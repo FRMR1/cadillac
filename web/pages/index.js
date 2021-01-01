@@ -1,6 +1,7 @@
 import Head from "next/head"
+import MainCanvas from "../components/Canvas"
 import client from "../client"
-import styles from "../styles/Home.module.css"
+import styles from "../styles/Home.module.scss"
 
 const Home = props => {
     console.log(props)
@@ -12,23 +13,13 @@ const Home = props => {
     return (
         <div className={styles.container}>
             <Head>
-                <title>Create Next App</title>
+                <title>Cadillac</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
             <main className={styles.main}>
-                <h1 className={styles.title}>Cadillac</h1>
-                <h2>Upcoming Shows:</h2>
-                <ul>
-                    {shows.map(show => (
-                        <li>
-                            {show.date} at {show.venue} in {show.city}
-                        </li>
-                    ))}
-                </ul>
+                <MainCanvas />
             </main>
-
-            <footer className={styles.footer}>Copyright 2020 Cadillac.</footer>
         </div>
     )
 }
