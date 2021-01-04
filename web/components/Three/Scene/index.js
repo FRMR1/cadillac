@@ -50,6 +50,7 @@ const Scene = props => {
         }),
         []
     )
+
     function makeScene(elem) {
         camera.position.z = 2
         camera.position.set(0, 1, 2)
@@ -91,18 +92,18 @@ const Scene = props => {
             height,
         } = elem.getBoundingClientRect()
 
-        const isOffscreen =
-            bottom < 0 ||
-            top > gl.domElement.clientHeight ||
-            right < 0 ||
-            left > gl.domElement.clientWidth
+        // const isOffscreen =
+        //     bottom < 0 ||
+        //     top > gl.domElement.clientHeight ||
+        //     right < 0 ||
+        //     left > gl.domElement.clientWidth
 
-        if (isOffscreen) {
-            return
-        }
+        // if (isOffscreen) {
+        //     return
+        // }
 
-        camera.aspect = width / height
-        camera.updateProjectionMatrix()
+        // camera.aspect = width / height
+        // camera.updateProjectionMatrix()
 
         const positiveYUpBottom = gl.domElement.clientHeight - bottom
         gl.setScissor(left, positiveYUpBottom, width, height)
@@ -111,18 +112,31 @@ const Scene = props => {
         gl.render(scene, camera)
     }
 
+    // function resizeRendererToDisplaySize(renderer) {
+    //     const canvas = renderer.domElement
+    //     const width = canvas.clientWidth
+    //     const height = canvas.clientHeight
+    //     const needResize = canvas.width !== width || canvas.height !== height
+    //     if (needResize) {
+    //         renderer.setSize(width, height, false)
+    //     }
+    //     return needResize
+    // }
+
     useFrame((state, delta) => {
         const transform = `translateY(${window.scrollY}px)`
         state.gl.domElement.style.transform = transform
         // resizeRendererToDisplaySize(state.gl)
-        state.gl.setScissorTest(false)
-        state.gl.clear(true, true)
-        state.gl.setScissorTest(true)
+        // state.gl.setScissorTest(false)
+        // state.gl.clear(true, true)
+        // state.gl.setScissorTest(true)
         renderSceneInfo(sceneInfo)
     })
 
+    console.log(gl.domElement.style)
+
     return (
-        <mesh>
+        <mesh {...props}>
             <planeBufferGeometry args={[20, 20, 1, 1]} />
             <shaderMaterial
                 uniforms={uniforms}
