@@ -28,13 +28,11 @@ varying vec3 v_position;
 
 void main() {
 
-    vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+    vec2 uv = v_position.xy;
 
-    uv = uv * vec2(1.5, 1.5);
+    // uv = uv * vec2(1.5, 1.5);
 
-    vec4 col = texture2D(u_texture, uv);
-    
-    uv.x *= u_ratio;
+    vec4 col = vec4(uv, 0., 1.);
     
     gl_FragColor = vec4(col.rgb ,1.0);
 }

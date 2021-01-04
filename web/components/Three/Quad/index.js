@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 import { useFrame, useThree, createPortal } from "react-three-fiber"
-import { frag, vert } from "../Shaders"
+import { frag, vert } from "../Shaders/quad"
 import Scene from "../Scene"
 import Scene2 from "../Scene2"
 import * as THREE from "three"
@@ -54,7 +54,7 @@ const Quad = props => {
                 scene
             )}
             <mesh>
-                <planeBufferGeometry args={[5, 7, 1, 1]} />
+                <planeBufferGeometry args={[10, 7, 1, 1]} />
                 <shaderMaterial
                     uniforms={uniforms}
                     vertexShader={vert}

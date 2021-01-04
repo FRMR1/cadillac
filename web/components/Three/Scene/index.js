@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 import { useFrame, useThree } from "react-three-fiber"
-import { frag, vert } from "../Shaders"
+import { frag, vert } from "../Shaders/scene"
 import * as THREE from "three"
 
 const Scene = props => {
@@ -78,8 +78,6 @@ const Scene = props => {
 
     const sceneInfo = setupScene()
 
-    console.log(sceneInfo)
-
     function renderSceneInfo(sceneInfo) {
         const { scene, camera, elem } = sceneInfo
 
@@ -124,14 +122,14 @@ const Scene = props => {
     })
 
     return (
-        <mesh />
-        /* <planeBufferGeometry args={[5, 4, 1, 1]} />
+        <mesh>
+            <planeBufferGeometry args={[20, 20, 1, 1]} />
             <shaderMaterial
                 uniforms={uniforms}
                 vertexShader={vert}
                 fragmentShader={frag}
             />
-        </mesh> */
+        </mesh>
     )
 }
 

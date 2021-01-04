@@ -23,9 +23,7 @@ const MainCanvas = props => {
             {/* <Suspense fallback={null}> */}
             {/* <OrbitControls /> */}
             <ambientLight />
-            <Quad boxRef={boxRef} pyramidRef={pyramidRef} />
-            {/* <Scene boxRef={boxRef} />
-            <Scene2 pyramidRef={pyramidRef} /> */}
+            <Scene boxRef={boxRef} pyramidRef={pyramidRef} />
             {/* </Suspense> */}
         </Canvas>
     )

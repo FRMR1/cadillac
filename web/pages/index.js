@@ -20,21 +20,12 @@ const Home = props => {
 
             <main className={styles.main}>
                 <MainCanvas boxRef={boxRef} pyramidRef={pyramidRef} />
-                <p>
-                    <span ref={boxRef} id="box" className="diagram left"></span>
-                    I love boxes. Presents come in boxes. When I find a new box
-                    I'm always excited to find out what's inside.
-                </p>
-                <p>
-                    <span
-                        ref={pyramidRef}
-                        id="pyramid"
-                        className="diagram right"
-                    ></span>
-                    When I was a kid I dreamed of going on an expedition inside
-                    a pyramid and finding a undiscovered tomb full of mummies
-                    and treasure.
-                </p>
+                <span ref={boxRef} id="box" className="diagram left"></span>
+                <span
+                    ref={pyramidRef}
+                    id="pyramid"
+                    className="diagram right"
+                ></span>
                 {/* {shows.map(show => (
                     <h2 key={show.date} style={{ marginBottom: "300px" }}>
                         {show.date} at {show.venue} in {show.city}

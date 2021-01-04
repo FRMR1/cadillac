@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 import { useFrame, useThree } from "react-three-fiber"
-import { frag, vert } from "../Shaders"
+import { frag, vert } from "../Shaders/quad"
 import * as THREE from "three"
 
 const Scene2 = props => {
