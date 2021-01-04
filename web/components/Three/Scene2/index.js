@@ -114,7 +114,7 @@ const Scene2 = props => {
         camera.aspect = width / height
         camera.updateProjectionMatrix()
 
-        const positiveYUpBottom = canvasRect.height - bottom
+        const positiveYUpBottom = gl.domElement.clientheight - bottom
         gl.setScissor(left, positiveYUpBottom, width, height)
         gl.setViewport(left, positiveYUpBottom, width, height)
 
@@ -132,15 +132,15 @@ const Scene2 = props => {
     })
 
     return (
-        <mesh>
-            <planeBufferGeometry args={[5, 1, 1, 1]} />
-            <shaderMaterial
-                uniforms={uniforms}
-                vertexShader={vert}
-                fragmentShader={frag}
-                onUpdate={self => (self.needsUpdate = true)}
-            />
-        </mesh>
+        <mesh />
+        //     <planeBufferGeometry args={[14, 1, 1, 1]} />
+        //     <shaderMaterial
+        //         uniforms={uniforms}
+        //         vertexShader={vert}
+        //         fragmentShader={frag}
+        //         onUpdate={self => (self.needsUpdate = true)}
+        //     />
+        // </mesh>
     )
 }
 

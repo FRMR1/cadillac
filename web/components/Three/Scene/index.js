@@ -9,6 +9,13 @@ const Scene = props => {
 
     const { gl } = useThree()
 
+    const scene = new THREE.Scene()
+    const fov = 45
+    const aspect = 2 // the canvas default
+    const near = 0.1
+    const far = 5
+    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
+
     const target = new THREE.WebGLRenderTarget(width, height, {
         format: THREE.RGBFormat,
         stencilBuffer: false,
@@ -44,13 +51,6 @@ const Scene = props => {
         []
     )
     function makeScene(elem) {
-        const scene = new THREE.Scene()
-
-        const fov = 45
-        const aspect = 2 // the canvas default
-        const near = 0.1
-        const far = 5
-        const camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
         camera.position.z = 2
         camera.position.set(0, 1, 2)
         camera.lookAt(0, 0, 0)
@@ -67,7 +67,7 @@ const Scene = props => {
     }
 
     function setupScene() {
-        const sceneInfo = makeScene(props.boxRef)
+        const sceneInfo = makeScene(props.pyramidRef)
         const geometry = new THREE.BoxBufferGeometry(1, 1, 1)
         const material = new THREE.MeshPhongMaterial({ color: "red" })
         const mesh = new THREE.Mesh(geometry, material)
@@ -77,6 +77,8 @@ const Scene = props => {
     }
 
     const sceneInfo = setupScene()
+
+    console.log(sceneInfo)
 
     function renderSceneInfo(sceneInfo) {
         const { scene, camera, elem } = sceneInfo
@@ -104,7 +106,7 @@ const Scene = props => {
         camera.aspect = width / height
         camera.updateProjectionMatrix()
 
-        const positiveYUpBottom = gl.domElement.clientheight - bottom
+        const positiveYUpBottom = gl.domElement.clientHeight - bottom
         gl.setScissor(left, positiveYUpBottom, width, height)
         gl.setViewport(left, positiveYUpBottom, width, height)
 
@@ -112,24 +114,24 @@ const Scene = props => {
     }
 
     useFrame((state, delta) => {
+        const transform = `translateY(${window.scrollY}px)`
+        state.gl.domElement.style.transform = transform
         // resizeRendererToDisplaySize(state.gl)
-
         state.gl.setScissorTest(false)
         state.gl.clear(true, true)
         state.gl.setScissorTest(true)
-
         renderSceneInfo(sceneInfo)
     })
 
     return (
-        <mesh>
-            <planeBufferGeometry args={[5, 1, 1, 1]} />
+        <mesh />
+        /* <planeBufferGeometry args={[5, 4, 1, 1]} />
             <shaderMaterial
                 uniforms={uniforms}
                 vertexShader={vert}
                 fragmentShader={frag}
             />
-        </mesh>
+        </mesh> */
     )
 }
 

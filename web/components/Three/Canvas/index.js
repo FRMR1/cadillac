@@ -2,6 +2,8 @@ import { Suspense, useEffect, useState } from "react"
 import * as THREE from "three"
 import { Canvas } from "react-three-fiber"
 import Scene from "../Scene"
+import Scene2 from "../Scene2"
+import Quad from "../Quad"
 import styles from "../../../styles/Canvas.module.scss"
 
 const MainCanvas = props => {
@@ -21,9 +23,9 @@ const MainCanvas = props => {
             {/* <Suspense fallback={null}> */}
             {/* <OrbitControls /> */}
             <ambientLight />
-            {boxRef && pyramidRef && (
-                <Scene boxRef={boxRef} pyramidRef={pyramidRef} />
-            )}
+            <Quad boxRef={boxRef} pyramidRef={pyramidRef} />
+            {/* <Scene boxRef={boxRef} />
+            <Scene2 pyramidRef={pyramidRef} /> */}
             {/* </Suspense> */}
         </Canvas>
     )
