@@ -30,9 +30,6 @@ void main() {
 
     vec2 uv = v_position.xy;
 
-    uv = uv * vec2(1.5, 1.5);
-
-    // vec4 col = vec4(uv, uv);
     vec4 col = texture2D(u_texture, uv);
     
     gl_FragColor = vec4(col.rgb ,1.0);

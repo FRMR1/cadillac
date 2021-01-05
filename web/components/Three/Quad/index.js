@@ -6,9 +6,7 @@ import Scene2 from "../Scene2"
 import * as THREE from "three"
 
 const Quad = props => {
-    const { gl, camera } = useThree()
-
-    const domEl = props.boxRef
+    const domEl = props.domEl
 
     const planeRef = useRef()
 
@@ -78,15 +76,36 @@ const Quad = props => {
         return { scaleX, scaleY }
     }
 
-    useFrame((state, delta) => {
-        // const
-        const { scaleX, scaleY } = getRenderSize(domEl)
+    const updateRenderPosition = (el, scrollY) => {
+        const {
+            left,
+            right,
+            top,
+            bottom,
+            width,
+            height,
+        } = el.getBoundingClientRect()
 
-        // planeRef.current.position.x = left
-        // planeRef.current.position.y = 5
+        // Set origin to top left
+        planeRef.current.position.x = -(camUnit.width / 2)
+        planeRef.current.position.y = camUnit.height / 2
+
+        // Set position
+        planeRef.current.position.x +=
+            (left / windowWidth) * camUnit.width +
+            (camUnit.width * planeRef.current.scale.x) / 2
+        planeRef.current.position.y -=
+            ((top - scrollY) / windowHeight) * camUnit.height +
+            (camUnit.height * planeRef.current.scale.y) / 2
+    }
+
+    useFrame((state, delta) => {
+        const { scaleX, scaleY } = getRenderSize(domEl)
 
         planeRef.current.scale.x = scaleX
         planeRef.current.scale.y = scaleY
+
+        updateRenderPosition(domEl, 0)
 
         state.gl.setRenderTarget(target)
         state.gl.render(scene, state.camera)

@@ -4,144 +4,65 @@ import { frag, vert } from "../Shaders/scene"
 import * as THREE from "three"
 
 const Scene = props => {
-    const width = window.innerWidth
-    const height = window.innerHeight
+    const windowWidth = window.innerWidth
+    const windowHeight = window.innerHeight
 
-    const { gl } = useThree()
+    const aspect = windowWidth / windowHeight
 
-    const planeRef = useRef()
-
-    const scene = new THREE.Scene()
-    const fov = 45
-    const aspect = 2 // the canvas default
-    const near = 0.1
-    const far = 5
-    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
-
-    const target = new THREE.WebGLRenderTarget(width, height, {
-        format: THREE.RGBFormat,
-        stencilBuffer: false,
-        depthBuffer: false,
-        depthWrite: false,
-        depthTest: false,
-    })
+    const [scene, target] = useMemo(() => {
+        const scene = new THREE.Scene()
+        const target = new THREE.WebGLMultisampleRenderTarget(
+            windowWidth,
+            windowHeight,
+            {
+                format: THREE.RGBFormat,
+                stencilBuffer: false,
+                depthBuffer: true,
+                depthWrite: true,
+                depthTest: true,
+            }
+        )
+        return [scene, target]
+    }, [])
 
     const uniforms = useMemo(
         () => ({
             u_time: { value: 0.0 },
             u_mouse: { value: new THREE.Vector2() },
-            u_speed: {
-                value: 0,
-            },
-            u_resolution: { value: { x: width, y: height } },
+            u_resolution: { value: { x: windowWidth, y: windowHeight } },
             u_ratio: {
-                value: window.innerWidth / window.innerHeight,
+                value: aspect,
             },
             u_texture: {
                 value: target.texture,
-            },
-            u_slider: {
-                value: props.sliderPos,
             },
         }),
         []
     )
 
-    function makeScene(elem) {
-        camera.position.z = 2
-        camera.position.set(0, 1, 2)
-        camera.lookAt(0, 0, 0)
+    const calculateUnitSize = zDistance => {
+        const fov = 75 // default camera value
+        const cameraZ = 5 // default camera value
 
-        {
-            const color = 0xffffff
-            const intensity = 1
-            const light = new THREE.DirectionalLight(color, intensity)
-            light.position.set(-1, 2, 4)
-            scene.add(light)
-        }
+        const vFov = (fov * Math.PI) / 180
 
-        return { scene, camera, elem }
+        const height = 2 * Math.tan(vFov / 2) * (cameraZ - zDistance)
+        const width = height * aspect
+
+        return { width, height }
     }
 
-    function setupScene() {
-        const sceneInfo = makeScene(props.pyramidRef)
-        const geometry = new THREE.BoxBufferGeometry(1, 1, 1)
-        const material = new THREE.MeshPhongMaterial({ color: "red" })
-        const mesh = new THREE.Mesh(geometry, material)
-        sceneInfo.scene.add(mesh)
-        sceneInfo.mesh = mesh
-        return sceneInfo
-    }
-
-    const sceneInfo = setupScene()
-
-    function renderSceneInfo(sceneInfo) {
-        const { scene, camera, elem } = sceneInfo
-
-        // get the viewport relative position of this element
-        const {
-            left,
-            right,
-            top,
-            bottom,
-            width,
-            height,
-        } = elem.getBoundingClientRect()
-
-        const x = width / window.innerWidth
-        const y = height / window.innerHeight
-
-        // const isOffscreen =
-        //     bottom < 0 ||
-        //     top > gl.domElement.clientHeight ||
-        //     right < 0 ||
-        //     left > gl.domElement.clientWidth
-
-        // if (isOffscreen) {
-        //     return
-        // }
-
-        // camera.aspect = width / height
-        // camera.updateProjectionMatrix()
-
-        const positiveYUpBottom = gl.domElement.clientHeight - bottom
-
-        // planeRef.current.position.x = 3
-        // planeRef.current.position.y = 3
-        // planeRef.current.scale.x = 0.7
-
-        // gl.setScissor(left, positiveYUpBottom, width, height)
-        // gl.setViewport(left, positiveYUpBottom, width, height)
-
-        gl.render(scene, camera)
-    }
-
-    useEffect(() => {
-        // console.log(planeRef.current)
-    })
-
-    // function resizeRendererToDisplaySize(renderer) {
-    //     const canvas = renderer.domElement
-    //     const width = canvas.clientWidth
-    //     const height = canvas.clientHeight
-    //     const needResize = canvas.width !== width || canvas.height !== height
-    //     if (needResize) {
-    //         renderer.setSize(width, height, false)
-    //     }
-    //     return needResize
-    // }
+    const camUnit = calculateUnitSize(0) // element's z-index === 0
 
     useFrame((state, delta) => {
-        // resizeRendererToDisplaySize(state.gl)
-        // state.gl.setScissorTest(false)
-        // state.gl.clear(true, true)
-        // state.gl.setScissorTest(true)
-        renderSceneInfo(sceneInfo)
+        state.gl.setRenderTarget(target)
+        state.gl.render(scene, state.camera)
+        state.gl.setRenderTarget(null)
     })
 
     return (
-        <mesh {...props} ref={planeRef}>
-            <planeBufferGeometry args={[20, 20, 1, 1]} />
+        <mesh>
+            <planeBufferGeometry args={[camUnit.width, camUnit.height, 1, 1]} />
             <shaderMaterial
                 uniforms={uniforms}
                 vertexShader={vert}

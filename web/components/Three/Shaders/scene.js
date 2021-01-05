@@ -28,9 +28,7 @@ varying vec3 v_position;
 
 void main() {
 
-    vec2 uv = v_position.xy;
-
-    // uv = uv * vec2(1.5, 1.5);
+    vec2 uv = gl_FragCoord.xy / u_resolution.xy;
 
     vec4 col = vec4(uv, 0., 1.);
     
