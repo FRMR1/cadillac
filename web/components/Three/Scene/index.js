@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useMemo, useRef, useEffect } from "react"
 import { useFrame, useThree } from "react-three-fiber"
 import { frag, vert } from "../Shaders/scene"
 import * as THREE from "three"
@@ -8,6 +8,8 @@ const Scene = props => {
     const height = window.innerHeight
 
     const { gl } = useThree()
+
+    const planeRef = useRef()
 
     const scene = new THREE.Scene()
     const fov = 45
@@ -86,6 +88,9 @@ const Scene = props => {
             height,
         } = elem.getBoundingClientRect()
 
+        const x = width / window.innerWidth
+        const y = height / window.innerHeight
+
         // const isOffscreen =
         //     bottom < 0 ||
         //     top > gl.domElement.clientHeight ||
@@ -100,11 +105,20 @@ const Scene = props => {
         // camera.updateProjectionMatrix()
 
         const positiveYUpBottom = gl.domElement.clientHeight - bottom
-        gl.setScissor(left, positiveYUpBottom, width, height)
-        gl.setViewport(left, positiveYUpBottom, width, height)
+
+        // planeRef.current.position.x = 3
+        // planeRef.current.position.y = 3
+        // planeRef.current.scale.x = 0.7
+
+        // gl.setScissor(left, positiveYUpBottom, width, height)
+        // gl.setViewport(left, positiveYUpBottom, width, height)
 
         gl.render(scene, camera)
     }
+
+    useEffect(() => {
+        // console.log(planeRef.current)
+    })
 
     // function resizeRendererToDisplaySize(renderer) {
     //     const canvas = renderer.domElement
@@ -118,8 +132,6 @@ const Scene = props => {
     // }
 
     useFrame((state, delta) => {
-        const transform = `translateY(${window.scrollY}px)`
-        state.gl.domElement.style.transform = transform
         // resizeRendererToDisplaySize(state.gl)
         // state.gl.setScissorTest(false)
         // state.gl.clear(true, true)
@@ -128,7 +140,7 @@ const Scene = props => {
     })
 
     return (
-        <mesh {...props}>
+        <mesh {...props} ref={planeRef}>
             <planeBufferGeometry args={[20, 20, 1, 1]} />
             <shaderMaterial
                 uniforms={uniforms}
