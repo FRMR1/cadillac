@@ -3,7 +3,7 @@ import { useFrame, useThree } from "react-three-fiber"
 import { frag, vert } from "../Shaders/scene"
 import * as THREE from "three"
 
-const Scene2 = props => {
+const Background = props => {
     const width = window.innerWidth
     const height = window.innerHeight
 
@@ -44,6 +44,7 @@ const Scene2 = props => {
         }),
         []
     )
+
     function makeScene(elem) {
         camera.position.z = 2
         camera.position.set(0, 1, 2)
@@ -61,19 +62,9 @@ const Scene2 = props => {
     }
 
     function setupScene() {
-        const sceneInfo = makeScene(props.boxRef)
-        const radius = 0.8
-        const widthSegments = 4
-        const heightSegments = 2
-        const geometry = new THREE.SphereBufferGeometry(
-            radius,
-            widthSegments,
-            heightSegments
-        )
-        const material = new THREE.MeshPhongMaterial({
-            color: "blue",
-            flatShading: true,
-        })
+        const sceneInfo = makeScene(props.windowRef)
+        const geometry = new THREE.BoxBufferGeometry(1, 1, 1)
+        const material = new THREE.MeshPhongMaterial({ color: "red" })
         const mesh = new THREE.Mesh(geometry, material)
         sceneInfo.scene.add(mesh)
         sceneInfo.mesh = mesh
@@ -95,18 +86,18 @@ const Scene2 = props => {
             height,
         } = elem.getBoundingClientRect()
 
-        const isOffscreen =
-            bottom < 0 ||
-            top > gl.domElement.clientHeight ||
-            right < 0 ||
-            left > gl.domElement.clientWidth
+        // const isOffscreen =
+        //     bottom < 0 ||
+        //     top > gl.domElement.clientHeight ||
+        //     right < 0 ||
+        //     left > gl.domElement.clientWidth
 
-        if (isOffscreen) {
-            return
-        }
+        // if (isOffscreen) {
+        //     return
+        // }
 
-        camera.aspect = width / height
-        camera.updateProjectionMatrix()
+        // camera.aspect = width / height
+        // camera.updateProjectionMatrix()
 
         const positiveYUpBottom = gl.domElement.clientHeight - bottom
         gl.setScissor(left, positiveYUpBottom, width, height)
@@ -115,27 +106,37 @@ const Scene2 = props => {
         gl.render(scene, camera)
     }
 
+    // function resizeRendererToDisplaySize(renderer) {
+    //     const canvas = renderer.domElement
+    //     const width = canvas.clientWidth
+    //     const height = canvas.clientHeight
+    //     const needResize = canvas.width !== width || canvas.height !== height
+    //     if (needResize) {
+    //         renderer.setSize(width, height, false)
+    //     }
+    //     return needResize
+    // }
+
     useFrame((state, delta) => {
+        const transform = `translateY(${window.scrollY}px)`
+        state.gl.domElement.style.transform = transform
         // resizeRendererToDisplaySize(state.gl)
-
-        state.gl.setScissorTest(false)
-        state.gl.clear(true, true)
-        state.gl.setScissorTest(true)
-
+        // state.gl.setScissorTest(false)
+        // state.gl.clear(true, true)
+        // state.gl.setScissorTest(true)
         renderSceneInfo(sceneInfo)
     })
 
     return (
-        <mesh>
-            <planeBufferGeometry args={[14, 1, 1, 1]} />
+        <mesh {...props}>
+            <planeBufferGeometry args={[20, 20, 1, 1]} />
             <shaderMaterial
                 uniforms={uniforms}
                 vertexShader={vert}
                 fragmentShader={frag}
-                onUpdate={self => (self.needsUpdate = true)}
             />
         </mesh>
     )
 }
 
-export default Scene2
+export default Background

@@ -35,13 +35,7 @@ const Scene = props => {
             u_ratio: {
                 value: window.innerWidth / window.innerHeight,
             },
-            u_n1: {
-                value: 14815366,
-            },
-            u_n2: {
-                value: 4096,
-            },
-            u_trail: {
+            u_texture: {
                 value: target.texture,
             },
             u_slider: {
@@ -132,8 +126,6 @@ const Scene = props => {
         // state.gl.setScissorTest(true)
         renderSceneInfo(sceneInfo)
     })
-
-    console.log(gl.domElement.style)
 
     return (
         <mesh {...props}>
