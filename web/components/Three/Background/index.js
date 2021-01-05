@@ -1,10 +1,13 @@
-import { useMemo } from "react"
+import { useMemo, useRef } from "react"
 import { useFrame, useThree } from "react-three-fiber"
 import Quad from "../Quad"
-import { frag, vert } from "../Shaders/scene"
+import { frag, vert } from "../Shaders/bg"
 import * as THREE from "three"
 
 const Background = props => {
+    const domEl = props.bodyRef
+    const planeRef = useRef()
+
     const { gl, camera } = useThree()
 
     const windowWidth = window.innerWidth
@@ -56,15 +59,60 @@ const Background = props => {
 
     const camUnit = calculateUnitSize()
 
+    const getRenderSize = el => {
+        const {
+            left,
+            right,
+            top,
+            bottom,
+            width,
+            height,
+        } = el.getBoundingClientRect()
+
+        const scaleX = width / windowWidth
+        const scaleY = height / windowHeight
+
+        return { scaleX, scaleY }
+    }
+
+    const updateRenderPosition = (el, scrollY) => {
+        const {
+            left,
+            right,
+            top,
+            bottom,
+            width,
+            height,
+        } = el.getBoundingClientRect()
+
+        // Set origin to top left
+        planeRef.current.position.x = -(camUnit.width / 2)
+        planeRef.current.position.y = camUnit.height / 2
+
+        // Set position
+        planeRef.current.position.x +=
+            (left / windowWidth) * camUnit.width +
+            (camUnit.width * planeRef.current.scale.x) / 2
+        planeRef.current.position.y -=
+            ((top - scrollY) / windowHeight / 2) * camUnit.height +
+            (camUnit.height * planeRef.current.scale.y) / 2
+    }
+
     useFrame((state, delta) => {
+        const { scaleX, scaleY } = getRenderSize(domEl)
+
+        planeRef.current.scale.x = scaleX
+        planeRef.current.scale.y = scaleY
+
+        updateRenderPosition(domEl, 0)
         gl.render(scene, camera)
     })
 
     return (
         <>
-            <mesh {...props}>
+            <mesh ref={planeRef}>
                 <planeBufferGeometry
-                    args={[camUnit.width, camUnit.height, 1, 1]}
+                    args={[camUnit.width, camUnit.height * 2, 1, 1]}
                 />
                 <shaderMaterial
                     uniforms={uniforms}

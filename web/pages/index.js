@@ -8,12 +8,12 @@ import styles from "../styles/Home.module.scss"
 const Home = props => {
     const boxRef = useRef()
     const pyramidRef = useRef()
-    const windowRef = useRef()
+    const bodyRef = useRef()
 
     const shows = Object.values(props)
 
     return (
-        <div ref={windowRef} className={styles.container}>
+        <div ref={bodyRef} className={styles.container}>
             <Head>
                 <title>Cadillac</title>
                 <link rel="icon" href="/favicon.ico" />
@@ -23,7 +23,7 @@ const Home = props => {
                 <MainCanvas
                     boxRef={boxRef}
                     pyramidRef={pyramidRef}
-                    windowRef={windowRef}
+                    bodyRef={bodyRef}
                 />
                 <span ref={boxRef} id="box" className="diagram left"></span>
                 <span

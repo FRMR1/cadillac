@@ -10,7 +10,7 @@ import styles from "../../../styles/Canvas.module.scss"
 const MainCanvas = props => {
     const [boxRef, setBoxRef] = useState()
     const [pyramidRef, setPyramidRef] = useState()
-    const [windowRef, setWindowRef] = useState()
+    const [bodyRef, setBodyRef] = useState()
 
     useEffect(() => {
         setBoxRef(props.boxRef.current)
@@ -21,21 +21,17 @@ const MainCanvas = props => {
     }, [props.pyramidRef])
 
     useEffect(() => {
-        setWindowRef(props.windowRef.current)
-    }, [props.windowRef])
+        setBodyRef(props.bodyRef.current)
+    }, [props.bodyRef])
 
     return (
         <Canvas className={styles.canvas}>
             {/* <Suspense fallback={null}> */}
-            {/* <OrbitControls /> */}
             <Background
-                windowRef={windowRef}
                 boxRef={boxRef}
                 pyramidRef={pyramidRef}
+                bodyRef={bodyRef}
             />
-            {/* <Quad boxRef={boxRef} pyramidRef={pyramidRef} /> */}
-            {/* <Scene2 boxRef={boxRef} pyramidRef={pyramidRef} /> */}
-            {/* <Scene boxRef={boxRef} pyramidRef={pyramidRef} /> */}
             {/* </Suspense> */}
         </Canvas>
     )
