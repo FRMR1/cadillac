@@ -47,7 +47,7 @@ const Background = props => {
 
     const calculateUnitSize = () => {
         const fov = 75 // default camera value
-        const cameraZ = 5 // default camera value
+        const cameraZ = 15 // default camera value
 
         const vFov = (fov * Math.PI) / 180
 
@@ -105,12 +105,15 @@ const Background = props => {
         planeRef.current.scale.y = scaleY
 
         updateRenderPosition(domEl, 0)
+
+        uniforms.u_time.value += delta
+
         gl.render(scene, camera)
     })
 
     return (
         <>
-            <mesh ref={planeRef}>
+            <mesh position={[0, 0, -10]} ref={planeRef}>
                 <planeBufferGeometry
                     args={[camUnit.width, camUnit.height * 2, 1, 1]}
                 />
@@ -120,8 +123,8 @@ const Background = props => {
                     fragmentShader={frag}
                 />
             </mesh>
-            <Quad domEl={props.boxRef} />
-            <Quad domEl={props.pyramidRef} />
+            {/* <Quad domEl={props.boxRef} />
+            <Quad domEl={props.pyramidRef} /> */}
         </>
     )
 }

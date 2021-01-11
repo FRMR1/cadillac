@@ -198,10 +198,10 @@
     "@react-spring/core" "9.0.0-rc.3"
     "@react-spring/shared" "9.0.0-rc.3"
 
-"@react-three/drei@^2.2.13":
-  version "2.2.13"
-  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-2.2.13.tgz#169d2fb4068caa8ed9df2a1d47fa914e1c72be86"
-  integrity sha512-t1Y2Cm+dSg+Zs1p5eTyAUcm/Fz2zvPEyLp+M7EZt8QVLEZHkr1op1HBYbw0BpaoRuoGBXbD0f3pbyYtC0jDvww==
+"@react-three/drei@^2.2.15":
+  version "2.2.15"
+  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-2.2.15.tgz#a12abb5675d9eb28e1692a8bc4ef67aa5b047820"
+  integrity sha512-jkXU4QbukmQsWBFRIhJvInDUUjvB/pvRMzgaD75b6M8UR6kLEeasCA3KiTf9OLNXt3r4faadrQFvvUBdbuzPeg==
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@react-spring/web" "^9.0.0-rc.3"

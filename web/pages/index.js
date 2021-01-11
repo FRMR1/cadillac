@@ -25,12 +25,12 @@ const Home = props => {
                     pyramidRef={pyramidRef}
                     bodyRef={bodyRef}
                 />
-                <span ref={boxRef} id="box" className="diagram left"></span>
+                {/* <span ref={boxRef} id="box" className="diagram left"></span>
                 <span
                     ref={pyramidRef}
                     id="pyramid"
                     className="diagram right"
-                ></span>
+                ></span> */}
                 {/* {shows.map(show => (
                     <h2 key={show.date} style={{ marginBottom: "300px" }}>
                         {show.date} at {show.venue} in {show.city}

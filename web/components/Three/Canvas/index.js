@@ -5,6 +5,7 @@ import Scene from "../Scene"
 import Scene2 from "../Scene2"
 import Background from "../Background"
 import Quad from "../Quad"
+import Reaper from "../Reaper"
 import styles from "../../../styles/Canvas.module.scss"
 
 const MainCanvas = props => {
@@ -26,13 +27,18 @@ const MainCanvas = props => {
 
     return (
         <Canvas className={styles.canvas}>
-            {/* <Suspense fallback={null}> */}
-            <Background
-                boxRef={boxRef}
-                pyramidRef={pyramidRef}
-                bodyRef={bodyRef}
-            />
-            {/* </Suspense> */}
+            <Suspense fallback={null}>
+                {/* <OrbitControls /> */}
+                {/* <ambientLight /> */}
+                <pointLight position={[0, 4, 10]} />
+                <Reaper />
+                <Background
+                    position={[0, 0, -2]}
+                    boxRef={boxRef}
+                    pyramidRef={pyramidRef}
+                    bodyRef={bodyRef}
+                />
+            </Suspense>
         </Canvas>
     )
 }
