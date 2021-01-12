@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect, useRef, useMemo } from "react"
-import { Canvas, useLoader, useThree } from "react-three-fiber"
+// import texture from "../../../public/assets/texture.png"
+import { Canvas, useLoader, useThree, useFrame } from "react-three-fiber"
 import { frag, vert } from "../Shaders/scene"
 
 import * as THREE from "three"
@@ -10,6 +11,8 @@ const Reaper = props => {
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
     const aspect = windowWidth / windowHeight
+
+    const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
 
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
     const group = useRef()
@@ -23,14 +26,12 @@ const Reaper = props => {
             u_ratio: {
                 value: aspect,
             },
-            // u_texture: {
-            //     value: target.texture,
-            // },
+            u_texture: {
+                value: txt,
+            },
         }),
         []
     )
-
-    console.log(obj)
 
     const material = new THREE.ShaderMaterial({
         uniforms: uniforms,
@@ -40,13 +41,13 @@ const Reaper = props => {
 
     obj.children[0].material = material
 
-    return (
-        <primitive
-            object={obj}
-            position={[0, -6, -5]}
-            // children-0-material={material}
-        />
-    )
+    useFrame((state, delta) => {
+        uniforms.u_time.value += delta
+        state.camera.position.z = 10
+        state.camera.position.y = 6
+    })
+
+    return <primitive object={obj} />
 }
 
 export default Reaper

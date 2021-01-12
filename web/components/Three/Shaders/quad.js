@@ -32,6 +32,6 @@ void main() {
 
     vec4 col = texture2D(u_texture, uv);
     
-    gl_FragColor = vec4(col.rgb ,1.0);
+    gl_FragColor = vec4(.12, .12, .12, 1.0);
 }
 `
