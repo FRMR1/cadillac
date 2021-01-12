@@ -7,7 +7,10 @@ import Background from "../Background"
 import Quad from "../Quad"
 import Reaper from "../Reaper"
 import Ground from "../Ground"
+// import { OrbitControls } from "@react-three/drei"
 import styles from "../../../styles/Canvas.module.scss"
+
+let OrbitControls
 
 const MainCanvas = props => {
     const [boxRef, setBoxRef] = useState()
@@ -32,7 +35,7 @@ const MainCanvas = props => {
                 {/* <OrbitControls /> */}
                 {/* <ambientLight /> */}
                 {/* <pointLight position={[0, 4, 10]} /> */}
-                <Ground />
+                {/* <Ground /> */}
                 <Reaper />
                 <Background
                     position={[0, 0, -2]}

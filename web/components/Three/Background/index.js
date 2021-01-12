@@ -1,7 +1,7 @@
 import { useMemo, useRef } from "react"
 import { useFrame, useThree } from "react-three-fiber"
 import Quad from "../Quad"
-import { frag, vert } from "../Shaders/quad"
+import { frag, vert } from "../Shaders/bg"
 import * as THREE from "three"
 
 const Background = props => {
@@ -47,7 +47,7 @@ const Background = props => {
 
     const calculateUnitSize = () => {
         const fov = 75 // default camera value
-        const cameraZ = 20 // default camera value
+        const cameraZ = 120 // default camera value
 
         const vFov = (fov * Math.PI) / 180
 
@@ -113,7 +113,7 @@ const Background = props => {
 
     return (
         <>
-            <mesh position={[0, 0, -10]} ref={planeRef}>
+            <mesh position={[0, 0, -100]} ref={planeRef}>
                 <planeBufferGeometry
                     args={[camUnit.width, camUnit.height * 2, 1, 1]}
                 />

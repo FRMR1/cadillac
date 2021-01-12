@@ -173,17 +173,19 @@ void main() {
     float phi = acos(v_normal.y);
     float angle = atan(v_normal.x, v_normal.z);
 
-    float fresnel = dot(vec3(0., 4., 10.), v_normal);
+    float fresnel = dot(vec3(1., 1., 1.), v_normal);
 
     vec2 uv3 = vec2((angle + PI) / (2. * PI), phi / PI);
     uv3 = fract(uv3 + vec2(u_time/16., u_time/14.));
 
     vec4 txt = texture2D(u_texture, uv3 + .2 * cnoise(vec4(uv3*4., u_time/10. + 1000., 0.), vec4(10.0)));
 
-    vec4 col = vec4(mix(vec3(0.), txt.rgb, fresnel), 1.);
-    col.rgb -= vec3(1.2);
+    vec4 col = vec4(mix(vec3(0., 0., 0.), txt.rgb, fresnel), 1.);
+    col = vec4(mix(col.rgb, vec3(0., 0., 0.), fresnel), 1.);
+    col.rgb -= vec3(.2);
     col.rgb = max(col.rgb, 0.);
-    col.rgb += vec3(.08);
+    col.rgb = min(col.rgb, 1.);
+    col.rgb += vec3(.14);
 
     
     gl_FragColor = col;
