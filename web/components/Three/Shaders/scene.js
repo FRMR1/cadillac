@@ -5,12 +5,25 @@ varying vec2 v_uv;
 varying vec3 v_position;
 varying vec3 v_normal;
 varying vec3 v_view;
+varying vec2 v_n;
 
 void main() {
 
-    vec4 transformed = modelViewMatrix * vec4(position, 1.0);
+    vec4 p = vec4( position, 1. );
 
+    vec4 transformed = modelViewMatrix * p;
     v_view = normalize(-transformed.xyz);
+
+    vec3 e = normalize( vec3( transformed ) );
+    vec3 n = normalize( normalMatrix * normal );
+
+    vec3 r = reflect( e, n );
+    float m = 2. * sqrt(
+        pow( r.x, 2. ) +
+        pow( r.y, 2. ) +
+        pow( r.z + 1., 2. )
+    );
+    v_n = r.xy / m + .5;
 
     v_uv = uv;
     v_position = position;
@@ -25,6 +38,7 @@ precision highp float;
 
 uniform vec2 u_resolution;
 uniform float u_time;
+uniform vec2 u_mouse;
 uniform float u_ratio;
 uniform float u_speed;
 uniform float u_slider;
@@ -35,6 +49,7 @@ varying vec2 v_uv;
 varying vec3 v_position;
 varying vec3 v_view;
 varying vec3 v_normal;
+varying vec2 v_n;
 
 float PI = 3.141592653589;
 
@@ -113,6 +128,12 @@ float cnoise(vec3 P){
   return 2.2 * n_xyz;
 }
 
+vec2 getmatcap(vec3 eye, vec3 normal) {
+    vec3 reflected = reflect(eye, normal);
+    float m = 2.8284271247461903 * sqrt( reflected.z+1.0 );
+    return reflected.xy / m + 0.5;
+  }
+
 void main() {
 
     vec3 viewDir = normalize( v_view );
@@ -121,26 +142,20 @@ void main() {
     vec2 uv = vec2( dot( x, v_normal ), dot( y, v_normal ) ) * 0.495 + 0.5;
     // uv.x /= 2.;
 
-    vec4 txt = texture2D(u_texture, uv);
-    vec4 txt2 = texture2D(u_texture2, uv);
-
+    vec4 txt = texture2D(u_texture, v_n);
+    vec4 txt2 = texture2D(u_texture2, v_n);
 
     float diff = abs(dot(v_normal, normalize(vec3(1., 1., 0.)))) + abs(dot(v_normal, normalize(vec3(1., -1., 0.))));
-
     diff *= .5;
 
     float noise = cnoise(v_position) + sin(u_time / 5.) / 2. + .4;
-
     float step = smoothstep(0.4, 0.39, noise);
-
     vec4 col = vec4(diff, diff, diff, 1.);
 
     vec4 final = mix(txt, col, step);
     vec4 bg = vec4(.125, .125, .125, 1.);
 
-    float fresnel = pow(1. + dot(normalize(vec3(0., 1., -1.)), v_normal), 1.) / 1.1;
-
-
+    float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.6, 1., u_mouse.y * -.6)), v_normal), .6);
 
     vec4 color = mix(final, bg, fresnel);
 

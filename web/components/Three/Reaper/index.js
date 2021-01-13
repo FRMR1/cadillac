@@ -45,19 +45,25 @@ const Reaper = props => {
         fragmentShader: frag,
     })
 
+    // const material = new THREE.MeshMatcapMaterial({
+    //     matcap: txt,
+    // })
+
     for (let i = 0; i < obj.children.length; i++) {
         obj.children[i].material = material
     }
 
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
+        uniforms.u_mouse.value.x = props.pointer.x
+        uniforms.u_mouse.value.y = props.pointer.y
         state.camera.position.x = 0
         state.camera.position.z = 43
         state.camera.position.y = 12
         // obj.rotation.z = obj.rotation.z += 0.01
         obj.rotation.x = Math.PI / 0.65
-        obj.rotation.x += (props.pointer.y / 5) * -1
-        obj.rotation.z = props.pointer.x / 2
+        obj.rotation.x += (props.pointer.y / 20) * -1
+        obj.rotation.z = props.pointer.x / 5
     })
 
     return <primitive object={obj} />
