@@ -14,7 +14,8 @@ const Reaper = props => {
 
     const { gl, scene } = useThree()
 
-    const txt = useLoader(THREE.TextureLoader, "/assets/texture.png")
+    const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
+    const txt2 = useLoader(THREE.TextureLoader, "/assets/texture2.jpg")
 
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
     const group = useRef()
@@ -31,6 +32,9 @@ const Reaper = props => {
             u_texture: {
                 value: txt,
             },
+            u_texture2: {
+                value: txt2,
+            },
         }),
         []
     )
@@ -45,15 +49,15 @@ const Reaper = props => {
         obj.children[i].material = material
     }
 
-    console.log(obj)
-
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
         state.camera.position.x = 0
         state.camera.position.z = 43
         state.camera.position.y = 12
-        obj.rotation.z = obj.rotation.z += 0.005
+        // obj.rotation.z = obj.rotation.z += 0.01
         obj.rotation.x = Math.PI / 0.65
+        obj.rotation.x += (props.pointer.y / 5) * -1
+        obj.rotation.z = props.pointer.x / 2
     })
 
     return <primitive object={obj} />

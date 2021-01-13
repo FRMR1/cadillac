@@ -113,7 +113,7 @@ const Background = props => {
 
     return (
         <>
-            <mesh position={[0, 0, -100]} ref={planeRef}>
+            <mesh position={[0, 0, 0]} ref={planeRef}>
                 <planeBufferGeometry
                     args={[camUnit.width, camUnit.height * 2, 1, 1]}
                 />

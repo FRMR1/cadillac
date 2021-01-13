@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react"
+import { Suspense, useEffect, useState, useMemo } from "react"
 import * as THREE from "three"
 import { Canvas } from "react-three-fiber"
 import Scene from "../Scene"
@@ -16,6 +16,10 @@ const MainCanvas = props => {
     const [pyramidRef, setPyramidRef] = useState()
     const [bodyRef, setBodyRef] = useState()
 
+    const pointer = useMemo(() => {
+        return new THREE.Vector2()
+    })
+
     useEffect(() => {
         setBoxRef(props.boxRef.current)
     }, [props.boxRef])
@@ -28,13 +32,19 @@ const MainCanvas = props => {
         setBodyRef(props.bodyRef.current)
     }, [props.bodyRef])
 
+    const pointerMove = e => {
+        pointer.set(e.x / window.innerWidth, 1 - e.y / window.innerHeight)
+        pointer.x = (e.clientX / window.innerWidth) * 2 - 1
+        pointer.y = -(e.clientY / window.innerHeight) * 2 + 1
+    }
+
     return (
-        <Canvas className={styles.canvas}>
+        <Canvas onPointerMove={pointerMove} className={styles.canvas}>
             <Suspense fallback={null}>
                 {/* <OrbitControls /> */}
-                <Reaper />
+                <Reaper pointer={pointer} />
                 <Background
-                    position={[0, 0, -2]}
+                    position={[0, 0, 0]}
                     boxRef={boxRef}
                     pyramidRef={pyramidRef}
                     bodyRef={bodyRef}
