@@ -12,11 +12,13 @@ const Reaper = props => {
     const windowHeight = window.innerHeight
     const aspect = windowWidth / windowHeight
 
-    const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
+    const { gl, scene } = useThree()
+
+    const txt = useLoader(THREE.TextureLoader, "/assets/texture.png")
 
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
     const group = useRef()
-    const obj = useLoader(OBJLoader, "/assets/reaper.obj")
+    const obj = useLoader(OBJLoader, "/assets/skull.obj")
 
     const uniforms = useMemo(
         () => ({
@@ -39,12 +41,19 @@ const Reaper = props => {
         fragmentShader: frag,
     })
 
-    obj.children[0].material = material
+    for (let i = 0; i < obj.children.length; i++) {
+        obj.children[i].material = material
+    }
+
+    console.log(obj)
 
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
-        state.camera.position.z = 10
-        state.camera.position.y = 6
+        state.camera.position.x = 0
+        state.camera.position.z = 43
+        state.camera.position.y = 12
+        obj.rotation.z = obj.rotation.z += 0.005
+        obj.rotation.x = Math.PI / 0.65
     })
 
     return <primitive object={obj} />

@@ -47,7 +47,7 @@ const Background = props => {
 
     const calculateUnitSize = () => {
         const fov = 75 // default camera value
-        const cameraZ = 120 // default camera value
+        const cameraZ = 150 // default camera value
 
         const vFov = (fov * Math.PI) / 180
 

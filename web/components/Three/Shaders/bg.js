@@ -45,6 +45,20 @@ float sdPyramid( vec3 p, float h)
   return sqrt( (d2+q.z*q.z)/m2 ) * sign(max(q.z,-p.y));
 }
 
+mat4 rotation3d(vec3 axis, float angle) {
+    axis = normalize(axis);
+    float s = sin(angle);
+    float c = cos(angle);
+    float oc = 1.0 - c;
+  
+    return mat4(
+          oc * axis.x * axis.x + c,           oc * axis.x * axis.y - axis.z * s,  oc * axis.z * axis.x + axis.y * s,  0.0,
+      oc * axis.x * axis.y + axis.z * s,  oc * axis.y * axis.y + c,           oc * axis.y * axis.z - axis.x * s,  0.0,
+      oc * axis.z * axis.x - axis.y * s,  oc * axis.y * axis.z + axis.x * s,  oc * axis.z * axis.z + c,           0.0,
+          0.0,                                0.0,                                0.0,                                1.0
+      );
+  }
+
 
 #define AA_QUALITY 0
 #define ENABLE_POST_PROCESSING 1
@@ -93,8 +107,10 @@ vec2 opBlend(vec2 d1, vec2 d2)
 
 vec2 SDF(vec3 pos)
 {
-    vec2 res =         vec2(sdPyramid(pos-vec3(0.,3.+sin(u_time)/2.,0), 2.5),    0.1);
-    res = opU(res, vec2(sdPlane(pos, vec4(0, 1.4, 0, 10)),           -0.5));
+    // vec2 res =         vec2(sdPlane(pos, vec4(0, 1.4, 0, 10)),           -0.9);
+    // res = opU(res, vec2(sdPlane(pos, vec4(0, 1.4, 0, 10)),           -0.9));
+
+    vec2 res = vec2(0.);
 
     return res;
 }
@@ -206,7 +222,7 @@ vec3 render(vec3 rayOrigin, vec3 rayDir)
         	// L is vector from surface point to light, N is surface normal. N and L must be normalized!
             float NoL = max(dot(N, L), 0.0);
             vec3 LDirectional = vec3(.8, 0.0, .6) * NoL;
-            vec3 LAmbient = vec3(0.2, 0.2, 0.2);
+            vec3 LAmbient = vec3(1., 1., 1.);
             vec3 diffuse = col * (LDirectional);
             
             // Visualize normals:
@@ -305,7 +321,7 @@ void main()
     vec2 screenCoord = gl_FragCoord.xy/u_resolution.xy;
 
     // Vignette
-    float radius = 0.2;
+    float radius = 2.;
     float d = smoothstep(radius, radius-0.5, length(screenCoord-vec2(0.5)));
     gl_FragColor = mix(gl_FragColor, vec4(0.), .1);
     
@@ -314,12 +330,14 @@ void main()
     gl_FragColor = mix(gl_FragColor, smoothstep(0.0, 1.0, gl_FragColor), constrast);
     
     // Colour mapping
-    // gl_FragColor *= vec4(0.90,0.96,1.1,1.0);
+    gl_FragColor *= vec4(0.90,0.96,1.1,1.0);
 #endif
     
-    gl_FragColor = pow(gl_FragColor, vec4(0.4545)); // Gamma correction (1.0 / 2.2)
-    gl_FragColor = max(vec4(0.), gl_FragColor);
-    gl_FragColor = min(vec4(1.), gl_FragColor);
-    gl_FragColor += vec4(.15, .15, .15, 0.);
+    // gl_FragColor = pow(gl_FragColor, vec4(0.4545)); // Gamma correction (1.0 / 2.2)
+    // gl_FragColor = max(vec4(0.), gl_FragColor);
+    // gl_FragColor = min(vec4(1.), gl_FragColor);
+    // gl_FragColor += vec4(.15, .15, .15, 0.);
+
+    gl_FragColor = vec4(28./255., 28./255., 28./255., 1.);
 }
 `
