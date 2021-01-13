@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react"
+import { useMemo, useRef, useState, useEffect } from "react"
 import { useFrame, useThree } from "react-three-fiber"
 import Quad from "../Quad"
 import { frag, vert } from "../Shaders/bg"
@@ -98,11 +98,27 @@ const Background = props => {
             (camUnit.height * planeRef.current.scale.y) / 2
     }
 
+    const [scroll, setScroll] = useState()
+
+    const handleScroll = () => {
+        setScroll(window.pageYOffset)
+    }
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll)
+    })
+
+    const handleScrollPos = scrollPos => {
+        let pos = scrollPos / 20
+        return pos
+    }
+
     useFrame((state, delta) => {
         const { scaleX, scaleY } = getRenderSize(domEl)
 
         planeRef.current.scale.x = scaleX
         planeRef.current.scale.y = scaleY
+        planeRef.current.position.z = handleScrollPos(scroll)
 
         updateRenderPosition(domEl, 0)
 

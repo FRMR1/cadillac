@@ -4,6 +4,7 @@ body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    color: #b58f18;
 }
 
 a {
@@ -29,4 +30,38 @@ a {
 .right {
     float: right;
     // margin-left: 0.25em;
+}
+
+#top,
+#bottom,
+#left,
+#right {
+    background: #b58f18;
+    position: fixed;
+    z-index: 9999;
+}
+#left,
+#right {
+    top: 0;
+    bottom: 0;
+    width: 2px;
+}
+#left {
+    left: 0;
+}
+#right {
+    right: 0;
+}
+
+#top,
+#bottom {
+    left: 0;
+    right: 0;
+    height: 2px;
+}
+#top {
+    top: 0;
+}
+#bottom {
+    bottom: 0;
 }

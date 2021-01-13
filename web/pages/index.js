@@ -4,39 +4,34 @@ import Head from "next/head"
 import MainCanvas from "../components/Three/Canvas"
 import client from "../client"
 import styles from "../styles/Home.module.scss"
+import Image from "next/image"
 
 const Home = props => {
-    const boxRef = useRef()
-    const pyramidRef = useRef()
-    const bodyRef = useRef()
-
     const shows = Object.values(props)
 
-    return (
-        <div ref={bodyRef} className={styles.container}>
-            <Head>
-                <title>Cadillac</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+    console.log(shows)
 
-            <main className={styles.main}>
-                <MainCanvas
-                    boxRef={boxRef}
-                    pyramidRef={pyramidRef}
-                    bodyRef={bodyRef}
-                />
-                {/* <span ref={boxRef} id="box" className="diagram left"></span>
-                <span
-                    ref={pyramidRef}
-                    id="pyramid"
-                    className="diagram right"
-                ></span> */}
-                {/* {shows.map(show => (
-                    <h2 key={show.date} style={{ marginBottom: "300px" }}>
-                        {show.date} at {show.venue} in {show.city}
-                    </h2>
-                ))} */}
-            </main>
+    return (
+        <div className={styles.showsContainer}>
+            <h2>Upcoming Shows</h2>
+            <table>
+                <tHead>
+                    <tr>
+                        <th>Date</th>
+                        <th>City</th>
+                        <th>Venue</th>
+                    </tr>
+                </tHead>
+                <tBody>
+                    {shows.map(show => (
+                        <tr>
+                            <td>{show.date}</td>
+                            <td>{show.city}</td>
+                            <td>{show.venue}</td>
+                        </tr>
+                    ))}
+                </tBody>
+            </table>
         </div>
     )
 }
@@ -45,7 +40,7 @@ Home.getInitialProps = async function (context) {
     const { show = "" } = context.query
     return await client.fetch(
         `
-    *[_type == "show"] | order(date){date, venue, city}
+    *[_type == "show"] | order(date desc){date, venue, city}
   `,
         { show }
     )

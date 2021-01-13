@@ -16,6 +16,40 @@
     align-items: center;
 }
 
+.navContainer {
+    z-index: 1;
+    position: absolute;
+    top: 30px;
+    text-align: center;
+}
+
+.nav {
+    margin-top: 45px;
+    span {
+        color: #b58f18;
+        margin: 0 10px;
+        text-transform: uppercase;
+    }
+}
+
+.showsContainer {
+    margin-top: 100%;
+    z-index: 1;
+    table {
+        width: 600px;
+        border-collapse: collapse;
+    }
+    table,
+    td,
+    th {
+        border: 1px solid #b58f18;
+    }
+    td,
+    th {
+        padding: 10px 10px;
+    }
+}
+
 .margin {
     margin-bottom: 300px;
 }

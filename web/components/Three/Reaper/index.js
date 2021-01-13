@@ -58,10 +58,10 @@ const Reaper = props => {
         uniforms.u_mouse.value.x = props.pointer.x
         uniforms.u_mouse.value.y = props.pointer.y
         state.camera.position.x = 0
-        state.camera.position.z = 43
+        state.camera.position.z = 48
         state.camera.position.y = 12
         // obj.rotation.z = obj.rotation.z += 0.01
-        obj.rotation.x = Math.PI / 0.65
+        obj.rotation.x = Math.PI / 0.64
         obj.rotation.x += (props.pointer.y / 20) * -1
         obj.rotation.z = props.pointer.x / 5
     })

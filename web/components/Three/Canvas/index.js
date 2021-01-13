@@ -8,25 +8,25 @@ import Quad from "../Quad"
 import Reaper from "../Reaper"
 import Ground from "../Ground"
 import Effects from "../Effects"
-// import { OrbitControls } from "drei"
 import styles from "../../../styles/Canvas.module.scss"
 
 const MainCanvas = props => {
-    const [boxRef, setBoxRef] = useState()
-    const [pyramidRef, setPyramidRef] = useState()
+    // const [boxRef, setBoxRef] = useState()
+    // const [pyramidRef, setPyramidRef] = useState()
     const [bodyRef, setBodyRef] = useState()
+    const [scroll, setScroll] = useState()
 
     const pointer = useMemo(() => {
         return new THREE.Vector2()
     })
 
-    useEffect(() => {
-        setBoxRef(props.boxRef.current)
-    }, [props.boxRef])
+    // useEffect(() => {
+    //     setBoxRef(props.boxRef.current)
+    // }, [props.boxRef])
 
-    useEffect(() => {
-        setPyramidRef(props.pyramidRef.current)
-    }, [props.pyramidRef])
+    // useEffect(() => {
+    //     setPyramidRef(props.pyramidRef.current)
+    // }, [props.pyramidRef])
 
     useEffect(() => {
         setBodyRef(props.bodyRef.current)
@@ -44,10 +44,11 @@ const MainCanvas = props => {
                 {/* <OrbitControls /> */}
                 <Reaper pointer={pointer} />
                 <Background
-                    position={[0, 0, 0]}
-                    boxRef={boxRef}
-                    pyramidRef={pyramidRef}
+                    // position={[0, 0, 0]}
+                    scrollPos={props.scrollPos}
                     bodyRef={bodyRef}
+                    // boxRef={boxRef}
+                    // pyramidRef={pyramidRef}
                 />
                 {/* <Effects /> */}
             </Suspense>

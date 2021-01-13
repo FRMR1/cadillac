@@ -148,14 +148,14 @@ void main() {
     float diff = abs(dot(v_normal, normalize(vec3(1., 1., 0.)))) + abs(dot(v_normal, normalize(vec3(1., -1., 0.))));
     diff *= .5;
 
-    float noise = cnoise(v_position) + sin(u_time / 5.) / 2. + .4;
+    float noise = cnoise(v_position) + sin(u_time / 5.) / 1.7 + .7;
     float step = smoothstep(0.4, 0.39, noise);
     vec4 col = vec4(diff, diff, diff, 1.);
 
     vec4 final = mix(txt, col, step);
-    vec4 bg = vec4(.125, .125, .125, 1.);
+    vec4 bg = vec4(0.02, 0.02, 0.02, 1.);
 
-    float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.6, 1., u_mouse.y * -.6)), v_normal), .6);
+    float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.6, 1., u_mouse.y * -.6)), v_normal), (sin(u_time*20.) + 1.) / 30. + .8);
 
     vec4 color = mix(final, bg, fresnel);
 
