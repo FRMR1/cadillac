@@ -32,8 +32,30 @@
     }
 }
 
-.showsContainer {
+.eldorado {
     margin-top: 100%;
+    margin-bottom: 200px;
+    z-index: 1;
+    .text {
+        margin-right: 60px;
+        text-align: center;
+    }
+    .text,
+    .image {
+        display: inline-block;
+    }
+    .text h3 {
+        font-size: 80px;
+        margin-bottom: 15px;
+        color: #eee;
+    }
+    .text span {
+        font-size: 30px;
+        color: #b58f18;
+    }
+}
+
+.showsContainer {
     z-index: 1;
     table {
         width: 600px;

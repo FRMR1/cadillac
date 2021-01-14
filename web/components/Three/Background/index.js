@@ -109,7 +109,7 @@ const Background = props => {
     })
 
     const handleScrollPos = scrollPos => {
-        let pos = scrollPos ? scrollPos / 20 : 0
+        let pos = scrollPos ? scrollPos / 60 + 8 : 8
         return pos > 15 ? 15 : pos
     }
 
@@ -129,7 +129,7 @@ const Background = props => {
 
     return (
         <>
-            <mesh position={[0, 0, 0]} ref={planeRef}>
+            <mesh position={[0, 0, 4]} ref={planeRef}>
                 <planeBufferGeometry
                     args={[camUnit.width, camUnit.height * 2, 1, 1]}
                 />

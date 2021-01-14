@@ -1,6 +1,7 @@
 import client from "../client"
 import Shows from "../components/Shows"
 import News from "../components/News"
+import Image from "next/image"
 import styles from "../styles/Home.module.scss"
 
 const Home = props => {
@@ -11,6 +12,15 @@ const Home = props => {
 
     return (
         <>
+            <div className={styles.eldorado}>
+                <div className={styles.text}>
+                    <h3>El Dorado</h3>
+                    <span>BUY! BUY! BUY!</span>
+                </div>
+                <div className={styles.image}>
+                    <Image src="/png/eldorado.png" width={200} height={200} />
+                </div>
+            </div>
             <Shows shows={shows} />
             <News posts={posts} />
         </>
