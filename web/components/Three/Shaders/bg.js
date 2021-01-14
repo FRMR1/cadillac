@@ -33,7 +33,7 @@ void main()
 
     vec3 bg = mix(vec3(0.2), vec3(0.12), dist);
 
-    gl_FragColor = vec4(.15, .15, .15, 1.);
+    gl_FragColor = vec4(.125, .125, .125, 1.);
 
 }
 `

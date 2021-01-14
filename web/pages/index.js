@@ -1,49 +1,31 @@
-import { useRef } from "react"
-
-import Head from "next/head"
-import MainCanvas from "../components/Three/Canvas"
 import client from "../client"
+import Shows from "../components/Shows"
+import News from "../components/News"
 import styles from "../styles/Home.module.scss"
-import Image from "next/image"
 
 const Home = props => {
-    const shows = Object.values(props)
+    const shows = Object.values(props.shows)
+    const posts = Object.values(props.posts)
 
-    console.log(shows)
+    console.log(posts)
 
     return (
-        <div className={styles.showsContainer}>
-            <h2>Upcoming Shows</h2>
-            <table>
-                <tHead>
-                    <tr>
-                        <th>Date</th>
-                        <th>City</th>
-                        <th>Venue</th>
-                    </tr>
-                </tHead>
-                <tBody>
-                    {shows.map(show => (
-                        <tr>
-                            <td>{show.date}</td>
-                            <td>{show.city}</td>
-                            <td>{show.venue}</td>
-                        </tr>
-                    ))}
-                </tBody>
-            </table>
-        </div>
+        <>
+            <Shows shows={shows} />
+            <News posts={posts} />
+        </>
     )
 }
 
-Home.getInitialProps = async function (context) {
-    const { show = "" } = context.query
-    return await client.fetch(
-        `
-    *[_type == "show"] | order(date desc){date, venue, city}
-  `,
-        { show }
-    )
+const showsQuery = `*[_type == "show"] | order(date desc){date, venue, city}`
+const postsQuery = `*[_type == "post"] | order(publishedAt desc){title, slug, publishedAt, body}`
+
+export const getStaticProps = async () => {
+    const shows = await client.fetch(showsQuery)
+    const posts = await client.fetch(postsQuery)
+    return {
+        props: { shows, posts }, // will be passed to the page component as props
+    }
 }
 
 export default Home

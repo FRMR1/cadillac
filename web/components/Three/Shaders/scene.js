@@ -136,30 +136,36 @@ vec2 getmatcap(vec3 eye, vec3 normal) {
 
 void main() {
 
+    vec3 a = vec3(0.5, 0.5, 0.5);
+    vec3 b = vec3(0.5, 0.5, 0.5);
+    vec3 c = vec3(0.5, 0.5, 0.5);
+    vec3 d = vec3(0.00, 0.33, 0.67);
+
     vec3 viewDir = normalize( v_view );
 	vec3 x = normalize( vec3( viewDir.z, 0.0, - viewDir.x ) );
 	vec3 y = cross( viewDir, x );
     vec2 uv = vec2( dot( x, v_normal ), dot( y, v_normal ) ) * 0.495 + 0.5;
-    // uv.x /= 2.;
-
-    vec4 txt = texture2D(u_texture, v_n);
-    vec4 txt2 = texture2D(u_texture2, v_n);
-
+    
     float diff = abs(dot(v_normal, normalize(vec3(1., 1., 0.)))) + abs(dot(v_normal, normalize(vec3(1., -1., 0.))));
     diff *= .5;
-
-    float noise = cnoise(v_position) + sin(u_time / 5.) / 1.7 + .7;
+    
+    float noise = cnoise(v_position) + sin(u_time / 5.) / 1.7 + 1.;
     float step = smoothstep(0.4, 0.39, noise);
     vec4 col = vec4(diff, diff, diff, 1.);
-
-    vec4 final = mix(txt, col, step);
+    
+    vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time /3.));
+    vec4 txt = texture2D(u_texture, v_n);
+    vec4 txt2 = vec4(animatedColor, 1.);
+    
+    vec4 color = mix(txt, txt2, step);
     vec4 bg = vec4(0.02, 0.02, 0.02, 1.);
 
     float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.6, 1., u_mouse.y * -.6)), v_normal), (sin(u_time*20.) + 1.) / 30. + .8);
 
-    vec4 color = mix(final, bg, fresnel);
 
-    gl_FragColor = color;
+    vec4 final = mix(color, bg, fresnel);
+
+    gl_FragColor = final;
     // gl_FragColor = vec4(step, step, step, 1.);
     // gl_FragColor = txt;
 }

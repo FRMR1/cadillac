@@ -14,7 +14,7 @@ const Reaper = props => {
 
     const { gl, scene } = useThree()
 
-    const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
+    const txt = useLoader(THREE.TextureLoader, "/assets/texture.png")
     const txt2 = useLoader(THREE.TextureLoader, "/assets/texture2.jpg")
 
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader

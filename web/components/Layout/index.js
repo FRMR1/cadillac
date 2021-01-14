@@ -1,5 +1,6 @@
 import React, { useRef } from "react"
 import Head from "next/head"
+import Link from "next/link"
 import MainCanvas from "../../components/Three/Canvas"
 import client from "../../client"
 import styles from "../../styles/Home.module.scss"
@@ -24,10 +25,18 @@ const Layout = props => {
                     <Image src="/svg/logo.svg" width={210} height={43} />
                 </div>
                 <div className={styles.nav}>
-                    <span>Home</span>
-                    <span>News</span>
-                    <span>Bio</span>
-                    <span>Shop</span>
+                    <Link href="/">
+                        <a>Home</a>
+                    </Link>
+                    <Link href="/news">
+                        <a>News</a>
+                    </Link>
+                    <Link href="/bio">
+                        <a>Bio</a>
+                    </Link>
+                    <Link href="#">
+                        <a>Shop</a>
+                    </Link>
                 </div>
             </div>
             <MainCanvas

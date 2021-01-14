@@ -109,8 +109,8 @@ const Background = props => {
     })
 
     const handleScrollPos = scrollPos => {
-        let pos = scrollPos / 20
-        return pos
+        let pos = scrollPos ? scrollPos / 20 : 0
+        return pos > 15 ? 15 : pos
     }
 
     useFrame((state, delta) => {
@@ -118,7 +118,7 @@ const Background = props => {
 
         planeRef.current.scale.x = scaleX
         planeRef.current.scale.y = scaleY
-        planeRef.current.position.z = handleScrollPos(scroll)
+        planeRef.current.position.z = handleScrollPos(scroll) + 5
 
         updateRenderPosition(domEl, 0)
 
