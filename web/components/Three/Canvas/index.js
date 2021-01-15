@@ -11,7 +11,7 @@ import Effects from "../Effects"
 import styles from "../../../styles/Canvas.module.scss"
 
 const MainCanvas = props => {
-    // const [boxRef, setBoxRef] = useState()
+    const [bioRef, setBioRef] = useState()
     // const [pyramidRef, setPyramidRef] = useState()
     const [bodyRef, setBodyRef] = useState()
     const [scroll, setScroll] = useState()
@@ -20,9 +20,9 @@ const MainCanvas = props => {
         return new THREE.Vector2()
     })
 
-    // useEffect(() => {
-    //     setBoxRef(props.boxRef.current)
-    // }, [props.boxRef])
+    useEffect(() => {
+        setBioRef(props.bioRef.current)
+    }, [props.boxRef])
 
     // useEffect(() => {
     //     setPyramidRef(props.pyramidRef.current)
@@ -47,7 +47,7 @@ const MainCanvas = props => {
                     // position={[0, 0, 0]}
                     scrollPos={props.scrollPos}
                     bodyRef={bodyRef}
-                    // boxRef={boxRef}
+                    bioRef={bioRef}
                     // pyramidRef={pyramidRef}
                 />
                 {/* <Effects /> */}

@@ -24,16 +24,48 @@ uniform sampler2D u_texture;
 varying vec2 v_uv;
 varying vec3 v_position;
 
-void main()
-{
+vec2 random2( vec2 p ) {
+    return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453);
+}
 
-    vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+void main() {
+    vec2 st = gl_FragCoord.xy/u_resolution.xy;
+    st.x *= u_resolution.x/u_resolution.y;
+    vec3 color = vec3(.125);
 
-    float dist = length(uv - vec2(.5));
+    // // Scale
+    // st *= 5.;
 
-    vec3 bg = mix(vec3(0.2), vec3(0.12), dist);
+    // // Tile the space
+    // vec2 i_st = floor(st);
+    // vec2 f_st = fract(st);
 
-    gl_FragColor = vec4(.125, .125, .125, 1.);
+    // float m_dist = 1.;  // minimum distance
+    // for (int j= -1; j <= 1; j++ ) {
+    //     for (int i= -1; i <= 1; i++ ) {
+    //         // Neighbor place in the grid
+    //         vec2 neighbor = vec2(float(i),float(j));
 
+    //         // Random position from current + neighbor place in the grid
+    //         vec2 offset = random2(i_st + neighbor);
+
+    //         // Animate the offset
+    //         offset = 0.5 + 0.5*sin(u_time + 6.2831*offset);
+
+    //         // Position of the cell
+    //         vec2 pos = neighbor + offset - f_st;
+
+    //         // Cell distance
+    //         float dist = length(pos);
+
+    //         // Metaball it!
+    //         m_dist = min(m_dist, m_dist*dist);
+    //     }
+    // }
+
+    // // Draw cells
+    // color += 1. - step(0.060, m_dist) - .99;
+
+    gl_FragColor = vec4(color,1.0);
 }
 `

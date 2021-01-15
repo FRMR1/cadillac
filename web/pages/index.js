@@ -16,7 +16,7 @@ const Home = props => {
                     <h3>
                         New Album <span className={styles.gold}>El Dorado</span>
                     </h3>
-                    <p>Out Now On</p>
+                    <p>Listen Now On</p>
                     <Image src="/svg/spotify.svg" width={180} height={50} />
                 </div>
                 <div className={styles.image}>

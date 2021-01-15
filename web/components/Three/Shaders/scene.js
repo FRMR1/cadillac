@@ -149,7 +149,7 @@ void main() {
     float diff = abs(dot(v_normal, normalize(vec3(1., 1., 0.)))) + abs(dot(v_normal, normalize(vec3(1., -1., 0.))));
     diff *= .5;
     
-    float noise = cnoise(v_position) + sin(u_time / 5.) / 2.7 + .7;
+    float noise = cnoise(v_position) + sin(u_time / 5.) / 3.9 + .9;
     float step = smoothstep(0.4, 0.39, noise);
     vec4 col = vec4(diff, diff, diff, 1.);
     
