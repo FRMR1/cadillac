@@ -109,7 +109,7 @@ const Background = props => {
     })
 
     const handleScrollPos = scrollPos => {
-        let pos = scrollPos ? scrollPos / 60 + 8 : 8
+        let pos = scrollPos ? scrollPos / 40 + 4 : 4
         return pos > 15 ? 15 : pos
     }
 

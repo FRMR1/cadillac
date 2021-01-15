@@ -21,10 +21,8 @@ const Reaper = props => {
     const group = useRef()
     const obj = useLoader(OBJLoader, "/assets/skull.obj")
 
-    obj.children.splice(0, 1)
-    obj.children.splice(1, 1)
-
-    console.log("OBJ", obj)
+    // obj.children.splice(0, 1)
+    // obj.children.splice(1, 1)
 
     const uniforms = useMemo(
         () => ({
@@ -66,9 +64,9 @@ const Reaper = props => {
         state.camera.position.z = 48
         state.camera.position.y = 12
         // obj.rotation.z = obj.rotation.z += 0.01
-        obj.rotation.x = Math.PI / 0.62
-        // obj.rotation.x += (props.pointer.y / 20) * -1
-        // obj.rotation.z = props.pointer.x / 5
+        obj.rotation.x = Math.PI / 0.64
+        obj.rotation.x += (props.pointer.y / 40) * -1
+        obj.rotation.z = props.pointer.x / 10
     })
 
     return <primitive object={obj} />

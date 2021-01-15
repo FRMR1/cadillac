@@ -2,23 +2,32 @@ import client from "../client"
 import styles from "../styles/Home.module.scss"
 
 const News = props => {
-    const shows = Object.values(props)
+    const posts = Object.values(props.posts)
 
     return (
-        <div className={styles.newsContainer}>
-            <h2>News</h2>
-        </div>
+        <>
+            {posts.map(post => (
+                <div className={styles.newsContainer}>
+                    <h3 key={post.slug}>{post.title}</h3>
+                    <span>{post.publishedAt}</span>
+                    <div className={styles.postBody}>
+                        {post.body.map(p => (
+                            <p>{p.children[0].text}</p>
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </>
     )
 }
 
-News.getInitialProps = async function (context) {
-    const { show = "" } = context.query
-    return await client.fetch(
-        `
-    *[_type == "show"] | order(date desc){date, venue, city}
-  `,
-        { show }
-    )
+const postsQuery = `*[_type == "post"] | order(publishedAt desc){title, slug, publishedAt, body}`
+
+export const getStaticProps = async () => {
+    const posts = await client.fetch(postsQuery)
+    return {
+        props: { posts }, // will be passed to the page component as props
+    }
 }
 
 export default News

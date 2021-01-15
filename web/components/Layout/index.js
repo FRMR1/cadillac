@@ -9,6 +9,9 @@ import Image from "next/image"
 const Layout = props => {
     const bodyRef = useRef()
 
+    const date = new Date()
+    const year = date.getFullYear()
+
     return (
         <div ref={bodyRef} className={styles.container}>
             <Head>
@@ -22,12 +25,17 @@ const Layout = props => {
             <div id="bottom"></div>
             <div className={styles.navContainer}>
                 <div className={styles.logo}>
-                    <Image src="/svg/logo.svg" width={210} height={43} />
+                    <Link href="/">
+                        <a>
+                            <Image
+                                src="/svg/logo.svg"
+                                width={210}
+                                height={43}
+                            />
+                        </a>
+                    </Link>
                 </div>
                 <div className={styles.nav}>
-                    <Link href="/">
-                        <a>Home</a>
-                    </Link>
                     <Link href="/news">
                         <a>News</a>
                     </Link>
@@ -44,8 +52,13 @@ const Layout = props => {
                 // pyramidRef={pyramidRef}
                 bodyRef={bodyRef}
             />
-
             <main className={styles.main}>{props.children}</main>
+            <footer>
+                <Image src="/svg/logo.svg" width={210} height={43} />
+                <span className={styles.copyright}>
+                    ©{year} Cadillac. All Rights Reserved.
+                </span>
+            </footer>
         </div>
     )
 }
