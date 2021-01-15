@@ -1,4 +1,5 @@
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
+import { connect } from "react-redux"
 import Head from "next/head"
 import Link from "next/link"
 import MainCanvas from "../../components/Three/Canvas"
@@ -47,11 +48,7 @@ const Layout = props => {
                     </Link>
                 </div>
             </div>
-            <MainCanvas
-                // boxRef={boxRef}
-                // pyramidRef={pyramidRef}
-                bodyRef={bodyRef}
-            />
+            <MainCanvas bodyRef={bodyRef} bioRef={props.bioRef} />
             <main className={styles.main}>{props.children}</main>
             <footer>
                 <Image src="/svg/logo.svg" width={210} height={43} />
@@ -73,4 +70,8 @@ Layout.getInitialProps = async function (context) {
     )
 }
 
-export default Layout
+const mapStateToProps = state => {
+    return { bioRef: state.bioRef }
+}
+
+export default connect(mapStateToProps)(Layout)

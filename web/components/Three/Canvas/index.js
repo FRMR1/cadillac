@@ -20,13 +20,9 @@ const MainCanvas = props => {
         return new THREE.Vector2()
     })
 
-    useEffect(() => {
-        setBioRef(props.bioRef.current)
-    }, [props.boxRef])
-
     // useEffect(() => {
-    //     setPyramidRef(props.pyramidRef.current)
-    // }, [props.pyramidRef])
+    //     setBioRef(props.bioRef.current)
+    // }, [props.boxRef])
 
     useEffect(() => {
         setBodyRef(props.bodyRef.current)
@@ -44,11 +40,9 @@ const MainCanvas = props => {
                 {/* <OrbitControls /> */}
                 <Reaper pointer={pointer} />
                 <Background
-                    // position={[0, 0, 0]}
                     scrollPos={props.scrollPos}
                     bodyRef={bodyRef}
-                    bioRef={bioRef}
-                    // pyramidRef={pyramidRef}
+                    bioRef={props.bioRef}
                 />
                 {/* <Effects /> */}
             </Suspense>

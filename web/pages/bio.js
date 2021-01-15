@@ -1,8 +1,16 @@
+import React, { useRef, useState, useEffect } from "react"
+import { connect } from "react-redux"
 import Link from "next/link"
 import Image from "next/image"
 import styles from "../styles/Home.module.scss"
 
 const Bio = props => {
+    const ref = useRef()
+
+    useEffect(() => {
+        props.setBioRef(ref)
+    }, [ref])
+
     return (
         <div className={styles.bioContainer}>
             <h2>WE. ARE. CADILLAC.</h2>
@@ -30,8 +38,15 @@ const Bio = props => {
                 it up for the band goddamnit!
             </p>
             <p>We are Cadillac, and we’re here to play rock n roll.</p>
+            <div ref={ref} className={styles.bioImage}></div>
         </div>
     )
 }
 
-export default Bio
+const mapDispatchToProps = dispatch => {
+    return {
+        setBioRef: bioRef => dispatch({ type: "SET_BIO_REF", value: bioRef }),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Bio)

@@ -1,4 +1,5 @@
-import { useMemo, useRef } from "react"
+import { useMemo, useRef, useContext } from "react"
+import { connect } from "react-redux"
 import { useFrame, useThree, createPortal } from "react-three-fiber"
 import { frag, vert } from "../Shaders/quad"
 import Scene from "../Scene"
@@ -6,7 +7,7 @@ import Scene2 from "../Scene2"
 import * as THREE from "three"
 
 const Quad = props => {
-    const domEl = props.domEl
+    const domEl = props.bioRef.current
 
     const planeRef = useRef()
 
@@ -114,10 +115,7 @@ const Quad = props => {
 
     return (
         <>
-            {createPortal(
-                <Scene boxRef={props.boxRef} pyramidRef={props.pyramidRef} />,
-                scene
-            )}
+            {/* {createPortal(<Scene />, scene)} */}
             <mesh ref={planeRef}>
                 <planeBufferGeometry
                     args={[camUnit.width, camUnit.height, 1, 1]}

@@ -139,8 +139,7 @@ const Background = props => {
                     fragmentShader={frag}
                 />
             </mesh>
-            {/* <Quad domEl={props.boxRef} />
-            <Quad domEl={props.pyramidRef} /> */}
+            <Quad bioRef={props.bioRef} />
         </>
     )
 }
