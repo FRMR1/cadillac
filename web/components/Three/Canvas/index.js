@@ -12,17 +12,12 @@ import styles from "../../../styles/Canvas.module.scss"
 
 const MainCanvas = props => {
     const [bioRef, setBioRef] = useState()
-    // const [pyramidRef, setPyramidRef] = useState()
     const [bodyRef, setBodyRef] = useState()
     const [scroll, setScroll] = useState()
 
     const pointer = useMemo(() => {
         return new THREE.Vector2()
     })
-
-    // useEffect(() => {
-    //     setBioRef(props.bioRef.current)
-    // }, [props.boxRef])
 
     useEffect(() => {
         setBodyRef(props.bodyRef.current)

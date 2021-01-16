@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useRef, useMemo } from "react"
 import { Canvas, useLoader, useThree, useFrame } from "react-three-fiber"
-import { frag, vert } from "../Shaders/scene"
+import { frag, vert } from "../Shaders/reaper"
 import * as THREE from "three"
 
 const Reaper = props => {

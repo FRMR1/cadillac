@@ -9,6 +9,8 @@ import * as THREE from "three"
 const Quad = props => {
     const domEl = props.bioRef.current
 
+    console.log(domEl)
+
     const planeRef = useRef()
 
     const windowWidth = window.innerWidth
@@ -49,7 +51,7 @@ const Quad = props => {
 
     const calculateUnitSize = zDistance => {
         const fov = 75 // default camera value
-        const cameraZ = 5 // default camera value
+        const cameraZ = 10 // default camera value
 
         const vFov = (fov * Math.PI) / 180
 
@@ -59,7 +61,7 @@ const Quad = props => {
         return { width, height }
     }
 
-    const camUnit = calculateUnitSize(0) // element's z-index === 0
+    const camUnit = calculateUnitSize(50) // element's z-index === 0
 
     const getRenderSize = el => {
         const {
@@ -96,8 +98,8 @@ const Quad = props => {
             (left / windowWidth) * camUnit.width +
             (camUnit.width * planeRef.current.scale.x) / 2
         planeRef.current.position.y -=
-            ((top - scrollY) / windowHeight) * camUnit.height +
-            (camUnit.height * planeRef.current.scale.y) / 2
+            -1 * ((top - scrollY) / windowHeight) * camUnit.height +
+            camUnit.height * planeRef.current.scale.y
     }
 
     useFrame((state, delta) => {
@@ -105,6 +107,7 @@ const Quad = props => {
 
         planeRef.current.scale.x = scaleX
         planeRef.current.scale.y = scaleY
+        planeRef.current.position.z = 20
 
         updateRenderPosition(domEl, 0)
 
@@ -115,7 +118,7 @@ const Quad = props => {
 
     return (
         <>
-            {/* {createPortal(<Scene />, scene)} */}
+            {createPortal(<Scene />, scene)}
             <mesh ref={planeRef}>
                 <planeBufferGeometry
                     args={[camUnit.width, camUnit.height, 1, 1]}

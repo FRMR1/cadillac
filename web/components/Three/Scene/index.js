@@ -1,6 +1,7 @@
 import { useMemo, useRef, useEffect } from "react"
-import { useFrame, useThree } from "react-three-fiber"
-import { frag, vert } from "../Shaders/scene"
+import { useFrame, useThree, useLoader } from "react-three-fiber"
+import { frag, vert } from "../Shaders/bio"
+import cadillac from "../../../public/jpg/cadillac.jpg"
 import * as THREE from "three"
 
 const Scene = props => {
@@ -25,6 +26,8 @@ const Scene = props => {
         return [scene, target]
     }, [])
 
+    const txt = useLoader(THREE.TextureLoader, "/jpg/cadillac.jpg")
+
     const uniforms = useMemo(
         () => ({
             u_time: { value: 0.0 },
@@ -34,7 +37,7 @@ const Scene = props => {
                 value: aspect,
             },
             u_texture: {
-                value: target.texture,
+                value: txt,
             },
         }),
         []
@@ -42,7 +45,7 @@ const Scene = props => {
 
     const calculateUnitSize = zDistance => {
         const fov = 75 // default camera value
-        const cameraZ = 5 // default camera value
+        const cameraZ = 65 // default camera value
 
         const vFov = (fov * Math.PI) / 180
 
