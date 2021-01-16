@@ -139,7 +139,7 @@ const Background = props => {
                     fragmentShader={frag}
                 />
             </mesh>
-            <Quad bioRef={props.bioRef} />
+            <Quad bioRef={props.bioRef} pointer={props.pointer} />
         </>
     )
 }

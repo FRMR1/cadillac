@@ -38,6 +38,7 @@ const MainCanvas = props => {
                     scrollPos={props.scrollPos}
                     bodyRef={bodyRef}
                     bioRef={props.bioRef}
+                    pointer={pointer}
                 />
                 {/* <Effects /> */}
             </Suspense>

@@ -22,16 +22,25 @@ precision mediump float;
 uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 uniform float u_time;
+uniform sampler2D u_image;
 uniform sampler2D u_texture;
 varying vec2 v_uv;
 
 void main() {
 
     vec2 uv = gl_FragCoord.xy/u_resolution.xy;
+    vec2 dispUV = vec2(uv.x, uv.y);
 
-    vec4 col = texture2D(u_texture, v_uv);
+    dispUV = vec2(1.) - dispUV;
     
-    //final color
+    vec4 disp = texture2D(u_texture, dispUV);
+    
+    dispUV.y = mix(dispUV.y, disp.r - .2, u_mouse.y);
+    
+    vec4 img = texture2D(u_image, dispUV);
+    
+    vec4 col = img;
+    
     gl_FragColor = col;
 
 }

@@ -9,8 +9,6 @@ import * as THREE from "three"
 const Quad = props => {
     const domEl = props.bioRef.current
 
-    console.log(domEl)
-
     const planeRef = useRef()
 
     const windowWidth = window.innerWidth
@@ -51,7 +49,7 @@ const Quad = props => {
 
     const calculateUnitSize = zDistance => {
         const fov = 75 // default camera value
-        const cameraZ = 10 // default camera value
+        const cameraZ = 15 // default camera value
 
         const vFov = (fov * Math.PI) / 180
 
@@ -118,7 +116,7 @@ const Quad = props => {
 
     return (
         <>
-            {createPortal(<Scene />, scene)}
+            {createPortal(<Scene pointer={props.pointer} />, scene)}
             <mesh ref={planeRef}>
                 <planeBufferGeometry
                     args={[camUnit.width, camUnit.height, 1, 1]}

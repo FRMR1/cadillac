@@ -121,8 +121,11 @@ $white: #eee;
 }
 
 .bioImage {
-    width: 400px;
+    width: 500px;
     height: 300px;
+    margin: 0 auto;
+    position: relative;
+    top: -280px;
 }
 
 .newsContainer {

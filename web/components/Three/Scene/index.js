@@ -1,7 +1,6 @@
 import { useMemo, useRef, useEffect } from "react"
 import { useFrame, useThree, useLoader } from "react-three-fiber"
 import { frag, vert } from "../Shaders/bio"
-import cadillac from "../../../public/jpg/cadillac.jpg"
 import * as THREE from "three"
 
 const Scene = props => {
@@ -26,15 +25,19 @@ const Scene = props => {
         return [scene, target]
     }, [])
 
-    const txt = useLoader(THREE.TextureLoader, "/jpg/cadillac.jpg")
+    const img = useLoader(THREE.TextureLoader, "/jpg/cadillac.jpg")
+    const txt = useLoader(THREE.TextureLoader, "/jpg/texture.jpg")
 
     const uniforms = useMemo(
         () => ({
             u_time: { value: 0.0 },
-            u_mouse: { value: new THREE.Vector2() },
+            u_mouse: { value: props.pointer },
             u_resolution: { value: { x: windowWidth, y: windowHeight } },
             u_ratio: {
                 value: aspect,
+            },
+            u_image: {
+                value: img,
             },
             u_texture: {
                 value: txt,
@@ -58,6 +61,8 @@ const Scene = props => {
     const camUnit = calculateUnitSize(0) // element's z-index === 0
 
     useFrame((state, delta) => {
+        uniforms.u_time.value += delta
+
         state.gl.setRenderTarget(target)
         state.gl.render(scene, state.camera)
         state.gl.setRenderTarget(null)
