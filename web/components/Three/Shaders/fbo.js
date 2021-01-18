@@ -10,7 +10,11 @@ void main() {
     v_uv = uv;
     v_position = position;
     v_normal = normal;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+
+    v_position.y += sin(3.1415926 * uv.x * 5.) / 4.;
+    v_position.x += sin(3.1415926 * uv.y * 3.) / 4.;
+
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(v_position, 1.0);
 }
 `
 
@@ -27,9 +31,9 @@ varying vec2 v_uv;
 
 void main() {
 
-    vec2 uv = gl_FragCoord.xy/u_resolution.xy;
+    vec2 uv = v_uv;
 
-    vec4 col = texture2D(u_texture, v_uv);
+    vec4 col = texture2D(u_texture, uv);
     
     //final color
     gl_FragColor = col;

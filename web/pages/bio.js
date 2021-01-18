@@ -17,7 +17,7 @@ const Bio = props => {
 
     return (
         <div className={styles.bioContainer}>
-            <h2>WE. ARE. CADILLAC.</h2>
+            <h2>We are Cadillac.</h2>
             <p>
                 Twenty-first century rock n roll you could fall in love, or have
                 your heart broken to. Either way, a stiff drink and some natural

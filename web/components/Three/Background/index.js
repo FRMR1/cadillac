@@ -95,7 +95,7 @@ const Background = props => {
             (camUnit.width * planeRef.current.scale.x) / 2
         planeRef.current.position.y -=
             ((top - scrollY) / windowHeight / 2) * camUnit.height +
-            (camUnit.height * planeRef.current.scale.y) / 2
+            camUnit.height * planeRef.current.scale.y
     }
 
     const [scroll, setScroll] = useState()

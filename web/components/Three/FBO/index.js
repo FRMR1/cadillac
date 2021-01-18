@@ -1,13 +1,16 @@
-import { useMemo, useRef, useContext } from "react"
-import { connect } from "react-redux"
+import { useMemo, useRef } from "react"
 import { useFrame, useThree, createPortal } from "react-three-fiber"
-import { frag, vert } from "../Shaders/quad"
+import { frag, vert } from "../Shaders/fbo"
 import BioImage from "../BioImage"
 import * as THREE from "three"
 
-const Quad = props => {
+const FBO = props => {
     const domEl = props.bioRef.current
     const planeRef = useRef()
+
+    const { camera } = useThree()
+
+    console.log(camera)
 
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
@@ -46,7 +49,7 @@ const Quad = props => {
 
     const calculateUnitSize = zDistance => {
         const fov = 75 // default camera value
-        const cameraZ = 15 // default camera value
+        const cameraZ = 23 // default camera value
 
         const vFov = (fov * Math.PI) / 180
 
@@ -94,7 +97,8 @@ const Quad = props => {
             (camUnit.width * planeRef.current.scale.x) / 2
         planeRef.current.position.y -=
             -1 * ((top - scrollY) / windowHeight) * camUnit.height +
-            camUnit.height * planeRef.current.scale.y
+            camUnit.height * planeRef.current.scale.y -
+            15
     }
 
     useFrame((state, delta) => {
@@ -103,6 +107,8 @@ const Quad = props => {
         planeRef.current.scale.x = scaleX
         planeRef.current.scale.y = scaleY
         planeRef.current.position.z = 20
+
+        // planeRef.current.material.wireframe = true
 
         updateRenderPosition(domEl, 0)
 
@@ -116,7 +122,7 @@ const Quad = props => {
             {createPortal(<BioImage pointer={props.pointer} />, scene)}
             <mesh ref={planeRef}>
                 <planeBufferGeometry
-                    args={[camUnit.width, camUnit.height, 1, 1]}
+                    args={[camUnit.width, camUnit.height, 30, 20]}
                 />
                 <shaderMaterial
                     uniforms={uniforms}
@@ -128,4 +134,4 @@ const Quad = props => {
     )
 }
 
-export default Quad
+export default FBO
