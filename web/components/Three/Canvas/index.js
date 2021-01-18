@@ -2,6 +2,7 @@ import { Suspense, useEffect, useState, useMemo } from "react"
 import * as THREE from "three"
 import { Canvas } from "react-three-fiber"
 import Background from "../Background"
+import dynamic from "next/dynamic"
 import Skull from "../Skull"
 import Effects from "../Effects"
 import styles from "../../../styles/Canvas.module.scss"
@@ -24,6 +25,10 @@ const MainCanvas = props => {
         pointer.x = (e.clientX / window.innerWidth) * 2 - 1
         pointer.y = -(e.clientY / window.innerHeight) * 2 + 1
     }
+
+    // const OrbitControls = dynamic(() =>
+    //     import("drei").then(drei => drei.OrbitControls)
+    // )
 
     return (
         <Canvas onPointerMove={pointerMove} className={styles.canvas}>
