@@ -1,5 +1,6 @@
 const initialState = {
     bioRef: {},
+    route: {},
 }
 
 const reducer = (state = initialState, action) => {
@@ -8,6 +9,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 bioRef: action.value,
+            }
+        case "SET_CURRENT_ROUTE":
+            return {
+                ...state,
+                route: action.value,
             }
         default:
             return state

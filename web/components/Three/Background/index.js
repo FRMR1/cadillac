@@ -8,6 +8,12 @@ const Background = props => {
     const domEl = props.bodyRef
     const planeRef = useRef()
 
+    const [route, setRoute] = useState()
+
+    useEffect(() => {
+        setRoute(props.route)
+    }, [])
+
     const { gl, camera } = useThree()
 
     const windowWidth = window.innerWidth
@@ -139,7 +145,9 @@ const Background = props => {
                     fragmentShader={frag}
                 />
             </mesh>
-            <Quad bioRef={props.bioRef} pointer={props.pointer} />
+            {props.route === "/bio" && (
+                <Quad bioRef={props.bioRef} pointer={props.pointer} />
+            )}
         </>
     )
 }

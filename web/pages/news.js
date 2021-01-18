@@ -1,7 +1,12 @@
+import { connect } from "react-redux"
+import { useRouter } from "next/router"
 import client from "../client"
 import styles from "../styles/Home.module.scss"
 
 const News = props => {
+    const { route } = useRouter()
+    props.setRoute(route)
+
     const posts = Object.values(props.posts)
 
     return (
@@ -30,4 +35,11 @@ export const getStaticProps = async () => {
     }
 }
 
-export default News
+const mapDispatchToProps = dispatch => {
+    return {
+        setRoute: route =>
+            dispatch({ type: "SET_CURRENT_ROUTE", value: route }),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(News)

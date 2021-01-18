@@ -10,6 +10,8 @@ import Image from "next/image"
 const Layout = props => {
     const bodyRef = useRef()
 
+    console.log("route", props.route)
+
     const date = new Date()
     const year = date.getFullYear()
 
@@ -48,7 +50,11 @@ const Layout = props => {
                     </Link>
                 </div>
             </div>
-            <MainCanvas bodyRef={bodyRef} bioRef={props.bioRef} />
+            <MainCanvas
+                bodyRef={bodyRef}
+                bioRef={props.bioRef}
+                route={props.route}
+            />
             <main className={styles.main}>{props.children}</main>
             <footer>
                 <Image src="/svg/logo.svg" width={210} height={43} />
@@ -71,7 +77,7 @@ Layout.getInitialProps = async function (context) {
 }
 
 const mapStateToProps = state => {
-    return { bioRef: state.bioRef }
+    return { bioRef: state.bioRef, route: state.route }
 }
 
 export default connect(mapStateToProps)(Layout)

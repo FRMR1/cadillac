@@ -1,13 +1,18 @@
+import { connect } from "react-redux"
 import client from "../client"
 import Link from "next/link"
 import Shows from "../components/Home/Shows"
 import News from "../components/Home/News"
 import Image from "next/image"
 import styles from "../styles/Home.module.scss"
+import { useRouter } from "next/router"
 
 const Home = props => {
     const shows = Object.values(props.shows)
     const posts = Object.values(props.posts)
+
+    const { route } = useRouter()
+    props.setRoute(route)
 
     return (
         <>
@@ -49,4 +54,11 @@ export const getStaticProps = async () => {
     }
 }
 
-export default Home
+const mapDispatchToProps = dispatch => {
+    return {
+        setRoute: route =>
+            dispatch({ type: "SET_CURRENT_ROUTE", value: route }),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Home)

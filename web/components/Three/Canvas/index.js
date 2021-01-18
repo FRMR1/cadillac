@@ -39,6 +39,7 @@ const MainCanvas = props => {
                     bodyRef={bodyRef}
                     bioRef={props.bioRef}
                     pointer={pointer}
+                    route={props.route}
                 />
                 {/* <Effects /> */}
             </Suspense>

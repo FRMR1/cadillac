@@ -1,11 +1,15 @@
 import React, { useRef, useState, useEffect } from "react"
 import { connect } from "react-redux"
+import { useRouter } from "next/router"
 import Link from "next/link"
 import Image from "next/image"
 import styles from "../styles/Home.module.scss"
 
 const Bio = props => {
     const ref = useRef()
+
+    const { route } = useRouter()
+    props.setRoute(route)
 
     useEffect(() => {
         props.setBioRef(ref)
@@ -46,6 +50,8 @@ const Bio = props => {
 const mapDispatchToProps = dispatch => {
     return {
         setBioRef: bioRef => dispatch({ type: "SET_BIO_REF", value: bioRef }),
+        setRoute: route =>
+            dispatch({ type: "SET_CURRENT_ROUTE", value: route }),
     }
 }
 
