@@ -1,18 +1,12 @@
 import { useMemo, useRef, useState, useEffect } from "react"
 import { useFrame, useThree } from "react-three-fiber"
-import Quad from "../Quad"
+import FBO from "../FBO"
 import { frag, vert } from "../Shaders/bg"
 import * as THREE from "three"
 
 const Background = props => {
     const domEl = props.bodyRef
     const planeRef = useRef()
-
-    const [route, setRoute] = useState()
-
-    useEffect(() => {
-        setRoute(props.route)
-    }, [])
 
     const { gl, camera } = useThree()
 
@@ -146,7 +140,7 @@ const Background = props => {
                 />
             </mesh>
             {props.route === "/bio" && (
-                <Quad bioRef={props.bioRef} pointer={props.pointer} />
+                <FBO bioRef={props.bioRef} pointer={props.pointer} />
             )}
         </>
     )

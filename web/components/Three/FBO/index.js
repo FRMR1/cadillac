@@ -2,18 +2,15 @@ import { useMemo, useRef, useContext } from "react"
 import { connect } from "react-redux"
 import { useFrame, useThree, createPortal } from "react-three-fiber"
 import { frag, vert } from "../Shaders/quad"
-import Scene from "../Scene"
-import Scene2 from "../Scene2"
+import BioImage from "../BioImage"
 import * as THREE from "three"
 
 const Quad = props => {
     const domEl = props.bioRef.current
-
     const planeRef = useRef()
 
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
-
     const aspect = windowWidth / windowHeight
 
     const [scene, target] = useMemo(() => {
@@ -116,7 +113,7 @@ const Quad = props => {
 
     return (
         <>
-            {createPortal(<Scene pointer={props.pointer} />, scene)}
+            {createPortal(<BioImage pointer={props.pointer} />, scene)}
             <mesh ref={planeRef}>
                 <planeBufferGeometry
                     args={[camUnit.width, camUnit.height, 1, 1]}

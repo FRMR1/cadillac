@@ -1,12 +1,8 @@
 import { Suspense, useEffect, useState, useMemo } from "react"
 import * as THREE from "three"
 import { Canvas } from "react-three-fiber"
-import Scene from "../Scene"
-import Scene2 from "../Scene2"
 import Background from "../Background"
-import Quad from "../Quad"
-import Reaper from "../Reaper"
-import Ground from "../Ground"
+import Skull from "../Skull"
 import Effects from "../Effects"
 import styles from "../../../styles/Canvas.module.scss"
 
@@ -33,7 +29,7 @@ const MainCanvas = props => {
         <Canvas onPointerMove={pointerMove} className={styles.canvas}>
             <Suspense fallback={null}>
                 {/* <OrbitControls /> */}
-                <Reaper pointer={pointer} />
+                <Skull pointer={pointer} />
                 <Background
                     scrollPos={props.scrollPos}
                     bodyRef={bodyRef}

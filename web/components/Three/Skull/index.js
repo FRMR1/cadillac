@@ -7,7 +7,7 @@ import * as THREE from "three"
 
 let OBJLoader
 
-const Reaper = props => {
+const Skull = props => {
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
     const aspect = windowWidth / windowHeight
@@ -72,4 +72,4 @@ const Reaper = props => {
     return <primitive object={obj} />
 }
 
-export default Reaper
+export default Skull
