@@ -14,8 +14,8 @@ const Skull = props => {
 
     const { gl, scene } = useThree()
 
-    const txt = useLoader(THREE.TextureLoader, "/assets/texture.png")
-    const txt2 = useLoader(THREE.TextureLoader, "/assets/texture2.jpg")
+    const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
+    const txt2 = useLoader(THREE.TextureLoader, "/assets/texture2.png")
 
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
     const group = useRef()

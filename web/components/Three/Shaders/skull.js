@@ -149,18 +149,19 @@ void main() {
     float diff = abs(dot(v_normal, normalize(vec3(1., 1., 0.)))) + abs(dot(v_normal, normalize(vec3(1., -1., 0.))));
     diff *= .5;
     
-    float noise = cnoise(v_position) + sin(u_time / 5.) / 3.9 + .9;
+    float noise = cnoise(v_position) + sin(u_time / 5.) / 2.7 + .9;
     float step = smoothstep(0.4, 0.39, noise);
     vec4 col = vec4(diff, diff, diff, 1.);
     
     vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time /3.));
     vec4 txt = texture2D(u_texture, v_n);
-    vec4 txt2 = vec4(animatedColor, 1.);
+    vec4 txt2 = texture2D(u_texture2, v_n);
+    // vec4 txt2 = vec4(animatedColor, 1.);
     
     vec4 color = mix(txt, txt2, step);
     vec4 bg = vec4(0.02, 0.02, 0.02, 1.);
 
-    float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.6, 1., u_mouse.y * -.6)), v_normal), (sin(u_time*20.) + 1.) / 30. + .8);
+    float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.5, 1., u_mouse.y * -.5)), v_normal), (sin(u_time*20.) + 1.) / 30. + 1.4);
 
 
     vec4 final = mix(color, bg, fresnel);

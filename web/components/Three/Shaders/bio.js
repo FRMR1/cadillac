@@ -37,11 +37,11 @@ void main() {
     
     vec4 disp = texture2D(u_texture, dispUV);
     
-    dispUV.y = mix(dispUV.y, disp.r - .2, sin(u_time / 1.5) / 50.);
-    dispUV.x = mix(dispUV.x, disp.g - .3, sin(u_time / 1.6) / 50.);
+    dispUV.y = mix(dispUV.y, disp.r - .2, sin(u_time / 1.5) / 40.);
+    dispUV.x = mix(dispUV.x, disp.g - .3, sin(u_time / 1.6) / 40.);
 
-    dispUV.y += sin(u_time / 1.1) / 100.;
-    dispUV.x += cos(u_time / 1.2) / 100.;
+    dispUV.y += sin(u_time / 1.5) / 100.;
+    dispUV.x += cos(u_time / 1.6) / 100.;
     
     vec4 img = texture2D(u_image, dispUV);
     
