@@ -21,9 +21,6 @@ const Skull = props => {
     const group = useRef()
     const obj = useLoader(OBJLoader, "/assets/skull.obj")
 
-    // obj.children.splice(0, 1)
-    // obj.children.splice(1, 1)
-
     const uniforms = useMemo(
         () => ({
             u_time: { value: 0.0 },
