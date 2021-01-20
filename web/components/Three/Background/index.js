@@ -94,7 +94,7 @@ const Background = props => {
             (left / windowWidth) * camUnit.width +
             (camUnit.width * planeRef.current.scale.x) / 2
         planeRef.current.position.y -=
-            ((top - scrollY) / windowHeight / 2) * camUnit.height +
+            ((top - scrollY) / windowHeight / 10) * camUnit.height +
             camUnit.height * planeRef.current.scale.y
     }
 

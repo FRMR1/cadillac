@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useRef, useMemo } from "react"
-// import texture from "../../../public/assets/texture.png"
 import { Canvas, useLoader, useThree, useFrame } from "react-three-fiber"
+import gsap from "gsap"
 import { frag, vert } from "../Shaders/skull"
 
 import * as THREE from "three"
@@ -53,6 +53,22 @@ const Skull = props => {
         obj.children[i].material = material
     }
 
+    const animateX = e => {
+        gsap.to(e, {
+            duration: 1,
+            z: props.pointer.x / 10,
+            ease: "inout",
+        })
+    }
+
+    const animateY = e => {
+        gsap.to(e, {
+            duration: 1,
+            x: Math.PI / 0.64 + (props.pointer.y / 20) * -1,
+            ease: "inout",
+        })
+    }
+
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
         uniforms.u_mouse.value.x = props.pointer.x
@@ -60,10 +76,12 @@ const Skull = props => {
         state.camera.position.x = 0
         state.camera.position.z = 48
         state.camera.position.y = 12
+        // obj.rotation.x = Math.PI / 0.64
         // obj.rotation.z = obj.rotation.z += 0.01
-        obj.rotation.x = Math.PI / 0.64
-        obj.rotation.x += (props.pointer.y / 40) * -1
-        obj.rotation.z = props.pointer.x / 10
+        // obj.rotation.x += (props.pointer.y / 40) * -1
+        // obj.rotation.z = props.pointer.x / 10
+        animateX(obj.rotation)
+        animateY(obj.rotation)
     })
 
     return <primitive object={obj} />

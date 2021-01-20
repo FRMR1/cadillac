@@ -175,9 +175,14 @@ $white: #eee;
     text-transform: uppercase;
     font-size: 15px;
     border-radius: 4px;
-    background-color: #202020;
+    background-color: rgba(32, 32, 32, 0.5);
+    transition: background-color 0.3s ease-in-out;
     cursor: pointer;
     padding: 15px 40px;
+    &:hover {
+        background-color: rgba(32, 32, 32, 1);
+        transition: background-color 0.3s ease-in-out;
+    }
 }
 
 .margin {
