@@ -63,11 +63,26 @@ float snoise(vec2 v) {
 void main() {
     vec2 st = gl_FragCoord.xy/u_resolution.xy;
     st.x *= u_resolution.x/u_resolution.y;
+    vec2 pos = v_position.xy / vec2(30.);
+    pos.x /= 8.;
+    pos.y *= 5.;
 
-    float noise = snoise(v_position.yx * vec2(cos(u_time * 0.015), sin(u_time * 0.01)) * 0.1) * 3.1415;
-    float step = smoothstep(0.4, 0.39, noise);
 
-    vec3 color = mix(vec3(.17), vec3(.19), step);
+    float DF = 0.0;
+
+    // Add a random position
+    float a = 0.0;
+    vec2 vel = vec2(u_time*.0125);
+    DF += snoise(pos+vel);
+
+    // Add a random position
+    a = snoise(pos*vec2(cos(u_time*0.005),sin(u_time*0.0055))*0.025)*3.1415;
+    vel = vec2(cos(a),sin(a));
+    DF += snoise(pos+vel)*.25+.25;
+
+    vec3 color = vec3( smoothstep(.7,.702,fract(DF)) );
+
+    color = mix(vec3(.17), vec3(.2), color);
 
     gl_FragColor = vec4(color,1.0);
 }
