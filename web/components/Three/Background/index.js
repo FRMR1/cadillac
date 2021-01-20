@@ -98,27 +98,13 @@ const Background = props => {
             camUnit.height * planeRef.current.scale.y
     }
 
-    const [scroll, setScroll] = useState()
-
-    const handleScroll = () => {
-        setScroll(window.pageYOffset)
-    }
-
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll)
-    })
-
-    const handleScrollPos = scrollPos => {
-        let pos = scrollPos ? scrollPos / 40 + 4 : 4
-        return pos > 15 ? 15 : pos
-    }
-
     useFrame((state, delta) => {
         const { scaleX, scaleY } = getRenderSize(domEl)
 
         planeRef.current.scale.x = scaleX
         planeRef.current.scale.y = scaleY
-        planeRef.current.position.z = handleScrollPos(scroll) + 5
+        // planeRef.current.position.z = handleScrollPos(scroll) + 5
+        planeRef.current.position.z = 0
 
         updateRenderPosition(domEl, 0)
 

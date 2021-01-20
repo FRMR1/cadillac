@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef, useMemo } from "react"
+import React, { Suspense, useState, useEffect, useRef, useMemo } from "react"
 import { Canvas, useLoader, useThree, useFrame } from "react-three-fiber"
 import gsap from "gsap"
 import { frag, vert } from "../Shaders/skull"
@@ -69,6 +69,23 @@ const Skull = props => {
         })
     }
 
+    const [scroll, setScroll] = useState()
+
+    const handleScroll = () => {
+        setScroll(window.pageYOffset)
+    }
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll)
+    })
+
+    const handleScrollPos = scrollPos => {
+        let zPos = scrollPos ? scrollPos / 40 : 0
+        let xRot = scrollPos ? scrollPos / 500 : 0
+        let yPos = scrollPos ? scrollPos / 15 : 0
+        return { xRot, zPos, yPos }
+    }
+
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
@@ -82,6 +99,11 @@ const Skull = props => {
         obj.rotation.x = Math.PI / 0.64
         obj.rotation.z = uniforms.u_mouse.value.x / 10
         obj.rotation.x += (uniforms.u_mouse.value.y / 20) * -1
+
+        const { xRot, zPos, yPos } = handleScrollPos(scroll)
+        obj.position.z = zPos
+        obj.position.y = yPos
+        obj.rotation.x += xRot
     })
 
     return <primitive object={obj} />

@@ -9,10 +9,10 @@ const Effects = () => {
     return (
         <>
             <EffectComposer>
-                <Noise opacity={0.001} />
+                <Noise opacity={0.01} />
                 <Vignette
                     offset={0.5} // vignette offset
-                    darkness={0.5} // vignette darkness
+                    darkness={1} // vignette darkness
                     eskil={false} // Eskil's vignette technique
                     blendFunction={BlendFunction.NORMAL} // blend mode
                 />

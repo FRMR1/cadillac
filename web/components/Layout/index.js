@@ -1,16 +1,15 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useEffect } from "react"
 import { connect } from "react-redux"
 import Head from "next/head"
 import Link from "next/link"
 import MainCanvas from "../../components/Three/Canvas"
 import client from "../../client"
-import styles from "../../styles/Home.module.scss"
+import dynamic from "next/dynamic"
 import Image from "next/image"
+import styles from "../../styles/Home.module.scss"
 
 const Layout = props => {
     const bodyRef = useRef()
-
-    console.log("route", props.route)
 
     const date = new Date()
     const year = date.getFullYear()
@@ -21,7 +20,6 @@ const Layout = props => {
                 <title>CADILLAC</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-
             <div id="left"></div>
             <div id="right"></div>
             <div id="top"></div>

@@ -10,8 +10,6 @@ const FBO = props => {
 
     const { camera } = useThree()
 
-    console.log(camera)
-
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
     const aspect = windowWidth / windowHeight
