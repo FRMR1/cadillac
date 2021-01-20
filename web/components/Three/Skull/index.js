@@ -56,7 +56,7 @@ const Skull = props => {
     const animateX = e => {
         gsap.to(e, {
             duration: 1,
-            z: props.pointer.x / 10,
+            x: props.pointer.x,
             ease: "inout",
         })
     }
@@ -64,24 +64,24 @@ const Skull = props => {
     const animateY = e => {
         gsap.to(e, {
             duration: 1,
-            x: Math.PI / 0.64 + (props.pointer.y / 20) * -1,
+            y: props.pointer.y,
             ease: "inout",
         })
     }
 
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
-        uniforms.u_mouse.value.x = props.pointer.x
-        uniforms.u_mouse.value.y = props.pointer.y
+
+        animateX(uniforms.u_mouse.value)
+        animateY(uniforms.u_mouse.value)
+
         state.camera.position.x = 0
         state.camera.position.z = 48
         state.camera.position.y = 12
-        // obj.rotation.x = Math.PI / 0.64
-        // obj.rotation.z = obj.rotation.z += 0.01
-        // obj.rotation.x += (props.pointer.y / 40) * -1
-        // obj.rotation.z = props.pointer.x / 10
-        animateX(obj.rotation)
-        animateY(obj.rotation)
+
+        obj.rotation.x = Math.PI / 0.64
+        obj.rotation.z = uniforms.u_mouse.value.x / 10
+        obj.rotation.x += (uniforms.u_mouse.value.y / 20) * -1
     })
 
     return <primitive object={obj} />

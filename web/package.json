@@ -23,6 +23,7 @@
     "react-three-fiber": "^5.3.10",
     "redux": "^4.0.5",
     "sass": "^1.32.0",
+    "smooth-scrolling": "^2.3.12",
     "three": "^0.124.0"
   }
 }
