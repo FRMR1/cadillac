@@ -53,55 +53,28 @@ const dice = props => {
         obj.children[i].material = material
     }
 
-    // const animateX = e => {
-    //     gsap.to(e, {
-    //         duration: 1,
-    //         x: props.pointer.x,
-    //         ease: "inout",
-    //     })
-    // }
-
-    // const animateY = e => {
-    //     gsap.to(e, {
-    //         duration: 1,
-    //         y: props.pointer.y,
-    //         ease: "inout",
-    //     })
-    // }
-
-    // const [scroll, setScroll] = useState()
-
-    // const handleScroll = () => {
-    //     setScroll(window.pageYOffset)
-    // }
-
-    // useEffect(() => {
-    //     window.addEventListener("scroll", handleScroll)
-    // })
-
-    // const handleScrollPos = scrollPos => {
-    //     let zPos = scrollPos ? scrollPos / 40 : 0
-    //     let xRot = scrollPos ? scrollPos / 500 : 0
-    //     let yPos = scrollPos ? scrollPos / 50 : 0
-    //     return { xRot, zPos, yPos }
-    // }
+    useEffect(() => {
+        const element = obj.position
+        gsap.to(element, {
+            y: () => element.y - 20,
+            ease: "none",
+            scrollTrigger: {
+                trigger: document.body,
+                invalidateOnRefresh: true,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+            },
+        })
+    }, [])
 
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
-        // animateX(uniforms.u_mouse.value)
-        // animateY(uniforms.u_mouse.value)
-
         obj.rotation.y += 0.02
-
-        // const { xRot, zPos, yPos } = handleScrollPos(scroll)
-        obj.position.z = 5
-        obj.position.x = -10
-        obj.position.y = 2
-        // obj.rotation.x += xRot
     })
 
-    return <primitive object={obj} />
+    return <primitive position={[-12, 2, 5]} object={obj} />
 }
 
 export default dice

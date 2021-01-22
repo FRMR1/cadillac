@@ -91,43 +91,55 @@ const Skull = props => {
         })
     }
 
-    const handleScroll = e => {
-        gsap.to(e, {
-            y: 20,
+    useEffect(() => {
+        const element = obj.position
+        gsap.to(element, {
+            y: () => element.y - 50,
             ease: "none",
             scrollTrigger: {
                 trigger: document.body,
+                invalidateOnRefresh: true,
                 start: "top top",
                 end: "bottom bottom",
                 scrub: 1,
             },
         })
-    }
+    }, [])
+
+    useEffect(() => {
+        const element = obj.rotation
+        gsap.to(element, {
+            x: () => element.x + 20,
+            ease: "none",
+            scrollTrigger: {
+                trigger: document.body,
+                invalidateOnRefresh: true,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+            },
+        })
+    }, [])
 
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
         animateX(uniforms.u_mouse.value)
         animateY(uniforms.u_mouse.value)
-        // handleScroll(obj.position.y)
+
+        obj.rotation.x = Math.PI / 0.59
 
         state.camera.position.x = 0
         state.camera.position.z = 50
         state.camera.position.y = 0
 
-        obj.rotation.x = Math.PI / 0.58
         obj.rotation.z = uniforms.u_mouse.value.x / 10
         obj.rotation.x += (uniforms.u_mouse.value.y / 20) * -1
-
-        obj.position.z = -91
-        obj.position.y = 60
-
-        // obj.rotation.x += xRot
-        handleScroll(obj.position)
     })
 
     return (
         <primitive
+            position={[0, 60, -91]}
             onPointerOver={() => animateSetting(uniforms.u_setting)}
             object={obj}
         />

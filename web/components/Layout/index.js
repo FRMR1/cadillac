@@ -29,7 +29,7 @@ const Layout = props => {
         }
 
         ScrollTrigger.addEventListener("refreshInit", setHeight)
-        // router.events.on("routeChangeComplete", setHeight)
+        router.events.on("routeChangeComplete", setHeight)
         router.events.on("routerChangeComplete", console.log("ROUTE COMPLETE"))
 
         gsap.to(element, {
