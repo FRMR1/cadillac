@@ -4,6 +4,7 @@ import { Canvas } from "react-three-fiber"
 import Background from "../Background"
 import dynamic from "next/dynamic"
 import Skull from "../Skull"
+import HeroText from "../Text/HeroText"
 import Dice from "../Dice"
 import Effects from "../Effects"
 import styles from "../../../styles/Canvas.module.scss"
@@ -31,6 +32,7 @@ const MainCanvas = props => {
                 {/* <OrbitControls /> */}
                 <Skull bodyRef={bodyRef} pointer={pointer} />
                 <Dice pointer={pointer} />
+                <HeroText />
                 <Background
                     bodyRef={bodyRef}
                     bioRef={props.bioRef}

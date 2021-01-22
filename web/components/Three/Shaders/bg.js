@@ -82,7 +82,7 @@ void main() {
 
     vec3 color = vec3( smoothstep(.7,.702,fract(DF)) );
 
-    color = mix(vec3(.17), vec3(56./255., 54./255., 49./255.), color);
+    color = mix(vec3(.17), vec3(56./255., 56./255., 56./255.), color);
 
     gl_FragColor = vec4(color,1.0);
 }
