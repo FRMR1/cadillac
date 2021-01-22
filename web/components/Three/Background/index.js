@@ -51,7 +51,7 @@ const Background = props => {
 
     const calculateUnitSize = () => {
         const fov = 75 // default camera value
-        const cameraZ = 15 // default camera value
+        const cameraZ = 95 // default camera value
 
         const vFov = (fov * Math.PI) / 180
 
@@ -107,10 +107,7 @@ const Background = props => {
 
         planeRef.current.scale.x = scaleX
         planeRef.current.scale.y = scaleY
-        planeRef.current.position.z = -50
-
-        // updateRenderPosition(domEl, 0)
-        // handleScroll(planeRef.current.position)
+        planeRef.current.position.z = -80
 
         uniforms.u_time.value += delta
 

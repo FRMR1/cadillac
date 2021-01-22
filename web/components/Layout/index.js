@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import Image from "next/image"
 import Head from "next/head"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import MainCanvas from "../../components/Three/Canvas"
@@ -11,6 +12,7 @@ import styles from "../../styles/Home.module.scss"
 
 const Layout = props => {
     const bodyRef = useRef()
+    const router = useRouter()
 
     gsap.registerPlugin(ScrollTrigger)
 
@@ -18,8 +20,8 @@ const Layout = props => {
     const year = date.getFullYear()
 
     useEffect(() => {
-        const element = bodyRef.current
         let height
+        const element = bodyRef.current
 
         function setHeight() {
             height = element.clientHeight
@@ -27,6 +29,8 @@ const Layout = props => {
         }
 
         ScrollTrigger.addEventListener("refreshInit", setHeight)
+        // router.events.on("routeChangeComplete", setHeight)
+        router.events.on("routerChangeComplete", console.log("ROUTE COMPLETE"))
 
         gsap.to(element, {
             y: () => -(height - document.documentElement.clientHeight),

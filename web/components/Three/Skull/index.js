@@ -92,10 +92,8 @@ const Skull = props => {
     }
 
     const handleScroll = e => {
-        const element = props.bodyRef
-        const height = element.clientHeight
         gsap.to(e, {
-            y: -(height - document.documentElement.clientHeight),
+            y: 20,
             ease: "none",
             scrollTrigger: {
                 trigger: document.body,
@@ -106,42 +104,26 @@ const Skull = props => {
         })
     }
 
-    // const [scroll, setScroll] = useState()
-
-    // const handleScroll = () => {
-    //     setScroll(window.pageYOffset)
-    // }
-
-    // useEffect(() => {
-    //     window.addEventListener("scroll", handleScroll)
-    // })
-
-    // const handleScrollPos = scrollPos => {
-    //     let zPos = scrollPos ? scrollPos / 80 : 0
-    //     let xRot = scrollPos ? scrollPos / 500 : 0
-    //     let yPos = scrollPos ? scrollPos / 12 : 0
-    //     return { xRot, zPos, yPos }
-    // }
-
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
         animateX(uniforms.u_mouse.value)
         animateY(uniforms.u_mouse.value)
-        handleScroll(obj.position.y)
+        // handleScroll(obj.position.y)
 
         state.camera.position.x = 0
         state.camera.position.z = 50
-        state.camera.position.y = 12
+        state.camera.position.y = 0
 
-        obj.rotation.x = Math.PI / 0.64
+        obj.rotation.x = Math.PI / 0.58
         obj.rotation.z = uniforms.u_mouse.value.x / 10
         obj.rotation.x += (uniforms.u_mouse.value.y / 20) * -1
 
-        // const { xRot, zPos, yPos } = handleScrollPos(scroll)
-        obj.position.z = 20
-        // obj.position.y = yPos
+        obj.position.z = -91
+        obj.position.y = 60
+
         // obj.rotation.x += xRot
+        handleScroll(obj.position)
     })
 
     return (

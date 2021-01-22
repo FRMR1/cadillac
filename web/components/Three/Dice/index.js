@@ -69,22 +69,22 @@ const dice = props => {
     //     })
     // }
 
-    const [scroll, setScroll] = useState()
+    // const [scroll, setScroll] = useState()
 
-    const handleScroll = () => {
-        setScroll(window.pageYOffset)
-    }
+    // const handleScroll = () => {
+    //     setScroll(window.pageYOffset)
+    // }
 
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll)
-    })
+    // useEffect(() => {
+    //     window.addEventListener("scroll", handleScroll)
+    // })
 
-    const handleScrollPos = scrollPos => {
-        let zPos = scrollPos ? scrollPos / 40 : 0
-        let xRot = scrollPos ? scrollPos / 500 : 0
-        let yPos = scrollPos ? scrollPos / 50 : 0
-        return { xRot, zPos, yPos }
-    }
+    // const handleScrollPos = scrollPos => {
+    //     let zPos = scrollPos ? scrollPos / 40 : 0
+    //     let xRot = scrollPos ? scrollPos / 500 : 0
+    //     let yPos = scrollPos ? scrollPos / 50 : 0
+    //     return { xRot, zPos, yPos }
+    // }
 
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
@@ -94,10 +94,10 @@ const dice = props => {
 
         obj.rotation.y += 0.02
 
-        const { xRot, zPos, yPos } = handleScrollPos(scroll)
-        obj.position.z = 35
+        // const { xRot, zPos, yPos } = handleScrollPos(scroll)
+        obj.position.z = 5
         obj.position.x = -10
-        obj.position.y = yPos - 2
+        obj.position.y = 2
         // obj.rotation.x += xRot
     })
 

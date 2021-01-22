@@ -29,14 +29,14 @@ const MainCanvas = props => {
         <Canvas onPointerMove={pointerMove} className={styles.canvas}>
             <Suspense fallback={null}>
                 {/* <OrbitControls /> */}
-                {/* <Skull bodyRef={bodyRef} pointer={pointer} /> */}
-                {/* <Dice pointer={pointer} /> */}
-                {/* <Background
+                <Skull bodyRef={bodyRef} pointer={pointer} />
+                <Dice pointer={pointer} />
+                <Background
                     bodyRef={bodyRef}
                     bioRef={props.bioRef}
                     pointer={pointer}
                     route={props.route}
-                /> */}
+                />
                 {/* <Effects /> */}
             </Suspense>
         </Canvas>

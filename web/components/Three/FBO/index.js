@@ -47,7 +47,7 @@ const FBO = props => {
 
     const calculateUnitSize = zDistance => {
         const fov = 75 // default camera value
-        const cameraZ = 23 // default camera value
+        const cameraZ = 95 // default camera value
 
         const vFov = (fov * Math.PI) / 180
 
@@ -104,7 +104,7 @@ const FBO = props => {
 
         planeRef.current.scale.x = scaleX
         planeRef.current.scale.y = scaleY
-        planeRef.current.position.z = 20
+        planeRef.current.position.z = 0
 
         // planeRef.current.material.wireframe = true
 
