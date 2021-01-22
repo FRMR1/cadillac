@@ -40,7 +40,8 @@ uniform vec2 u_resolution;
 uniform float u_time;
 uniform vec2 u_mouse;
 uniform float u_ratio;
-uniform float u_setting;
+uniform float u_speed;
+uniform float u_slider;
 uniform sampler2D u_texture;
 uniform sampler2D u_texture2;
 
@@ -151,7 +152,7 @@ void main() {
     vec3 pos = v_position;
     pos /= vec3(3.);
     
-    float noise = .5 * (cnoise(pos * 2.)) + u_setting * 10. - pos.z;
+    float noise = cnoise(pos * sin(u_time / 20.) + pos / 100.);
     float step = smoothstep(0.4, 0.39, noise);
     vec4 col = vec4(diff, diff, diff, 1.);
     
@@ -170,10 +171,8 @@ void main() {
     float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.5, 1., u_mouse.y * -.5)), v_normal), (sin(u_time*20.) + 1.) / 30. + 1.4);
 
 
-    vec4 final = mix(color, bg, fresnel);
+    vec4 final = mix(txt, bg, fresnel);
 
-    gl_FragColor = final;
-    // gl_FragColor = vec4(step, step, step, 1.);
-    // gl_FragColor = txt;
+    gl_FragColor = txt;
 }
 `

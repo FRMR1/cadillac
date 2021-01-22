@@ -1,21 +1,50 @@
 import React, { useRef, useEffect } from "react"
 import { connect } from "react-redux"
+import Image from "next/image"
 import Head from "next/head"
 import Link from "next/link"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import MainCanvas from "../../components/Three/Canvas"
 import client from "../../client"
-import dynamic from "next/dynamic"
-import Image from "next/image"
 import styles from "../../styles/Home.module.scss"
 
 const Layout = props => {
     const bodyRef = useRef()
 
+    gsap.registerPlugin(ScrollTrigger)
+
     const date = new Date()
     const year = date.getFullYear()
 
+    useEffect(() => {
+        const element = bodyRef.current
+
+        document.body.style.height = 4000
+
+        // console.log(element)
+        // let height
+        // function setHeight() {
+        //     height = element.clientHeight
+        //     document.body.style.height = height + "px"
+        // }
+        // ScrollTrigger.addEventListener("refreshInit", setHeight)
+
+        // gsap.to(element, {
+        //     y: () => -(height - document.documentElement.clientHeight),
+        //     ease: "none",
+        //     scrollTrigger: {
+        //         trigger: document.body,
+        //         invalidateOnRefresh: true,
+        //         start: "top top",
+        //         end: "bottom bottom",
+        //         scrub: 1,
+        //     },
+        // })
+    }, [])
+
     return (
-        <div ref={bodyRef} className={styles.container}>
+        <>
             <Head>
                 <title>CADILLAC</title>
                 <link rel="icon" href="/favicon.ico" />
@@ -24,43 +53,45 @@ const Layout = props => {
             <div id="right"></div>
             <div id="top"></div>
             <div id="bottom"></div>
-            <div className={styles.navContainer}>
-                <div className={styles.logo}>
-                    <Link href="/">
-                        <a>
-                            <Image
-                                src="/svg/logo.svg"
-                                width={210}
-                                height={43}
-                            />
-                        </a>
-                    </Link>
+            <div ref={bodyRef} className={styles.container}>
+                <div className={styles.navContainer}>
+                    <div className={styles.logo}>
+                        <Link href="/">
+                            <a>
+                                <Image
+                                    src="/svg/logo.svg"
+                                    width={210}
+                                    height={43}
+                                />
+                            </a>
+                        </Link>
+                    </div>
+                    <div className={styles.nav}>
+                        <Link href="/news">
+                            <a>News</a>
+                        </Link>
+                        <Link href="/bio">
+                            <a>Bio</a>
+                        </Link>
+                        <Link href="#">
+                            <a>Shop</a>
+                        </Link>
+                    </div>
                 </div>
-                <div className={styles.nav}>
-                    <Link href="/news">
-                        <a>News</a>
-                    </Link>
-                    <Link href="/bio">
-                        <a>Bio</a>
-                    </Link>
-                    <Link href="#">
-                        <a>Shop</a>
-                    </Link>
-                </div>
+                {/* <MainCanvas
+                    bodyRef={bodyRef}
+                    bioRef={props.bioRef}
+                    route={props.route}
+                /> */}
+                <main className={styles.main}>{props.children}</main>
+                <footer>
+                    <Image src="/svg/logo.svg" width={210} height={43} />
+                    <span className={styles.copyright}>
+                        ©{year} Cadillac. All Rights Reserved.
+                    </span>
+                </footer>
             </div>
-            <MainCanvas
-                bodyRef={bodyRef}
-                bioRef={props.bioRef}
-                route={props.route}
-            />
-            <main className={styles.main}>{props.children}</main>
-            <footer>
-                <Image src="/svg/logo.svg" width={210} height={43} />
-                <span className={styles.copyright}>
-                    ©{year} Cadillac. All Rights Reserved.
-                </span>
-            </footer>
-        </div>
+        </>
     )
 }
 

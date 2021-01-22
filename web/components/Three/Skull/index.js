@@ -1,6 +1,7 @@
-import React, { Suspense, useState, useEffect, useRef, useMemo } from "react"
-import { Canvas, useLoader, useThree, useFrame } from "react-three-fiber"
+import React, { useEffect, useRef, useMemo } from "react"
+import { useLoader, useThree, useFrame } from "react-three-fiber"
 import gsap from "gsap"
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import { frag, vert } from "../Shaders/skull"
 
 import * as THREE from "three"
@@ -12,9 +13,11 @@ const Skull = props => {
     const windowHeight = window.innerHeight
     const aspect = windowWidth / windowHeight
 
+    gsap.registerPlugin(ScrollTrigger)
+
     const { gl, scene } = useThree()
 
-    const txt = useLoader(THREE.TextureLoader, "/assets/texture.png")
+    const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
     const txt2 = useLoader(THREE.TextureLoader, "/assets/texture2.jpg")
 
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
@@ -34,6 +37,9 @@ const Skull = props => {
             },
             u_texture2: {
                 value: txt2,
+            },
+            u_setting: {
+                value: 0,
             },
         }),
         []
@@ -69,44 +75,81 @@ const Skull = props => {
         })
     }
 
-    const [scroll, setScroll] = useState()
-
-    const handleScroll = () => {
-        setScroll(window.pageYOffset)
+    const animateSetting = e => {
+        gsap.to(e, {
+            duration: 2,
+            value: 1,
+            ease: "inout",
+        })
     }
 
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll)
-    })
-
-    const handleScrollPos = scrollPos => {
-        let zPos = scrollPos ? scrollPos / 40 : 0
-        let xRot = scrollPos ? scrollPos / 500 : 0
-        let yPos = scrollPos ? scrollPos / 15 : 0
-        return { xRot, zPos, yPos }
+    const animateSettingBack = e => {
+        gsap.to(e, {
+            duration: 2,
+            value: 0,
+            ease: "inout",
+        })
     }
+
+    const handleScroll = e => {
+        const element = props.bodyRef
+        const height = element.clientHeight
+        gsap.to(e, {
+            y: -(height - document.documentElement.clientHeight),
+            ease: "none",
+            scrollTrigger: {
+                trigger: document.body,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+            },
+        })
+    }
+
+    // const [scroll, setScroll] = useState()
+
+    // const handleScroll = () => {
+    //     setScroll(window.pageYOffset)
+    // }
+
+    // useEffect(() => {
+    //     window.addEventListener("scroll", handleScroll)
+    // })
+
+    // const handleScrollPos = scrollPos => {
+    //     let zPos = scrollPos ? scrollPos / 80 : 0
+    //     let xRot = scrollPos ? scrollPos / 500 : 0
+    //     let yPos = scrollPos ? scrollPos / 12 : 0
+    //     return { xRot, zPos, yPos }
+    // }
 
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
         animateX(uniforms.u_mouse.value)
         animateY(uniforms.u_mouse.value)
+        handleScroll(obj.position.y)
 
         state.camera.position.x = 0
-        state.camera.position.z = 48
+        state.camera.position.z = 50
         state.camera.position.y = 12
 
         obj.rotation.x = Math.PI / 0.64
         obj.rotation.z = uniforms.u_mouse.value.x / 10
         obj.rotation.x += (uniforms.u_mouse.value.y / 20) * -1
 
-        const { xRot, zPos, yPos } = handleScrollPos(scroll)
-        obj.position.z = zPos
-        obj.position.y = yPos
-        obj.rotation.x += xRot
+        // const { xRot, zPos, yPos } = handleScrollPos(scroll)
+        obj.position.z = 20
+        // obj.position.y = yPos
+        // obj.rotation.x += xRot
     })
 
-    return <primitive object={obj} />
+    return (
+        <primitive
+            onPointerOver={() => animateSetting(uniforms.u_setting)}
+            object={obj}
+        />
+    )
 }
 
 export default Skull

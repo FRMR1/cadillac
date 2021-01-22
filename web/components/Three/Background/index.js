@@ -1,7 +1,11 @@
 import { useMemo, useRef, useState, useEffect } from "react"
 import { useFrame, useThree } from "react-three-fiber"
 import FBO from "../FBO"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import { frag, vert } from "../Shaders/bg"
+// import { Text } from "troika-three-text"
+
 import * as THREE from "three"
 
 const Background = props => {
@@ -47,7 +51,7 @@ const Background = props => {
 
     const calculateUnitSize = () => {
         const fov = 75 // default camera value
-        const cameraZ = 150 // default camera value
+        const cameraZ = 55 // default camera value
 
         const vFov = (fov * Math.PI) / 180
 
@@ -59,54 +63,77 @@ const Background = props => {
 
     const camUnit = calculateUnitSize()
 
-    const getRenderSize = el => {
-        const {
-            left,
-            right,
-            top,
-            bottom,
-            width,
-            height,
-        } = el.getBoundingClientRect()
+    // const getRenderSize = el => {
+    //     const {
+    //         left,
+    //         right,
+    //         top,
+    //         bottom,
+    //         width,
+    //         height,
+    //     } = el.getBoundingClientRect()
 
-        const scaleX = width / windowWidth
-        const scaleY = height / windowHeight
+    //     const scaleX = width / windowWidth
+    //     const scaleY = height / windowHeight
 
-        return { scaleX, scaleY }
-    }
+    //     return { scaleX, scaleY }
+    // }
 
-    const updateRenderPosition = (el, scrollY) => {
-        const {
-            left,
-            right,
-            top,
-            bottom,
-            width,
-            height,
-        } = el.getBoundingClientRect()
+    // const updateRenderPosition = (el, scrollY) => {
+    //     const {
+    //         left,
+    //         right,
+    //         top,
+    //         bottom,
+    //         width,
+    //         height,
+    //     } = el.getBoundingClientRect()
 
-        // Set origin to top left
-        planeRef.current.position.x = -(camUnit.width / 2)
-        planeRef.current.position.y = camUnit.height / 2
+    //     // Set origin to top left
+    //     planeRef.current.position.x = -(camUnit.width / 2)
+    //     planeRef.current.position.y = camUnit.height / 2
 
-        // Set position
-        planeRef.current.position.x +=
-            (left / windowWidth) * camUnit.width +
-            (camUnit.width * planeRef.current.scale.x) / 2
-        planeRef.current.position.y -=
-            ((top - scrollY) / windowHeight / 10) * camUnit.height +
-            camUnit.height * planeRef.current.scale.y
+    //     // Set position
+    //     planeRef.current.position.x +=
+    //         (left / windowWidth) * camUnit.width +
+    //         (camUnit.width * planeRef.current.scale.x) / 2
+    //     planeRef.current.position.y -=
+    //         ((top - scrollY) / windowHeight / 10) * camUnit.height +
+    //         camUnit.height * planeRef.current.scale.y
+    // }
+
+    const handleScroll = e => {
+        const element = props.bodyRef
+        let height
+        function setHeight() {
+            height = element.clientHeight
+            document.body.style.height = height + "px"
+        }
+        ScrollTrigger.addEventListener("refreshInit", setHeight)
+        gsap.to(e, {
+            y: -(
+                element.getBoundingClientRect().height -
+                document.documentElement.clientHeight
+            ),
+            ease: "none",
+            scrollTrigger: {
+                trigger: document.body,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+            },
+        })
     }
 
     useFrame((state, delta) => {
-        const { scaleX, scaleY } = getRenderSize(domEl)
+        // const { scaleX, scaleY } = getRenderSize(domEl)
 
-        planeRef.current.scale.x = scaleX
-        planeRef.current.scale.y = scaleY
-        // planeRef.current.position.z = handleScrollPos(scroll) + 5
-        planeRef.current.position.z = 0
+        // planeRef.current.scale.x = scaleX
+        // planeRef.current.scale.y = scaleY
+        // planeRef.current.position.z = 0
 
-        updateRenderPosition(domEl, 0)
+        // updateRenderPosition(domEl, 0)
+        handleScroll(planeRef.current.position)
 
         uniforms.u_time.value += delta
 
@@ -115,7 +142,7 @@ const Background = props => {
 
     return (
         <>
-            <mesh position={[0, 0, 4]} ref={planeRef}>
+            <mesh position={[0, 0, 0]} ref={planeRef}>
                 <planeBufferGeometry
                     args={[camUnit.width, camUnit.height * 2, 1, 1]}
                 />
