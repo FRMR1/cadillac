@@ -29,7 +29,7 @@ const MainCanvas = props => {
         <Canvas onPointerMove={pointerMove} className={styles.canvas}>
             <Suspense fallback={null}>
                 {/* <OrbitControls /> */}
-                <Skull bodyRef={bodyRef} pointer={pointer} />
+                {/* <Skull bodyRef={bodyRef} pointer={pointer} /> */}
                 {/* <Dice pointer={pointer} /> */}
                 {/* <Background
                     bodyRef={bodyRef}

@@ -19,28 +19,26 @@ const Layout = props => {
 
     useEffect(() => {
         const element = bodyRef.current
+        let height
 
-        document.body.style.height = 4000
+        function setHeight() {
+            height = element.clientHeight
+            document.body.style.height = height + "px"
+        }
 
-        // console.log(element)
-        // let height
-        // function setHeight() {
-        //     height = element.clientHeight
-        //     document.body.style.height = height + "px"
-        // }
-        // ScrollTrigger.addEventListener("refreshInit", setHeight)
+        ScrollTrigger.addEventListener("refreshInit", setHeight)
 
-        // gsap.to(element, {
-        //     y: () => -(height - document.documentElement.clientHeight),
-        //     ease: "none",
-        //     scrollTrigger: {
-        //         trigger: document.body,
-        //         invalidateOnRefresh: true,
-        //         start: "top top",
-        //         end: "bottom bottom",
-        //         scrub: 1,
-        //     },
-        // })
+        gsap.to(element, {
+            y: () => -(height - document.documentElement.clientHeight),
+            ease: "none",
+            scrollTrigger: {
+                trigger: document.body,
+                invalidateOnRefresh: true,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+            },
+        })
     }, [])
 
     return (
@@ -53,43 +51,45 @@ const Layout = props => {
             <div id="right"></div>
             <div id="top"></div>
             <div id="bottom"></div>
-            <div ref={bodyRef} className={styles.container}>
-                <div className={styles.navContainer}>
-                    <div className={styles.logo}>
-                        <Link href="/">
-                            <a>
-                                <Image
-                                    src="/svg/logo.svg"
-                                    width={210}
-                                    height={43}
-                                />
-                            </a>
-                        </Link>
+            <div id="viewport">
+                <div ref={bodyRef} className={styles.container}>
+                    <div className={styles.navContainer}>
+                        <div className={styles.logo}>
+                            <Link href="/">
+                                <a>
+                                    <Image
+                                        src="/svg/logo.svg"
+                                        width={210}
+                                        height={43}
+                                    />
+                                </a>
+                            </Link>
+                        </div>
+                        <div className={styles.nav}>
+                            <Link href="/news">
+                                <a>News</a>
+                            </Link>
+                            <Link href="/bio">
+                                <a>Bio</a>
+                            </Link>
+                            <Link href="#">
+                                <a>Shop</a>
+                            </Link>
+                        </div>
                     </div>
-                    <div className={styles.nav}>
-                        <Link href="/news">
-                            <a>News</a>
-                        </Link>
-                        <Link href="/bio">
-                            <a>Bio</a>
-                        </Link>
-                        <Link href="#">
-                            <a>Shop</a>
-                        </Link>
-                    </div>
+                    <MainCanvas
+                        bodyRef={bodyRef}
+                        bioRef={props.bioRef}
+                        route={props.route}
+                    />
+                    <main className={styles.main}>{props.children}</main>
+                    <footer>
+                        <Image src="/svg/logo.svg" width={210} height={43} />
+                        <span className={styles.copyright}>
+                            ©{year} Cadillac. All Rights Reserved.
+                        </span>
+                    </footer>
                 </div>
-                {/* <MainCanvas
-                    bodyRef={bodyRef}
-                    bioRef={props.bioRef}
-                    route={props.route}
-                /> */}
-                <main className={styles.main}>{props.children}</main>
-                <footer>
-                    <Image src="/svg/logo.svg" width={210} height={43} />
-                    <span className={styles.copyright}>
-                        ©{year} Cadillac. All Rights Reserved.
-                    </span>
-                </footer>
             </div>
         </>
     )
