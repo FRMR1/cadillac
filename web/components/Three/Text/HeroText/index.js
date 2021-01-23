@@ -1,29 +1,26 @@
-import React, { useState, useMemo, useRef } from "react"
-import { extend, useLoader, useFrame } from "react-three-fiber"
 import * as THREE from "three"
+import React, { useMemo, useRef } from "react"
+import { useLoader, useUpdate, useFrame } from "react-three-fiber"
 import { frag, vert } from "../../Shaders/herotext"
-import { Text } from "troika-three-text"
+import gsap from "gsap"
 
-extend({ Text })
-
-const HeroText = prpos => {
+export default function Text({
+    children,
+    vAlign = "center",
+    hAlign = "center",
+    size = 1,
+    color = "#000000",
+    ...props
+}) {
     const ref = useRef()
 
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
     const aspect = windowWidth / windowHeight
 
-    const text = "Cadillac"
-
-    const [opts, setOpts] = useState({
-        fontSize: 18,
-        maxWidth: 300,
-        lineHeight: 1,
-        letterSpacing: 0,
-        // textAlign: "justify",
-    })
-
-    const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
+    const font = useLoader(THREE.FontLoader, "/fonts/victorian.json")
+    const txt = useLoader(THREE.TextureLoader, "/assets/hero.jpg")
+    const txt2 = useLoader(THREE.TextureLoader, "/assets/texture2.jpg")
 
     const uniforms = useMemo(
         () => ({
@@ -36,38 +33,97 @@ const HeroText = prpos => {
             u_texture: {
                 value: txt,
             },
+            u_texture2: {
+                value: txt2,
+            },
+            u_setting: {
+                value: 0,
+            },
         }),
         []
     )
 
+    const config = useMemo(
+        () => ({
+            font,
+            size: 110,
+            height: 20,
+            curveSegments: 20,
+            bevelEnabled: true,
+            bevelThickness: 3,
+            bevelSize: 1.5,
+            bevelOffset: 0,
+            bevelSegments: 2,
+        }),
+        [font]
+    )
+
+    const mesh = useUpdate(
+        self => {
+            const size = new THREE.Vector3()
+            self.geometry.computeBoundingBox()
+            self.geometry.boundingBox.getSize(size)
+            self.rotation.x = 1
+            self.position.x =
+                hAlign === "center"
+                    ? -size.x / 2
+                    : hAlign === "right"
+                    ? 0
+                    : -size.x
+            // self.position.y =
+            //     vAlign === "center"
+            //         ? -size.y / 2
+            //         : vAlign === "top"
+            //         ? 0
+            //         : -size.y
+        },
+        [children]
+    )
+
+    const animateX = e => {
+        gsap.to(e, {
+            duration: 1,
+            x: props.pointer.x,
+            ease: "inout",
+        })
+    }
+
+    const animateY = e => {
+        gsap.to(e, {
+            duration: 1,
+            y: props.pointer.y,
+            ease: "inout",
+        })
+    }
+
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
-        ref.current.position.y = 80
-        ref.current.position.z = -80
+        animateX(uniforms.u_mouse.value)
+        animateY(uniforms.u_mouse.value)
+
+        state.camera.position.x = 0
+        state.camera.position.z = 50
+        state.camera.position.y = 0
+
+        mesh.current.position.y += Math.sin(uniforms.u_time.value / 1.5) / 5
+        mesh.current.rotation.x += Math.sin(uniforms.u_time.value / 2)
+
+        // mesh.current.rotation.y = 0.3
+        mesh.current.rotation.x = 0.5
+        // mesh.current.rotation.z = 0.3
     })
 
     return (
-        <text
-            ref={ref}
-            // position-z={-60}
-            // position-y={90}
-            {...opts}
-            text={text}
-            font={
-                "https://fonts.gstatic.com/s/raleway/v14/1Ptrg8zYS_SKggPNwK4vaqI.woff"
-            }
-            anchorX="center"
-            // anchorY="middle"
-        >
-            <shaderMaterial
-                attach="material"
-                uniforms={uniforms}
-                vertexShader={vert}
-                fragmentShader={frag}
-            />
-        </text>
+        <group {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
+            <mesh ref={mesh}>
+                <textBufferGeometry args={[children, config]} />
+                <shaderMaterial
+                    uniforms={uniforms}
+                    vertexShader={vert}
+                    fragmentShader={frag}
+                />
+            </mesh>
+        </group>
     )
 }
-
-export default HeroText

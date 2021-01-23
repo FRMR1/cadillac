@@ -53,28 +53,29 @@ const dice = props => {
         obj.children[i].material = material
     }
 
-    useEffect(() => {
-        const element = obj.position
-        gsap.to(element, {
-            y: () => element.y - 20,
-            ease: "none",
-            scrollTrigger: {
-                trigger: document.body,
-                invalidateOnRefresh: true,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1,
-            },
-        })
-    }, [])
+    // useEffect(() => {
+    //     const element = obj.position
+    //     gsap.to(element, {
+    //         y: () => element.y - 20,
+    //         ease: "none",
+    //         scrollTrigger: {
+    //             trigger: document.body,
+    //             invalidateOnRefresh: true,
+    //             start: "top top",
+    //             end: "bottom bottom",
+    //             scrub: 1,
+    //         },
+    //     })
+    // }, [])
 
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
         obj.rotation.y += 0.02
+        obj.position.y += Math.sin(uniforms.u_time.value) / 60
     })
 
-    return <primitive position={[-12, 2, 5]} object={obj} />
+    return <primitive position={[-12, 20, 5]} object={obj} />
 }
 
 export default dice

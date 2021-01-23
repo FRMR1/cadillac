@@ -26,7 +26,6 @@ varying vec3 v_position;
 
 float PI = 3.141592653589;
 
-
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
@@ -67,22 +66,29 @@ void main() {
     pos.x /= 8.;
     pos.y *= 5.;
 
+    vec3 a = vec3(0.6, 0.6, 0.6);
+    vec3 b = vec3(.25, .25, .25);
+    vec3 c = vec3(.5, .5, .5);
+    vec3 d = vec3(0., .33, .67);
+    vec3 animatedColor = a + b * cos(2. * PI * (c * v_uv.y + d + u_time / 10.));
+    vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_uv.y + d + u_time / 10.));
+
 
     float DF = 0.0;
 
     // Add a random position
-    float a = 0.0;
+    float a1 = 0.0;
     vec2 vel = vec2(u_time*.0125);
     DF += snoise(pos+vel);
 
     // Add a random position
-    a = snoise(pos*vec2(cos(u_time*0.005),sin(u_time*0.0055))*0.025)*3.1415;
-    vel = vec2(cos(a),sin(a));
+    a1 = snoise(pos*vec2(cos(u_time*0.05),sin(u_time*0.055))*0.025)*3.1415;
+    vel = vec2(cos(a1),sin(a1));
     DF += snoise(pos+vel)*.25+.25;
 
     vec3 color = vec3( smoothstep(.7,.702,fract(DF)) );
 
-    color = mix(vec3(.17), vec3(56./255., 56./255., 56./255.), color);
+    color = mix(animatedColor, animatedColor2, color);
 
     gl_FragColor = vec4(color,1.0);
 }

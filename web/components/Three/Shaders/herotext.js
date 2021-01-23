@@ -152,7 +152,7 @@ void main() {
     vec3 pos = v_position;
     pos /= vec3(3.);
     
-    float noise = cnoise(pos * sin(u_time / 20.) + pos / 100.);
+    float noise = cnoise(pos * sin(u_time / 20.) / 10.);
     float step = smoothstep(0.4, 0.39, noise);
     vec4 col = vec4(diff, diff, diff, 1.);
     
@@ -168,9 +168,9 @@ void main() {
     vec4 color = mix(txt2, txt, step);
     vec4 bg = vec4(0.2, 0.2, 0.2, 1.);
 
-    float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.5, 1., u_mouse.y * -.5)), v_normal), (sin(u_time*20.) + 1.) / 30. + 1.4);
+    float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.5, -1., u_mouse.y * -.5)), v_normal), (sin(u_time*20.) + 1.) / 30. + 1.4);
 
-    vec4 final = mix(txt, bg, fresnel);
+    vec4 final = mix(color, bg, fresnel);
 
     gl_FragColor = color;
 }

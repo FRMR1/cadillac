@@ -32,7 +32,11 @@ const MainCanvas = props => {
                 {/* <OrbitControls /> */}
                 <Skull bodyRef={bodyRef} pointer={pointer} />
                 <Dice pointer={pointer} />
-                <HeroText />
+                <HeroText
+                    position={[0, 55, -60]}
+                    children={"CADILLAC"}
+                    pointer={pointer}
+                />
                 <Background
                     bodyRef={bodyRef}
                     bioRef={props.bioRef}

@@ -91,55 +91,37 @@ const Skull = props => {
         })
     }
 
-    useEffect(() => {
-        const element = obj.position
-        gsap.to(element, {
-            y: () => element.y - 50,
-            ease: "none",
-            scrollTrigger: {
-                trigger: document.body,
-                invalidateOnRefresh: true,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1,
-            },
-        })
-    }, [])
-
-    useEffect(() => {
-        const element = obj.rotation
-        gsap.to(element, {
-            x: () => element.x + 20,
-            ease: "none",
-            scrollTrigger: {
-                trigger: document.body,
-                invalidateOnRefresh: true,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1,
-            },
-        })
-    }, [])
+    // useEffect(() => {
+    //     const element = obj.position
+    //     gsap.to(element, {
+    //         y: () => element.y - 50,
+    //         ease: "none",
+    //         scrollTrigger: {
+    //             trigger: document.body,
+    //             invalidateOnRefresh: true,
+    //             start: "top top",
+    //             end: "bottom bottom",
+    //             scrub: 1,
+    //         },
+    //     })
+    // }, [])
 
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
-        animateX(uniforms.u_mouse.value)
-        animateY(uniforms.u_mouse.value)
+        // animateX(uniforms.u_mouse.value)
+        // animateY(uniforms.u_mouse.value)
 
         obj.rotation.x = Math.PI / 0.59
+        obj.scale.set(0.35, 0.35, 0.35)
 
-        state.camera.position.x = 0
-        state.camera.position.z = 50
-        state.camera.position.y = 0
-
-        obj.rotation.z = uniforms.u_mouse.value.x / 10
-        obj.rotation.x += (uniforms.u_mouse.value.y / 20) * -1
+        obj.rotation.z -= 0.025
+        obj.position.y += Math.sin(uniforms.u_time.value * 1.5) / 35
     })
 
     return (
         <primitive
-            position={[0, 60, -91]}
+            position={[20, 70, -71]}
             onPointerOver={() => animateSetting(uniforms.u_setting)}
             object={obj}
         />

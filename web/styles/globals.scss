@@ -66,7 +66,7 @@ main {
 #bottom,
 #left,
 #right {
-    background: #b58f18;
+    background: #282828;
     position: fixed;
     z-index: 9999;
 }
@@ -74,7 +74,7 @@ main {
 #right {
     top: 0;
     bottom: 0;
-    width: 2px;
+    width: 10px;
 }
 #left {
     left: 0;
@@ -87,7 +87,7 @@ main {
 #bottom {
     left: 0;
     right: 0;
-    height: 2px;
+    height: 10px;
 }
 #top {
     top: 0;

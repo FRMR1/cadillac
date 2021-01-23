@@ -137,7 +137,7 @@ vec2 getmatcap(vec3 eye, vec3 normal) {
 void main() {
 
     vec3 a = vec3(0.6, 0.6, 0.6);
-    vec3 b = vec3(.4, .4, .4);
+    vec3 b = vec3(.3, .3, .3);
     vec3 c = vec3(.5, .5, .5);
     vec3 d = vec3(0., .33, .67);
 
@@ -152,17 +152,17 @@ void main() {
     vec3 pos = v_position;
     pos /= vec3(3.);
     
-    float noise = cnoise(pos * sin(u_time / 20.) + pos / 100.);
+    float noise = cnoise(pos * sin(u_time / 20.));
     float step = smoothstep(0.4, 0.39, noise);
     vec4 col = vec4(diff, diff, diff, 1.);
     
-    vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time /3.));
-    vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_n.y + d + u_time /3.));
+    vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time /2.));
+    vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_n.y + d + u_time /2.5));
 
-    vec4 txt = texture2D(u_texture, v_n);
+    // vec4 txt = texture2D(u_texture, v_n);
     // vec4 txt2 = texture2D(u_texture2, v_n);
 
-    // vec4 txt = vec4(animatedColor2, 1.);
+    vec4 txt = vec4(animatedColor2, 1.);
     vec4 txt2 = vec4(animatedColor, 1.);
     
     vec4 color = mix(txt2, txt, step);
@@ -170,9 +170,8 @@ void main() {
 
     float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.5, 1., u_mouse.y * -.5)), v_normal), (sin(u_time*20.) + 1.) / 30. + 1.4);
 
-
     vec4 final = mix(txt, bg, fresnel);
 
-    gl_FragColor = txt;
+    gl_FragColor = color;
 }
 `

@@ -59,7 +59,7 @@ const Layout = props => {
                 <div ref={bodyRef} className={styles.container}>
                     <div className={styles.navContainer}>
                         <div className={styles.logo}>
-                            <Link href="/">
+                            {/* <Link href="/">
                                 <a>
                                     <Image
                                         src="/svg/logo.svg"
@@ -67,7 +67,7 @@ const Layout = props => {
                                         height={43}
                                     />
                                 </a>
-                            </Link>
+                            </Link> */}
                         </div>
                         <div className={styles.nav}>
                             <Link href="/news">
