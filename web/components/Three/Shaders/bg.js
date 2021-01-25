@@ -67,7 +67,7 @@ void main() {
     pos.y *= 5.;
 
     vec3 a = vec3(0.6, 0.6, 0.6);
-    vec3 b = vec3(.25, .25, .25);
+    vec3 b = vec3(.2, .2, .2);
     vec3 c = vec3(.5, .5, .5);
     vec3 d = vec3(0., .33, .67);
     vec3 animatedColor = a + b * cos(2. * PI * (c * v_uv.y + d + u_time / 10.));
@@ -88,7 +88,8 @@ void main() {
 
     vec3 color = vec3( smoothstep(.7,.702,fract(DF)) );
 
-    color = mix(animatedColor, animatedColor2, color);
+    color = mix(vec3(.356), animatedColor2, color);
+    color -= vec3(.2);
 
     gl_FragColor = vec4(color,1.0);
 }

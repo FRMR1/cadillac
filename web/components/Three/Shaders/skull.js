@@ -171,6 +171,6 @@ void main() {
 
     vec4 final = mix(color, bg, fresnel);
 
-    gl_FragColor = color;
+    gl_FragColor = txt;
 }
 `
