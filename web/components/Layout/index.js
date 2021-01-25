@@ -14,6 +14,8 @@ const Layout = props => {
     const bodyRef = useRef()
     const router = useRouter()
 
+    console.log("LAYOUT PROPS", props)
+
     gsap.registerPlugin(ScrollTrigger)
 
     const date = new Date()
@@ -58,18 +60,11 @@ const Layout = props => {
             <div id="viewport">
                 <div ref={bodyRef} className={styles.container}>
                     <div className={styles.navContainer}>
-                        <div className={styles.logo}>
-                            {/* <Link href="/">
-                                <a>
-                                    <Image
-                                        src="/svg/logo.svg"
-                                        width={210}
-                                        height={43}
-                                    />
-                                </a>
-                            </Link> */}
-                        </div>
+                        <div className={styles.logo}></div>
                         <div className={styles.nav}>
+                            <Link href="/">
+                                <a>Home</a>
+                            </Link>
                             <Link href="/news">
                                 <a>News</a>
                             </Link>
@@ -84,6 +79,8 @@ const Layout = props => {
                     <MainCanvas
                         bodyRef={bodyRef}
                         bioRef={props.bioRef}
+                        newsRef={props.newsRef}
+                        showsRef={props.showsRef}
                         route={props.route}
                     />
                     <main className={styles.main}>{props.children}</main>
@@ -110,7 +107,12 @@ Layout.getInitialProps = async function (context) {
 }
 
 const mapStateToProps = state => {
-    return { bioRef: state.bioRef, route: state.route }
+    return {
+        bioRef: state.bioRef,
+        route: state.route,
+        newsRef: state.newsRef,
+        showsRef: state.showsRef,
+    }
 }
 
 export default connect(mapStateToProps)(Layout)

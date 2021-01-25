@@ -1,12 +1,20 @@
+import { useRef, useEffect } from "react"
+import { connect } from "react-redux"
 import Link from "next/link"
 import styles from "../../../styles/Home.module.scss"
 
 const News = props => {
+    const newsRef = useRef()
+
     const posts = props.posts
+
+    useEffect(() => {
+        props.setNewsRef(newsRef.current)
+    }, [newsRef])
 
     return (
         <div className={styles.newsContainer}>
-            <h2>News</h2>
+            <h2 ref={newsRef}>News</h2>
             {posts.map(post => (
                 <>
                     <h3 key={post.slug}>{post.title}</h3>
@@ -31,4 +39,11 @@ const News = props => {
     )
 }
 
-export default News
+const mapDispatchToProps = dispatch => {
+    return {
+        setNewsRef: newsRef =>
+            dispatch({ type: "SET_NEWS_REF", value: newsRef }),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(News)

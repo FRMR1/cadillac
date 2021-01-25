@@ -5,6 +5,7 @@ import Background from "../Background"
 import dynamic from "next/dynamic"
 import Skull from "../Skull"
 import HeroText from "../Text/HeroText"
+import NavMenuItem from "../Text/H1"
 import Dice from "../Dice"
 import Effects from "../Effects"
 import styles from "../../../styles/Canvas.module.scss"
@@ -40,6 +41,8 @@ const MainCanvas = props => {
                 <Background
                     bodyRef={bodyRef}
                     bioRef={props.bioRef}
+                    newsRef={props.newsRef}
+                    showsRef={props.showsRef}
                     pointer={pointer}
                     route={props.route}
                 />

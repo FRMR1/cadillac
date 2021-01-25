@@ -1,5 +1,7 @@
 const initialState = {
     bioRef: {},
+    showsRef: {},
+    newsRef: {},
     route: {},
 }
 
@@ -9,6 +11,16 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 bioRef: action.value,
+            }
+        case "SET_NEWS_REF":
+            return {
+                ...state,
+                newsRef: action.value,
+            }
+        case "SET_SHOWS_REF":
+            return {
+                ...state,
+                showsRef: action.value,
             }
         case "SET_CURRENT_ROUTE":
             return {

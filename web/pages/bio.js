@@ -12,7 +12,7 @@ const Bio = props => {
     props.setRoute(route)
 
     useEffect(() => {
-        props.setBioRef(ref)
+        props.setBioRef(ref.current)
     }, [ref])
 
     return (

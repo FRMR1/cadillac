@@ -1,6 +1,8 @@
 import { useMemo, useRef, useState, useEffect } from "react"
 import { useFrame, useThree } from "react-three-fiber"
 import FBO from "../FBO"
+import H1 from "../Text/H1"
+import BioImage from "../BioImage"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import { frag, vert } from "../Shaders/bg"
@@ -11,6 +13,8 @@ import * as THREE from "three"
 const Background = props => {
     const domEl = props.bodyRef
     const planeRef = useRef()
+
+    console.log("bg props", props)
 
     const { gl, camera } = useThree()
 
@@ -127,7 +131,27 @@ const Background = props => {
                 />
             </mesh>
             {props.route === "/bio" && (
-                <FBO bioRef={props.bioRef} pointer={props.pointer} />
+                <FBO el={props.bioRef} pointer={props.pointer}>
+                    <BioImage />
+                </FBO>
+            )}
+            {props.route === "/" && (
+                <>
+                    <FBO el={props.newsRef} pointer={props.pointer}>
+                        <H1
+                            position={[0, 55, -60]}
+                            children={"CADILLAC"}
+                            pointer={props.pointer}
+                        />
+                    </FBO>
+                    <FBO el={props.showsRef} pointer={props.pointer}>
+                        <H1
+                            position={[0, 55, -60]}
+                            children={"CADILLAC"}
+                            pointer={props.pointer}
+                        />
+                    </FBO>
+                </>
             )}
         </>
     )

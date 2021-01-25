@@ -116,7 +116,7 @@ const Skull = props => {
         obj.scale.set(0.35, 0.35, 0.35)
 
         obj.rotation.z -= 0.025
-        obj.position.y += Math.sin(uniforms.u_time.value * 1.5) / 35
+        obj.position.y += Math.sin(uniforms.u_time.value * 1.2) / 35
     })
 
     return (

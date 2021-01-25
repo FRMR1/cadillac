@@ -1,11 +1,10 @@
 import { useMemo, useRef } from "react"
 import { useFrame, useThree, createPortal } from "react-three-fiber"
 import { frag, vert } from "../Shaders/fbo"
-import BioImage from "../BioImage"
 import * as THREE from "three"
 
 const FBO = props => {
-    const domEl = props.bioRef.current
+    const domEl = props.el
     const planeRef = useRef()
 
     const { camera } = useThree()
@@ -117,7 +116,7 @@ const FBO = props => {
 
     return (
         <>
-            {createPortal(<BioImage pointer={props.pointer} />, scene)}
+            {createPortal(props.children, scene)}
             <mesh ref={planeRef}>
                 <planeBufferGeometry
                     args={[camUnit.width, camUnit.height, 30, 20]}
