@@ -66,8 +66,8 @@ void main() {
     pos.x /= 8.;
     pos.y *= 5.;
 
-    vec3 a = vec3(0.6, 0.6, 0.6);
-    vec3 b = vec3(.2, .2, .2);
+    vec3 a = vec3(0.5, 0.5, 0.5);
+    vec3 b = vec3(.15, .15, .15);
     vec3 c = vec3(.5, .5, .5);
     vec3 d = vec3(0., .33, .67);
 

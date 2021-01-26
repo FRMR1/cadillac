@@ -15,9 +15,11 @@ const Skull = props => {
 
     gsap.registerPlugin(ScrollTrigger)
 
+    console.log(props.pointer)
+
     const { gl, scene } = useThree()
 
-    const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
+    const txt = useLoader(THREE.TextureLoader, "/assets/texture2.jpg")
     const txt2 = useLoader(THREE.TextureLoader, "/assets/texture2.jpg")
 
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
@@ -75,27 +77,17 @@ const Skull = props => {
         })
     }
 
-    const animateSetting = e => {
-        gsap.to(e, {
-            duration: 2,
-            value: 1,
-            ease: "inout",
-        })
-    }
-
-    const animateSettingBack = e => {
-        gsap.to(e, {
-            duration: 2,
-            value: 0,
-            ease: "inout",
-        })
-    }
-
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
         obj.rotation.x = Math.PI / 0.59
         obj.scale.set(0.3, 0.3, 0.3)
+
+        animateX(uniforms.u_mouse.value)
+        animateY(uniforms.u_mouse.value)
+
+        obj.rotation.z = uniforms.u_mouse.value.x / 10
+        obj.rotation.x += uniforms.u_mouse.value.y / -10
 
         // obj.rotation.z -= 0.025
         obj.position.y += Math.sin(uniforms.u_time.value / 1.75) / 170

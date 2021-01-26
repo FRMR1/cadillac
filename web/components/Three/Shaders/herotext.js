@@ -215,7 +215,7 @@ void main() {
     float step = smoothstep(0.4, 0.3999, noise);
     vec4 col = vec4(diff, diff, diff, 1.);
     
-    vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time /3.));
+    vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time / 5.5));
     vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_n.y + d + u_time /3.));
 
     vec4 txt = texture2D(u_texture, v_n);
@@ -225,12 +225,12 @@ void main() {
     vec4 txt2 = vec4(animatedColor, 1.);
     
     vec4 color = mix(txt2, txt, step);
-    vec4 bg = vec4(0.2, 0.2, 0.2, 1.);
+    // vec4 bg = vec4(0.2, 0.2, 0.2, 1.);
 
-    float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.5, -1., u_mouse.y * -.5)), v_normal), (sin(u_time*20.) + 1.) / 30. + 1.4);
+    // float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.5, -1., u_mouse.y * -.5)), v_normal), (sin(u_time*20.) + 1.));
 
-    vec4 final = mix(color, bg, fresnel);
+    // vec4 final = mix(txt, bg, fresnel);
 
-    gl_FragColor = color;
+    gl_FragColor = txt;
 }
 `
