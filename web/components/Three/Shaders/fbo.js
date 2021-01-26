@@ -12,11 +12,6 @@ void main() {
     v_position = position;
     v_normal = normal;
 
-    v_position.y += sin(3.1415926 * uv.x * 5.) / 4.;
-    v_position.x += sin(3.1415926 * uv.y * 3.) / 4.;
-
-    v_position.y += sin(u_time) * .2;
-
     gl_Position = projectionMatrix * modelViewMatrix * vec4(v_position, 1.0);
 }
 `

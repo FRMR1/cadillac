@@ -46,12 +46,12 @@ export default function Text({
     const config = useMemo(
         () => ({
             font,
-            size: 110,
-            height: 20,
+            size: 10,
+            height: 1,
             curveSegments: 20,
             bevelEnabled: true,
-            bevelThickness: 3,
-            bevelSize: 1.5,
+            bevelThickness: 1,
+            bevelSize: 0.2,
             bevelOffset: 0,
             bevelSegments: 2,
         }),
@@ -102,11 +102,7 @@ export default function Text({
         animateX(uniforms.u_mouse.value)
         animateY(uniforms.u_mouse.value)
 
-        state.camera.position.x = 0
-        state.camera.position.z = 50
-        state.camera.position.y = 0
-
-        mesh.current.position.y += Math.sin(uniforms.u_time.value / 1.5) / 5
+        mesh.current.position.y += Math.sin(uniforms.u_time.value / 1.5) / 25
         mesh.current.rotation.x += Math.sin(uniforms.u_time.value / 2)
 
         // mesh.current.rotation.y = 0.3

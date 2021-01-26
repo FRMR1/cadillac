@@ -34,7 +34,7 @@ const MainCanvas = props => {
                 <Skull bodyRef={bodyRef} pointer={pointer} />
                 <Dice pointer={pointer} />
                 <HeroText
-                    position={[0, 55, -60]}
+                    position={[0, 4.8, -5]}
                     children={"CADILLAC"}
                     pointer={pointer}
                 />

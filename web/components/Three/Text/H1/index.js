@@ -19,8 +19,22 @@ const H1 = ({
     const aspect = windowWidth / windowHeight
 
     const font = useLoader(THREE.FontLoader, "/fonts/ciutadella.json")
-    const txt = useLoader(THREE.TextureLoader, "/assets/hero.jpg")
-    const txt2 = useLoader(THREE.TextureLoader, "/assets/texture2.jpg")
+
+    const [scene, target] = useMemo(() => {
+        const scene = new THREE.Scene()
+        const target = new THREE.WebGLMultisampleRenderTarget(
+            windowWidth,
+            windowHeight,
+            {
+                format: THREE.RGBFormat,
+                stencilBuffer: false,
+                depthBuffer: true,
+                depthWrite: true,
+                depthTest: true,
+            }
+        )
+        return [scene, target]
+    }, [])
 
     const uniforms = useMemo(
         () => ({
@@ -71,43 +85,16 @@ const H1 = ({
         [children]
     )
 
-    const animateX = e => {
-        gsap.to(e, {
-            duration: 1,
-            x: props.pointer.x,
-            ease: "inout",
-        })
-    }
-
-    const animateY = e => {
-        gsap.to(e, {
-            duration: 1,
-            y: props.pointer.y,
-            ease: "inout",
-        })
-    }
-
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
-        animateX(uniforms.u_mouse.value)
-        animateY(uniforms.u_mouse.value)
-
-        state.camera.position.x = 0
-        state.camera.position.z = 50
-        state.camera.position.y = 0
-
-        mesh.current.position.y =
-            Math.sin((uniforms.u_time.value * props.seed) / 2) * 5
-        mesh.current.rotation.x += Math.sin(uniforms.u_time.value / 2)
-
-        // mesh.current.rotation.y = 0.3
-        mesh.current.rotation.x = 0.5
-        // mesh.current.rotation.z = 0.3
+        state.gl.setRenderTarget(target)
+        state.gl.render(scene, state.camera)
+        state.gl.setRenderTarget(null)
     })
 
     return (
-        <group {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
+        <group {...props} scale={[size / 5, size * 4, 0.1]}>
             <mesh ref={mesh}>
                 <textBufferGeometry args={[children, config]} />
                 <shaderMaterial

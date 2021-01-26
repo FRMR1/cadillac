@@ -14,8 +14,6 @@ const Background = props => {
     const domEl = props.bodyRef
     const planeRef = useRef()
 
-    console.log("bg props", props)
-
     const { gl, camera } = useThree()
 
     const windowWidth = window.innerWidth
@@ -111,7 +109,11 @@ const Background = props => {
 
         planeRef.current.scale.x = scaleX
         planeRef.current.scale.y = scaleY
-        planeRef.current.position.z = -80
+        planeRef.current.position.z = -10
+
+        state.camera.position.x = 0
+        state.camera.position.z = 5
+        state.camera.position.y = 0
 
         uniforms.u_time.value += delta
 
@@ -140,14 +142,14 @@ const Background = props => {
                     <FBO el={props.newsRef} pointer={props.pointer}>
                         <H1
                             position={[0, 55, -60]}
-                            children={"CADILLAC"}
+                            children={"NEWS"}
                             pointer={props.pointer}
                         />
                     </FBO>
                     <FBO el={props.showsRef} pointer={props.pointer}>
                         <H1
-                            position={[0, 55, -60]}
-                            children={"CADILLAC"}
+                            position={[0, 0, 0]}
+                            children={"UPCOMING SHOWS"}
                             pointer={props.pointer}
                         />
                     </FBO>

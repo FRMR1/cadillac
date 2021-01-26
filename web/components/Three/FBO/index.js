@@ -50,13 +50,13 @@ const FBO = props => {
 
         const vFov = (fov * Math.PI) / 180
 
-        const height = 2 * Math.tan(vFov / 2) * (cameraZ - zDistance)
+        const height = 2 * Math.tan(vFov / 2) * cameraZ
         const width = height * aspect
 
         return { width, height }
     }
 
-    const camUnit = calculateUnitSize(50) // element's z-index === 0
+    const camUnit = calculateUnitSize() // element's z-distance === 0
 
     const getRenderSize = el => {
         const {
@@ -89,23 +89,16 @@ const FBO = props => {
         planeRef.current.position.y = camUnit.height / 2
 
         // Set position
-        planeRef.current.position.x +=
-            (left / windowWidth) * camUnit.width +
-            (camUnit.width * planeRef.current.scale.x) / 2
-        planeRef.current.position.y -=
-            -1 * ((top - scrollY) / windowHeight) * camUnit.height +
-            camUnit.height * planeRef.current.scale.y -
-            15
+        planeRef.current.position.x = left / camUnit.width
+        planeRef.current.position.y = top / camUnit.height
     }
 
     useFrame((state, delta) => {
         const { scaleX, scaleY } = getRenderSize(domEl)
 
-        planeRef.current.scale.x = scaleX
+        planeRef.current.scale.x = scaleX / 2
         planeRef.current.scale.y = scaleY
-        planeRef.current.position.z = 0
-
-        // planeRef.current.material.wireframe = true
+        planeRef.current.position.z = -80
 
         updateRenderPosition(domEl, 0)
 
@@ -119,7 +112,7 @@ const FBO = props => {
             {createPortal(props.children, scene)}
             <mesh ref={planeRef}>
                 <planeBufferGeometry
-                    args={[camUnit.width, camUnit.height, 30, 20]}
+                    args={[camUnit.width, camUnit.height, 1, 1]}
                 />
                 <shaderMaterial
                     uniforms={uniforms}
