@@ -184,7 +184,7 @@ float fbm(vec4 p) {
     float amp = 1.;
     float scale = 1.;
 
-    for (int i=0;i<3;i++) {
+    for (int i=0;i<6;i++) {
         sum += snoise(p*scale) * amp;
         p.w += 100.;
         amp *= .9;
@@ -211,17 +211,17 @@ void main() {
     vec3 pos = v_position;
     pos /= vec3(3.);
     
-    float noise = fbm(vec4(pos / 80., u_time * .1));
-    float step = smoothstep(0.4, 0.39, noise);
+    float noise = fbm(vec4(pos / 10., u_time * .01));
+    float step = smoothstep(0.4, 0.3999, noise);
     vec4 col = vec4(diff, diff, diff, 1.);
     
     vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time /3.));
     vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_n.y + d + u_time /3.));
 
-    // vec4 txt = texture2D(u_texture, v_n);
+    vec4 txt = texture2D(u_texture, v_n);
     // vec4 txt2 = texture2D(u_texture2, v_n);
 
-    vec4 txt = vec4(animatedColor2, 1.);
+    // vec4 txt = vec4(animatedColor2, 1.);
     vec4 txt2 = vec4(animatedColor, 1.);
     
     vec4 color = mix(txt2, txt, step);
@@ -229,7 +229,7 @@ void main() {
 
     float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.5, -1., u_mouse.y * -.5)), v_normal), (sin(u_time*20.) + 1.) / 30. + 1.4);
 
-    vec4 final = mix(txt, bg, fresnel);
+    vec4 final = mix(color, bg, fresnel);
 
     gl_FragColor = color;
 }

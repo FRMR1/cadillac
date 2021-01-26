@@ -95,15 +95,15 @@ const Skull = props => {
         uniforms.u_time.value += delta
 
         obj.rotation.x = Math.PI / 0.59
-        obj.scale.set(0.06, 0.06, 0.06)
+        obj.scale.set(0.3, 0.3, 0.3)
 
-        obj.rotation.z -= 0.025
-        obj.position.y += Math.sin(uniforms.u_time.value / 1.75) / 70
+        // obj.rotation.z -= 0.025
+        obj.position.y += Math.sin(uniforms.u_time.value / 1.75) / 170
     })
 
     return (
         <primitive
-            position={[3, 5, -7]}
+            position={[0, 5, -12]}
             onPointerOver={() => animateSetting(uniforms.u_setting)}
             object={obj}
         />

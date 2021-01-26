@@ -19,7 +19,7 @@ export default function Text({
     const aspect = windowWidth / windowHeight
 
     const font = useLoader(THREE.FontLoader, "/fonts/victorian.json")
-    const txt = useLoader(THREE.TextureLoader, "/assets/hero.jpg")
+    const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
     const txt2 = useLoader(THREE.TextureLoader, "/assets/texture2.jpg")
 
     const uniforms = useMemo(
@@ -102,7 +102,7 @@ export default function Text({
         animateX(uniforms.u_mouse.value)
         animateY(uniforms.u_mouse.value)
 
-        mesh.current.position.y += Math.sin(uniforms.u_time.value / 1.5) / 25
+        mesh.current.position.y += Math.sin(uniforms.u_time.value / 1.5) / 60
         mesh.current.rotation.x += Math.sin(uniforms.u_time.value / 2)
 
         // mesh.current.rotation.y = 0.3

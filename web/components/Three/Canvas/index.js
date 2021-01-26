@@ -32,7 +32,7 @@ const MainCanvas = props => {
             <Suspense fallback={null}>
                 {/* <OrbitControls /> */}
                 <Skull bodyRef={bodyRef} pointer={pointer} />
-                <Dice pointer={pointer} />
+                {/* <Dice pointer={pointer} /> */}
                 <HeroText
                     position={[0, 4.8, -5]}
                     children={"CADILLAC"}

@@ -43,16 +43,16 @@ const dice = props => {
         obj.children[i].material = material
     }
 
-    obj.scale.set(0.3, 0.3, 0.3)
+    obj.scale.set(0.28, 0.28, 0.28)
 
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
         obj.rotation.y += 0.02
-        obj.position.y += Math.sin(uniforms.u_time.value / 2) / 60
+        obj.position.y += Math.sin(uniforms.u_time.value / 2) / 200
     })
 
-    return <primitive position={[-3, 3, -4]} object={obj} />
+    return <primitive position={[-2.6, 4, -4]} object={obj} />
 }
 
 export default dice

@@ -62,7 +62,7 @@ float snoise(vec2 v) {
 void main() {
     vec2 st = gl_FragCoord.xy/u_resolution.xy;
     st.x *= u_resolution.x/u_resolution.y;
-    vec2 pos = v_position.xy / vec2(30.);
+    vec2 pos = v_position.xy / vec2(5.);
     pos.x /= 8.;
     pos.y *= 5.;
 
@@ -70,9 +70,9 @@ void main() {
     vec3 b = vec3(.2, .2, .2);
     vec3 c = vec3(.5, .5, .5);
     vec3 d = vec3(0., .33, .67);
+
     vec3 animatedColor = a + b * cos(2. * PI * (c * v_uv.y + d + u_time / 10.));
     vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_uv.y + d + u_time / 10.));
-
 
     float DF = 0.0;
 
