@@ -195,10 +195,23 @@ float fbm(vec4 p) {
 
 void main() {
 
-    vec3 a = vec3(0.6, 0.6, 0.6);
-    vec3 b = vec3(.4, .4, .4);
+    // Rainbow pattern
+    vec3 a = vec3(0.4, 0.4, 0.4);
+    vec3 b = vec3(.25, .25, .25);
     vec3 c = vec3(.5, .5, .5);
     vec3 d = vec3(0., .33, .67);
+
+    // Red and yellow
+    // vec3 a = vec3(.8, 0.16, 0.);
+    // vec3 b = vec3(0., .39, 0.);
+    // vec3 c = vec3(1., 1., 1.);
+    // vec3 d = vec3(0., .5, 0.);
+
+    // Test
+    // vec3 a = vec3(0.938, 0.328, 0.718);
+    // vec3 b = vec3(0.659, 0.438, 0.328);
+    // vec3 c = vec3(0.388, 0.388, 0.296);
+    // vec3 d = vec3(2.538, 2.478, 0.168);
 
     vec3 viewDir = normalize( v_view );
 	vec3 x = normalize( vec3( viewDir.z, 0.0, - viewDir.x ) );
@@ -215,8 +228,8 @@ void main() {
     float step = smoothstep(0.4, 0.3999, noise);
     vec4 col = vec4(diff, diff, diff, 1.);
     
-    vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time /3.));
-    vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_n.y + d + u_time /3.));
+    vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time / 5.));
+    vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_n.y + d + u_time / 5.));
 
     // vec4 txt = texture2D(u_texture, v_n);
     // vec4 txt2 = texture2D(u_texture2, v_n);

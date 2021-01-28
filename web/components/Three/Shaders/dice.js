@@ -136,10 +136,17 @@ vec2 getmatcap(vec3 eye, vec3 normal) {
 
 void main() {
 
-    vec3 a = vec3(0.6, 0.6, 0.6);
-    vec3 b = vec3(.3, .3, .3);
-    vec3 c = vec3(.5, .5, .5);
-    vec3 d = vec3(0., .33, .67);
+    // Rainbow pattern
+    // vec3 a = vec3(0.4, 0.4, 0.4);
+    // vec3 b = vec3(.3, .3, .3);
+    // vec3 c = vec3(.5, .5, .5);
+    // vec3 d = vec3(0., .33, .67);
+
+    // Red and yellow
+    vec3 a = vec3(1., 0.5, 0.);
+    vec3 b = vec3(0., .5, 0.);
+    vec3 c = vec3(1., 1., 1.);
+    vec3 d = vec3(0., .5, 0.);
 
     vec3 viewDir = normalize( v_view );
 	vec3 x = normalize( vec3( viewDir.z, 0.0, - viewDir.x ) );
@@ -159,16 +166,16 @@ void main() {
     vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time /2.));
     vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_n.y + d + u_time /2.5));
 
-    // vec4 txt = texture2D(u_texture, v_n);
+    vec4 txt = texture2D(u_texture, v_n);
     // vec4 txt2 = texture2D(u_texture2, v_n);
 
-    vec4 txt = vec4(animatedColor2, 1.);
+    // vec4 txt = vec4(animatedColor2, 1.);
     vec4 txt2 = vec4(animatedColor, 1.);
     
     vec4 color = mix(txt2, txt, step);
     vec4 bg = vec4(0.2, 0.2, 0.2, 1.);
 
-    float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.5, 1., u_mouse.y * -.5)), v_normal), (sin(u_time*20.) + 1.) / 30. + 1.4);
+    float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.5, u_mouse.y * -.5, 1.)), v_normal), (sin(u_time*20.) + 1.) / 30. + 1.4);
 
     vec4 final = mix(txt, bg, fresnel);
 

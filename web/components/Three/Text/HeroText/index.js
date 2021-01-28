@@ -19,7 +19,7 @@ export default function Text({
     const aspect = windowWidth / windowHeight
 
     const font = useLoader(THREE.FontLoader, "/fonts/victorian.json")
-    const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
+    const txt = useLoader(THREE.TextureLoader, "/assets/texture3.jpg")
     const txt2 = useLoader(THREE.TextureLoader, "/assets/texture2.jpg")
 
     const uniforms = useMemo(
@@ -47,7 +47,7 @@ export default function Text({
         () => ({
             font,
             size: 10,
-            height: 1,
+            height: 0.1,
             curveSegments: 20,
             bevelEnabled: true,
             bevelThickness: 1,

@@ -7,6 +7,7 @@ import Skull from "../Skull"
 import HeroText from "../Text/HeroText"
 import NavMenuItem from "../Text/H1"
 import Dice from "../Dice"
+import Dice2 from "../Dice2"
 import Effects from "../Effects"
 import styles from "../../../styles/Canvas.module.scss"
 
@@ -32,7 +33,9 @@ const MainCanvas = props => {
             <Suspense fallback={null}>
                 {/* <OrbitControls /> */}
                 <Skull bodyRef={bodyRef} pointer={pointer} />
-                {/* <Dice pointer={pointer} /> */}
+                <Dice pointer={pointer} />
+                <Dice pointer={pointer} />
+                <Dice2 pointer={pointer} />
                 <HeroText
                     position={[0, 4.8, -5]}
                     children={"CADILLAC"}

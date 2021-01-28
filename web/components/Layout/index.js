@@ -14,8 +14,6 @@ const Layout = props => {
     const bodyRef = useRef()
     const router = useRouter()
 
-    console.log("LAYOUT PROPS", props)
-
     gsap.registerPlugin(ScrollTrigger)
 
     const date = new Date()

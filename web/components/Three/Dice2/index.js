@@ -57,7 +57,7 @@ const Dice = props => {
 
     return (
         <>
-            <primitive position={[2.6, 5, -4]} object={obj} />
+            <primitive position={[-2.6, 4.5, -4]} object={obj} />
         </>
     )
 }
