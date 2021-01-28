@@ -51,13 +51,13 @@ const Dice = props => {
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
-        obj.rotation.y += 0.02
+        obj.rotation.y += 0.03
         obj.position.y += Math.sin(uniforms.u_time.value / 2) / 400
     })
 
     return (
         <>
-            <primitive position={[2.6, 5, -4]} object={obj} />
+            <primitive position={[2.6, 4, -4]} object={obj} />
         </>
     )
 }

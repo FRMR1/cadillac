@@ -136,11 +136,17 @@ vec2 getmatcap(vec3 eye, vec3 normal) {
 
 void main() {
 
-    // pink, aqua blue
-    vec3 a = vec3(0.4, 0.4, 1.);
-    vec3 b = vec3(0.35, 0.35, 0.);
-    vec3 c = vec3(1., 1., 1.);
-    vec3 d = vec3(0.698, 0.145, 0.667);
+    // black, purple
+    // vec3 a = vec3(.306, 0.156, .496);
+    // vec3 b = vec3(.15, 0., .34);
+    // vec3 c = vec3(1., 1., 1.);
+    // vec3 d = vec3(0., 0.333, 0.);
+
+    // red, orange, yellow
+    vec3 a = vec3(0.5, 0.5, 0.5);
+    vec3 b = vec3(.35, .35, .35);
+    vec3 c = vec3(.5, .5, .5);
+    vec3 d = vec3(0., .33, .67);
 
     vec3 viewDir = normalize( v_view );
 	vec3 x = normalize( vec3( viewDir.z, 0.0, - viewDir.x ) );
@@ -160,10 +166,10 @@ void main() {
     vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time /2.));
     vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_n.y + d + u_time /2.5));
 
-    // vec4 txt = texture2D(u_texture, v_n);
+    vec4 txt = texture2D(u_texture, v_n);
     // vec4 txt2 = texture2D(u_texture2, v_n);
 
-    vec4 txt = vec4(animatedColor2, 1.);
+    // vec4 txt = vec4(animatedColor2, 1.);
     vec4 txt2 = vec4(animatedColor, 1.);
     
     vec4 color = mix(txt2, txt, step);

@@ -196,10 +196,16 @@ float fbm(vec4 p) {
 void main() {
 
     // rainbow 
-    // vec3 a = vec3(0.4, 0.4, 0.4);
-    // vec3 b = vec3(.25, .25, .25);
-    // vec3 c = vec3(.5, .5, .5);
-    // vec3 d = vec3(0., .33, .67);
+    vec3 a = vec3(0.4, 0.4, 0.7);
+    vec3 b = vec3(.25, .25, .25);
+    vec3 c = vec3(.5, .5, .5);
+    vec3 d = vec3(0., .33, .67);
+
+    // black, purple
+    // vec3 a = vec3(.306, 0.156, .496);
+    // vec3 b = vec3(.15, 0., .34);
+    // vec3 c = vec3(1., 1., 1.);
+    // vec3 d = vec3(0., 0.333, 0.);
 
     // red, orange, yellow
     // vec3 a = vec3(0.75, 0.5, .5);
@@ -220,10 +226,10 @@ void main() {
     // vec3 d = vec3(0.698, 0.145, 0.667);
 
     // purple, lime green
-    vec3 a = vec3(0.46, 0.5, 0.5);
-    vec3 b = vec3(-0.1, 0.265, 0.265);
-    vec3 c = vec3(1.5, 1.5, 1.5);
-    vec3 d = vec3(0., 0.5, 0.0);
+    // vec3 a = vec3(0.46, 0.5, 0.5);
+    // vec3 b = vec3(-0.1, 0.265, 0.265);
+    // vec3 c = vec3(1.5, 1.5, 1.5);
+    // vec3 d = vec3(0., 0.5, 0.0);
 
     vec3 viewDir = normalize( v_view );
 	vec3 x = normalize( vec3( viewDir.z, 0.0, - viewDir.x ) );

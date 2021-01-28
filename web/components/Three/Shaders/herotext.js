@@ -196,16 +196,22 @@ float fbm(vec4 p) {
 void main() {
 
     // red, orange, yellow
-    // vec3 a = vec3(0.75, 0.5, .5);
-    // vec3 b = vec3(0., 0.25, 0.0);
-    // vec3 c = vec3(1., 1., 1.);
+    // vec3 a = vec3(1., 0.5, .3);
+    // vec3 b = vec3(0., 0.35, 0.0);
+    // vec3 c = vec3(1.5, 1.5, 1.5);
     // vec3 d = vec3(0.698, 0.333, 0.667);
 
     // pink, aqua blue
-    vec3 a = vec3(0.4, 0.4, 1.);
-    vec3 b = vec3(0.35, 0.35, 0.);
+    // vec3 a = vec3(0.4, 0.4, 1.);
+    // vec3 b = vec3(0.35, 0.35, 0.);
+    // vec3 c = vec3(1., 1., 1.);
+    // vec3 d = vec3(0.698, 0.145, 0.667);
+
+    // black, purple
+    vec3 a = vec3(.306, 0.156, .496);
+    vec3 b = vec3(.15, 0., .34);
     vec3 c = vec3(1., 1., 1.);
-    vec3 d = vec3(0.698, 0.145, 0.667);
+    vec3 d = vec3(0., 0.333, 0.);
 
     vec3 viewDir = normalize( v_view );
 	vec3 x = normalize( vec3( viewDir.z, 0.0, - viewDir.x ) );
@@ -222,8 +228,8 @@ void main() {
     float step = smoothstep(0.4, 0.3999, noise);
     vec4 col = vec4(diff, diff, diff, 1.);
     
-    vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time / 5.5));
-    vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_n.y + d + u_time /5.));
+    vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time / 5.));
+    vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_n.y + d + u_time / 10.));
 
     // vec4 txt = texture2D(u_texture, v_n);
     // vec4 txt2 = texture2D(u_texture2, v_n);

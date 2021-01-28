@@ -75,12 +75,6 @@ const H1 = ({
                     : hAlign === "right"
                     ? 0
                     : -size.x
-            // self.position.y =
-            //     vAlign === "center"
-            //         ? -size.y / 2
-            //         : vAlign === "top"
-            //         ? 0
-            //         : -size.y
         },
         [children]
     )
@@ -94,7 +88,7 @@ const H1 = ({
     })
 
     return (
-        <group {...props} scale={[size / 5, size * 4, 0.1]}>
+        <group {...props} scale={[size, size, 0.1]}>
             <mesh ref={mesh}>
                 <textBufferGeometry args={[children, config]} />
                 <shaderMaterial

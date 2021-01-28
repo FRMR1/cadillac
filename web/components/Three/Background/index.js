@@ -141,18 +141,18 @@ const Background = props => {
                 <>
                     <FBO el={props.newsRef} pointer={props.pointer}>
                         <H1
-                            position={[0, 55, -60]}
+                            position={[0, 0, 4]}
                             children={"NEWS"}
                             pointer={props.pointer}
                         />
                     </FBO>
-                    <FBO el={props.showsRef} pointer={props.pointer}>
+                    {/* <FBO el={props.showsRef} pointer={props.pointer}>
                         <H1
                             position={[0, 0, 0]}
                             children={"UPCOMING SHOWS"}
                             pointer={props.pointer}
                         />
-                    </FBO>
+                    </FBO> */}
                 </>
             )}
         </>

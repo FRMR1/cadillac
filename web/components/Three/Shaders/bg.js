@@ -66,19 +66,13 @@ void main() {
     pos.x /= 8.;
     pos.y *= 5.;
 
-    // modulating dull purple, blue, etc
-    // vec3 a = vec3(0.2, 0.2, .52);
-    // vec3 b = vec3(0.073, 0.073, 0.);
-    // vec3 c = vec3(1., 1., 1.);
-    // vec3 d = vec3((sin(u_time / 3.) + .5) / 2., 0.145, 0.667);
-
-    // red, orange, yellow
-    vec3 a = vec3(0.45, 0.2, .2);
-    vec3 b = vec3(0., 0.25, 0.0);
+    // black, purple
+    vec3 a = vec3(.25, 0.156, .44);
+    vec3 b = vec3(.09, 0., .28);
     vec3 c = vec3(1., 1., 1.);
-    vec3 d = vec3(0.698, 0.333, 0.667);
+    vec3 d = vec3(0., 0.333, 0.);
 
-    vec3 animatedColor = a + b * cos(2. * PI * (c * v_uv.y + d + u_time / 10.));
+    vec3 animatedColor = a + b * sin(2. * PI * (c * v_uv.y + d + u_time / 10. + .25) * -1.);
     vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_uv.y + d + u_time / 10.));
 
     float DF = 0.0;
@@ -96,7 +90,7 @@ void main() {
     vec3 color = vec3( smoothstep(.7,.702,fract(DF)) );
 
     // color = mix(vec3(197./255., 106./255., 204./255.), vec3(123./255., 109./255., 189./255.), color);
-    color = mix(vec3(.17), animatedColor, color);
+    color = mix(vec3(72./255., 53./255., 110./255.), vec3(40./255.), color);
 
     // color -= vec3(.2);
 

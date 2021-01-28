@@ -1,5 +1,5 @@
 import * as THREE from "three"
-import React, { useMemo, useRef } from "react"
+import React, { useMemo, useRef, useEffect } from "react"
 import { useLoader, useUpdate, useFrame } from "react-three-fiber"
 import { frag, vert } from "../../Shaders/herotext"
 import gsap from "gsap"
@@ -70,12 +70,14 @@ export default function Text({
                     : hAlign === "right"
                     ? 0
                     : -size.x
-            // self.position.y =
-            //     vAlign === "center"
-            //         ? -size.y / 2
-            //         : vAlign === "top"
-            //         ? 0
-            //         : -size.y
+
+            // Add roughness to text
+            // const vertices = self.geometry.attributes.position.array
+            // const verticesCount = self.geometry.attributes.position.count
+
+            // for (let i = 0; i < verticesCount; i++) {
+            //     vertices[i] += Math.random() / 10
+            // }
         },
         [children]
     )
