@@ -195,23 +195,35 @@ float fbm(vec4 p) {
 
 void main() {
 
-    // Rainbow pattern
-    vec3 a = vec3(0.4, 0.4, 0.4);
-    vec3 b = vec3(.25, .25, .25);
-    vec3 c = vec3(.5, .5, .5);
-    vec3 d = vec3(0., .33, .67);
+    // rainbow 
+    // vec3 a = vec3(0.4, 0.4, 0.4);
+    // vec3 b = vec3(.25, .25, .25);
+    // vec3 c = vec3(.5, .5, .5);
+    // vec3 d = vec3(0., .33, .67);
 
-    // Red and yellow
-    // vec3 a = vec3(.8, 0.16, 0.);
-    // vec3 b = vec3(0., .39, 0.);
+    // red, orange, yellow
+    // vec3 a = vec3(0.75, 0.5, .5);
+    // vec3 b = vec3(0., 0.25, 0.0);
     // vec3 c = vec3(1., 1., 1.);
-    // vec3 d = vec3(0., .5, 0.);
+    // vec3 d = vec3(0.698, 0.333, 0.667);
 
-    // Test
-    // vec3 a = vec3(0.938, 0.328, 0.718);
-    // vec3 b = vec3(0.659, 0.438, 0.328);
-    // vec3 c = vec3(0.388, 0.388, 0.296);
-    // vec3 d = vec3(2.538, 2.478, 0.168);
+    // pink, purple
+    // vec3 a = vec3(0.68, 0.36, 1.);
+    // vec3 b = vec3(0.32, 0., 0.);
+    // vec3 c = vec3(1., 1., 1.);
+    // vec3 d = vec3(0.698, 0.333, 0.667);
+
+    // pink, aqua blue
+    // vec3 a = vec3(0.4, 0.4, 1.);
+    // vec3 b = vec3(0.35, 0.35, 0.);
+    // vec3 c = vec3(1., 1., 1.);
+    // vec3 d = vec3(0.698, 0.145, 0.667);
+
+    // purple, lime green
+    vec3 a = vec3(0.46, 0.5, 0.5);
+    vec3 b = vec3(-0.1, 0.265, 0.265);
+    vec3 c = vec3(1.5, 1.5, 1.5);
+    vec3 d = vec3(0., 0.5, 0.0);
 
     vec3 viewDir = normalize( v_view );
 	vec3 x = normalize( vec3( viewDir.z, 0.0, - viewDir.x ) );
