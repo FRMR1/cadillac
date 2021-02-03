@@ -7,7 +7,7 @@ import * as THREE from "three"
 
 let OBJLoader
 
-const Dice = props => {
+const Bullet = props => {
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
     const aspect = windowWidth / windowHeight
@@ -19,7 +19,7 @@ const Dice = props => {
 
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
     const group = useRef()
-    const obj = useLoader(OBJLoader, "/assets/dice.obj")
+    const obj = useLoader(OBJLoader, "/assets/bullet.obj")
 
     const uniforms = useMemo(
         () => ({
@@ -46,20 +46,20 @@ const Dice = props => {
         obj.children[i].material = material
     }
 
-    obj.scale.set(0.2, 0.2, 0.2)
+    obj.scale.set(3.3, 3.3, 3.3)
 
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
-        obj.rotation.y += 0.03
-        obj.position.y += Math.sin(uniforms.u_time.value / 2) / 400
+        obj.rotation.y += 0.022
+        obj.position.y += Math.sin(uniforms.u_time.value / 3) / 300
     })
 
     return (
         <>
-            <primitive position={[2.6, 3.75, -4]} object={obj} />
+            <primitive position={[-1.6, 5.75, -4]} object={obj} />
         </>
     )
 }
 
-export default Dice
+export default Bullet

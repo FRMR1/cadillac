@@ -107,9 +107,8 @@ const Background = props => {
     useFrame((state, delta) => {
         const { scaleX, scaleY } = getRenderSize(domEl)
 
-        planeRef.current.scale.x = scaleX
-        planeRef.current.scale.y = scaleY
-        planeRef.current.position.z = -10
+        // planeRef.current.scale.x = scaleX
+        // planeRef.current.scale.y = scaleY
 
         state.camera.position.x = 0
         state.camera.position.z = 5
@@ -122,7 +121,7 @@ const Background = props => {
 
     return (
         <>
-            <mesh position={[0, 0, 0]} ref={planeRef}>
+            <mesh position={[0, 0, -10]} ref={planeRef}>
                 <planeBufferGeometry
                     args={[camUnit.width, camUnit.height * 2, 1, 1]}
                 />
@@ -132,29 +131,29 @@ const Background = props => {
                     fragmentShader={frag}
                 />
             </mesh>
-            {props.route === "/bio" && (
+            {/* {props.route === "/bio" && (
                 <FBO el={props.bioRef} pointer={props.pointer}>
                     <BioImage />
                 </FBO>
-            )}
-            {props.route === "/" && (
+            )} */}
+            {/* {props.route === "/" && (
                 <>
                     <FBO el={props.newsRef} pointer={props.pointer}>
                         <H1
-                            position={[0, 0, 4]}
+                            position={[0, 0, 0]}
                             children={"NEWS"}
                             pointer={props.pointer}
                         />
                     </FBO>
-                    {/* <FBO el={props.showsRef} pointer={props.pointer}>
+                    <FBO el={props.showsRef} pointer={props.pointer}>
                         <H1
                             position={[0, 0, 0]}
                             children={"UPCOMING SHOWS"}
                             pointer={props.pointer}
                         />
-                    </FBO> */}
+                    </FBO>
                 </>
-            )}
+            )} */}
         </>
     )
 }

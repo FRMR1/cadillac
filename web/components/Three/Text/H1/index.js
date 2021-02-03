@@ -51,12 +51,12 @@ const H1 = ({
     const config = useMemo(
         () => ({
             font,
-            size: 14,
+            size: 1,
             height: 0,
             curveSegments: 20,
             bevelEnabled: true,
-            bevelThickness: 1,
-            bevelSize: 0.1,
+            bevelThickness: 0,
+            bevelSize: 0,
             bevelOffset: 0,
             bevelSegments: 2,
         }),
@@ -68,7 +68,7 @@ const H1 = ({
             const size = new THREE.Vector3()
             self.geometry.computeBoundingBox()
             self.geometry.boundingBox.getSize(size)
-            self.rotation.x = 1
+            // self.rotation.x = 1
             self.position.x =
                 hAlign === "center"
                     ? -size.x / 2
@@ -88,8 +88,8 @@ const H1 = ({
     })
 
     return (
-        <group {...props} scale={[size, size, 0.1]}>
-            <mesh ref={mesh}>
+        <group {...props}>
+            <mesh ref={mesh} scale={[1, 1, 1]}>
                 <textBufferGeometry args={[children, config]} />
                 <shaderMaterial
                     uniforms={uniforms}

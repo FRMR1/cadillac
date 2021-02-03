@@ -63,8 +63,8 @@ void main() {
     vec2 st = gl_FragCoord.xy/u_resolution.xy;
     st.x *= u_resolution.x/u_resolution.y;
     vec2 pos = v_position.xy / vec2(5.);
-    pos.x /= 8.;
-    pos.y *= 5.;
+    pos.x /= 4.;
+    pos.y *= 2.;
 
     // black, purple
     vec3 a = vec3(.25, 0.156, .44);
@@ -90,7 +90,7 @@ void main() {
     vec3 color = vec3( smoothstep(.7,.702,fract(DF)) );
 
     // color = mix(vec3(197./255., 106./255., 204./255.), vec3(123./255., 109./255., 189./255.), color);
-    color = mix(vec3(72./255., 53./255., 110./255.), vec3(40./255.), color);
+    color = mix(vec3(40./255.), vec3(72./255., 53./255., 110./255.), color);
 
     // color -= vec3(.2);
 

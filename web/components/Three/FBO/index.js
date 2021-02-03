@@ -11,6 +11,7 @@ const FBO = props => {
 
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
+    const clientHeight = props.bodyRef.clientHeight
     const aspect = windowWidth / windowHeight
 
     const [scene, target] = useMemo(() => {
@@ -46,7 +47,7 @@ const FBO = props => {
 
     const calculateUnitSize = zDistance => {
         const fov = 75 // default camera value
-        const cameraZ = 95 // default camera value
+        const cameraZ = 5 // default camera value
 
         const vFov = (fov * Math.PI) / 180
 
@@ -68,8 +69,8 @@ const FBO = props => {
             height,
         } = el.getBoundingClientRect()
 
-        const scaleX = width / windowWidth
-        const scaleY = height / windowHeight
+        const scaleX = (width / windowWidth) * 2
+        const scaleY = (height / windowHeight) * 14
 
         return { scaleX, scaleY }
     }
@@ -89,8 +90,8 @@ const FBO = props => {
         planeRef.current.position.y = camUnit.height / 2
 
         // Set position
-        planeRef.current.position.x = left / camUnit.width
-        planeRef.current.position.y = top / camUnit.height
+        planeRef.current.position.x += (left - width) * camUnit.width
+        planeRef.current.position.y -= (top / height) * camUnit.height
     }
 
     useFrame((state, delta) => {
@@ -98,7 +99,7 @@ const FBO = props => {
 
         planeRef.current.scale.x = scaleX / 2
         planeRef.current.scale.y = scaleY
-        planeRef.current.position.z = -80
+        planeRef.current.position.z = -40
 
         updateRenderPosition(domEl, 0)
 
