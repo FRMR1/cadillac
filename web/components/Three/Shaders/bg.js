@@ -1,12 +1,9 @@
 export const vert = `
-precision highp float;
-
-varying vec2 v_uv;
-varying vec3 v_position;
+varying vec3 vPosition;
 
 void main() {
 
-    v_position = position;
+    vPosition = position;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 }
 `
@@ -14,15 +11,10 @@ void main() {
 export const frag = `
 precision highp float;
 
-uniform vec2 u_resolution;
-uniform float u_time;
-uniform float u_ratio;
-uniform float u_speed;
-uniform float u_slider;
-uniform sampler2D u_texture;
+uniform vec2 uResolution;
+uniform float uTime;
 
-varying vec2 v_uv;
-varying vec3 v_position;
+varying vec3 vPosition;
 
 float PI = 3.141592653589;
 
@@ -60,39 +52,27 @@ float snoise(vec2 v) {
 }
 
 void main() {
-    vec2 st = gl_FragCoord.xy/u_resolution.xy;
-    st.x *= u_resolution.x/u_resolution.y;
-    vec2 pos = v_position.xy / vec2(5.);
+    vec2 st = gl_FragCoord.xy/uResolution.xy;
+    st.x *= uResolution.x/uResolution.y;
+    vec2 pos = vPosition.xy / vec2(5.);
     pos.x /= 4.;
     pos.y *= 2.;
-
-    // black, purple
-    vec3 a = vec3(.25, 0.156, .44);
-    vec3 b = vec3(.09, 0., .28);
-    vec3 c = vec3(1., 1., 1.);
-    vec3 d = vec3(0., 0.333, 0.);
-
-    vec3 animatedColor = a + b * sin(2. * PI * (c * v_uv.y + d + u_time / 10. + .25) * -1.);
-    vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_uv.y + d + u_time / 10.));
 
     float DF = 0.0;
 
     // Add a random position
     float a1 = 0.0;
-    vec2 vel = vec2(u_time*.0125);
+    vec2 vel = vec2(uTime*.0125);
     DF += snoise(pos+vel);
 
     // Add a random position
-    a1 = snoise(pos*vec2(cos(u_time*0.05),sin(u_time*0.055))*0.025)*3.1415;
+    a1 = snoise(pos*vec2(cos(uTime*0.05),sin(uTime*0.055))*0.025)*3.1415;
     vel = vec2(cos(a1),sin(a1));
     DF += snoise(pos+vel)*.25+.25;
 
     vec3 color = vec3( smoothstep(.7,.702,fract(DF)) );
 
-    // color = mix(vec3(197./255., 106./255., 204./255.), vec3(123./255., 109./255., 189./255.), color);
     color = mix(vec3(40./255.), vec3(72./255., 53./255., 110./255.), color);
-
-    // color -= vec3(.2);
 
     gl_FragColor = vec4(color,1.0);
 }

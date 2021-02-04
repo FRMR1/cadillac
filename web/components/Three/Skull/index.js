@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useMemo } from "react"
-import { useLoader, useThree, useFrame } from "react-three-fiber"
+import React, { useRef, useMemo } from "react"
+import { useLoader, useFrame } from "react-three-fiber"
 import gsap from "gsap"
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import { frag, vert } from "../Shaders/skull"
 
 import * as THREE from "three"
@@ -9,40 +8,13 @@ import * as THREE from "three"
 let OBJLoader
 
 const Skull = props => {
-    const windowWidth = window.innerWidth
-    const windowHeight = window.innerHeight
-    const aspect = windowWidth / windowHeight
-
-    gsap.registerPlugin(ScrollTrigger)
-
-    console.log(props.pointer)
-
-    const { gl, scene } = useThree()
-
-    const txt = useLoader(THREE.TextureLoader, "/assets/hero.jpg")
-    const txt2 = useLoader(THREE.TextureLoader, "/assets/texture2.jpg")
-
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
-    const group = useRef()
     const obj = useLoader(OBJLoader, "/assets/skull.obj")
 
     const uniforms = useMemo(
         () => ({
-            u_time: { value: 0.0 },
-            u_mouse: { value: new THREE.Vector2() },
-            u_resolution: { value: { x: windowWidth, y: windowHeight } },
-            u_ratio: {
-                value: aspect,
-            },
-            u_texture: {
-                value: txt,
-            },
-            u_texture2: {
-                value: txt2,
-            },
-            u_setting: {
-                value: 0,
-            },
+            uTime: { value: 0.0 },
+            uMouse: { value: new THREE.Vector2() },
         }),
         []
     )
@@ -52,10 +24,6 @@ const Skull = props => {
         vertexShader: vert,
         fragmentShader: frag,
     })
-
-    // const material = new THREE.MeshMatcapMaterial({
-    //     matcap: txt,
-    // })
 
     for (let i = 0; i < obj.children.length; i++) {
         obj.children[i].material = material
@@ -78,19 +46,16 @@ const Skull = props => {
     }
 
     useFrame((state, delta) => {
-        uniforms.u_time.value += delta
+        uniforms.uTime.value += delta
+
+        animateX(uniforms.uMouse.value)
+        animateY(uniforms.uMouse.value)
 
         obj.rotation.x = Math.PI / 0.59
         obj.scale.set(0.3, 0.3, 0.3)
-
-        animateX(uniforms.u_mouse.value)
-        animateY(uniforms.u_mouse.value)
-
-        obj.rotation.z = uniforms.u_mouse.value.x / 10
-        obj.rotation.x += uniforms.u_mouse.value.y / -10
-
-        // obj.rotation.z -= 0.025
-        obj.position.y += Math.sin(uniforms.u_time.value / 1.75) / 170
+        obj.rotation.z = uniforms.uMouse.value.x / 10
+        obj.rotation.x += uniforms.uMouse.value.y / -10
+        obj.position.y += Math.sin(uniforms.uTime.value / 1.75) / 170
     })
 
     return (

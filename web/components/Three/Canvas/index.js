@@ -2,14 +2,13 @@ import { Suspense, useEffect, useState, useMemo } from "react"
 import * as THREE from "three"
 import { Canvas } from "react-three-fiber"
 import Background from "../Background"
-import dynamic from "next/dynamic"
 import Skull from "../Skull"
 import HeroText from "../Text/HeroText"
-import H1 from "../Text/H1"
+// import H1 from "../Text/H1"
 import Dice from "../Dice"
 import Bullet from "../Bullet"
-import FBO from "../FBO"
-import Effects from "../Effects"
+// import FBO from "../FBO"
+// import Effects from "../Effects"
 import styles from "../../../styles/Canvas.module.scss"
 
 const MainCanvas = props => {
@@ -49,7 +48,7 @@ const MainCanvas = props => {
                     pointer={pointer}
                     route={props.route}
                 />
-                {props.route === "/" && (
+                {/* {props.route === "/" && (
                     <FBO
                         el={props.newsRef}
                         pointer={props.pointer}
@@ -61,7 +60,7 @@ const MainCanvas = props => {
                             pointer={props.pointer}
                         />
                     </FBO>
-                )}
+                )} */}
                 {/* <Effects /> */}
             </Suspense>
         </Canvas>

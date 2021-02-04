@@ -1,18 +1,12 @@
 export const vert = `
-precision highp float;
-
-varying vec2 v_uv;
-varying vec3 v_position;
-varying vec3 v_normal;
-varying vec3 v_view;
-varying vec2 v_n;
+varying vec3 vPosition;
+varying vec2 vN;
 
 void main() {
 
     vec4 p = vec4( position, 1. );
 
     vec4 transformed = modelViewMatrix * p;
-    v_view = normalize(-transformed.xyz);
 
     vec3 e = normalize( vec3( transformed ) );
     vec3 n = normalize( normalMatrix * normal );
@@ -23,35 +17,22 @@ void main() {
         pow( r.y, 2. ) +
         pow( r.z + 1., 2. )
     );
-    v_n = r.xy / m + .5;
+    vN = r.xy / m + .5;
 
-    v_uv = uv;
-    v_position = position;
-    v_normal = normal;
+    vPosition = position;
 
     gl_Position = projectionMatrix * transformed;
 }
 `
 
 export const frag = `
-precision highp float;
+uniform float uTime;
 
-uniform vec2 u_resolution;
-uniform float u_time;
-uniform vec2 u_mouse;
-uniform float u_ratio;
-uniform float u_speed;
-uniform float u_slider;
-uniform sampler2D u_texture;
-uniform sampler2D u_texture2;
+varying vec3 vPosition;
+varying vec2 vN;
 
-varying vec2 v_uv;
-varying vec3 v_position;
-varying vec3 v_view;
-varying vec3 v_normal;
-varying vec2 v_n;
-
-float PI = 3.141592653589;
+#define F4 0.309016994374947451
+#define PI 3.141592653589
 
 vec4 mod289(vec4 x) {
     return x - floor(x * (1.0 / 289.0)) * 289.0;
@@ -93,7 +74,6 @@ vec4 grad4(float j, vec4 ip)
 }
 
 // (sqrt(5) - 1)/4 = F4, used once below
-#define F4 0.309016994374947451
 
 float snoise(vec4 v)
 {
@@ -173,12 +153,6 @@ float snoise(vec4 v)
 
 }
 
-vec2 getmatcap(vec3 eye, vec3 normal) {
-    vec3 reflected = reflect(eye, normal);
-    float m = 2.8284271247461903 * sqrt( reflected.z+1.0 );
-    return reflected.xy / m + 0.5;
-}
-
 float fbm(vec4 p) {
     float sum = 0.;
     float amp = 1.;
@@ -231,36 +205,19 @@ void main() {
     // vec3 c = vec3(1.5, 1.5, 1.5);
     // vec3 d = vec3(0., 0.5, 0.0);
 
-    vec3 viewDir = normalize( v_view );
-	vec3 x = normalize( vec3( viewDir.z, 0.0, - viewDir.x ) );
-	vec3 y = cross( viewDir, x );
-    vec2 uv = vec2( dot( x, v_normal ), dot( y, v_normal ) ) * 0.495 + 0.5;
-    
-    float diff = abs(dot(v_normal, normalize(vec3(1., 1., 0.)))) + abs(dot(v_normal, normalize(vec3(1., -1., 0.))));
-    diff *= .5;
-
-    vec3 pos = v_position;
+    vec3 pos = vPosition;
     pos /= vec3(3.);
     
-    float noise = fbm(vec4(pos / 10., u_time * .01));
+    float noise = fbm(vec4(pos / 10., uTime * .01));
     float step = smoothstep(0.4, 0.3999, noise);
-    vec4 col = vec4(diff, diff, diff, 1.);
     
-    vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time / 5.));
-    vec3 animatedColor2 = a + b * sin(2. * PI * (c * v_n.y + d + u_time / 5.));
+    vec3 animatedColor = a + b * cos(2. * PI * (c * vN.y + d + uTime / 5.));
+    vec3 animatedColor2 = a + b * sin(2. * PI * (c * vN.y + d + uTime / 5.));
 
-    // vec4 txt = texture2D(u_texture, v_n);
-    // vec4 txt2 = texture2D(u_texture2, v_n);
-
-    vec4 txt = vec4(animatedColor2, 1.);
-    vec4 txt2 = vec4(animatedColor, 1.);
+    vec4 txt = vec4(animatedColor, 1.);
+    vec4 txt2 = vec4(animatedColor2, 1.);
     
-    vec4 color = mix(txt2, txt, step);
-    vec4 bg = vec4(0.2, 0.2, 0.2, 1.);
-
-    float fresnel = pow(1. + dot(normalize(vec3(u_mouse.x * -.5, -1., u_mouse.y * -.5)), v_normal), (sin(u_time*20.) + 1.) / 30. + 1.4);
-
-    vec4 final = mix(txt, bg, fresnel);
+    vec4 color = mix(txt, txt2, step);
 
     gl_FragColor = color;
 }

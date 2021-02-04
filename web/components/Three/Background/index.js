@@ -1,20 +1,16 @@
-import { useMemo, useRef, useState, useEffect } from "react"
+import { useMemo, useRef } from "react"
 import { useFrame, useThree } from "react-three-fiber"
-import FBO from "../FBO"
-import H1 from "../Text/H1"
-import BioImage from "../BioImage"
-import gsap from "gsap"
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import { frag, vert } from "../Shaders/bg"
-// import { Text } from "troika-three-text"
+// import FBO from "../FBO"
+// import H1 from "../Text/H1"
+// import BioImage from "../BioImage"
 
 import * as THREE from "three"
 
 const Background = props => {
-    const domEl = props.bodyRef
-    const planeRef = useRef()
-
     const { gl, camera } = useThree()
+    const planeRef = useRef()
+    const domEl = props.bodyRef
 
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
@@ -38,13 +34,9 @@ const Background = props => {
 
     const uniforms = useMemo(
         () => ({
-            u_time: { value: 0.0 },
-            u_mouse: { value: new THREE.Vector2() },
-            u_resolution: { value: { x: windowWidth, y: windowHeight } },
-            u_ratio: {
-                value: aspect,
-            },
-            u_texture: {
+            uTime: { value: 0.0 },
+            uResolution: { value: { x: windowWidth, y: windowHeight } },
+            uTexture: {
                 value: target.texture,
             },
         }),
@@ -107,14 +99,11 @@ const Background = props => {
     useFrame((state, delta) => {
         const { scaleX, scaleY } = getRenderSize(domEl)
 
-        // planeRef.current.scale.x = scaleX
-        // planeRef.current.scale.y = scaleY
-
         state.camera.position.x = 0
         state.camera.position.z = 5
         state.camera.position.y = 0
 
-        uniforms.u_time.value += delta
+        uniforms.uTime.value += delta
 
         gl.render(scene, camera)
     })
