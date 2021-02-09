@@ -1,5 +1,6 @@
-import React, { useRef, useMemo } from "react"
+import React, { useEffect, useContext, useMemo } from "react"
 import { useLoader, useFrame } from "react-three-fiber"
+import { SmoothScrollContext } from "../../../contexts/SmoothScroll.context"
 import gsap from "gsap"
 import { frag, vert } from "../Shaders/skull"
 
@@ -8,6 +9,9 @@ import * as THREE from "three"
 let OBJLoader
 
 const Skull = props => {
+    const scroll = props.scroll
+    let scrollY = 0
+
     const domEl = props.bodyRef
     const domElRect = domEl.getBoundingClientRect()
 
@@ -54,12 +58,18 @@ const Skull = props => {
 
     obj.scale.set(0.3, 0.3, 0.3)
 
+    scroll.on("scroll", ({ scroll }) => {
+        scrollY = scroll.y
+    })
+
     useFrame((state, delta) => {
         uniforms.uTime.value += delta
 
         animateX(uniforms.uMouse.value)
         animateY(uniforms.uMouse.value)
 
+        obj.position.y = -4
+        obj.position.y += scrollY / 80
         obj.rotation.x = Math.PI / 0.63
         obj.rotation.z = uniforms.uMouse.value.x / 10
         obj.rotation.x += uniforms.uMouse.value.y / -10

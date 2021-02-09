@@ -32,14 +32,19 @@ const MainCanvas = props => {
         <Canvas onPointerMove={pointerMove} className={styles.canvas}>
             <Suspense fallback={null}>
                 {/* <OrbitControls /> */}
-                <Skull bodyRef={bodyRef} pointer={pointer} />
-                <Dice pointer={pointer} />
-                <Bullet pointer={pointer} />
+                <Skull
+                    bodyRef={bodyRef}
+                    pointer={pointer}
+                    scroll={props.scroll}
+                />
+                <Dice scroll={props.scroll} pointer={pointer} />
+                <Bullet scroll={props.scroll} pointer={pointer} />
                 <HeroText
                     position={[0, -0.5, -5]}
                     children={"CADILLAC"}
                     pointer={pointer}
                     bodyRef={bodyRef}
+                    scroll={props.scroll}
                 />
                 <Background
                     bodyRef={bodyRef}

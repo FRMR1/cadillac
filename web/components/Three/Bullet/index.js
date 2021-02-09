@@ -7,6 +7,9 @@ import * as THREE from "three"
 let OBJLoader
 
 const Bullet = props => {
+    const scroll = props.scroll
+    let scrollY = 0
+
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
     const obj = useLoader(OBJLoader, "/assets/bullet.obj")
     const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
@@ -34,8 +37,15 @@ const Bullet = props => {
 
     obj.scale.set(3.3, 3.3, 3.3)
 
+    scroll.on("scroll", ({ scroll }) => {
+        scrollY = scroll.y
+    })
+
     useFrame((state, delta) => {
         elapsedTime += delta
+
+        obj.position.y = 1
+        obj.position.y += scrollY / 250
 
         obj.rotation.y += 0.022
         obj.position.y += Math.sin(elapsedTime / 0.55) / 870

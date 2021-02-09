@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import { connect } from "react-redux"
 import Image from "next/image"
 import Head from "next/head"
@@ -36,12 +36,8 @@ const Layout = props => {
                     className={styles.container}
                 >
                     <div className={styles.navContainer} data-scroll-section>
-                        <div className={styles.logo}></div>
-                        <div
-                            data-scroll
-                            // data-scroll-position="top"
-                            className={styles.nav}
-                        >
+                        {/* <div className={styles.logo}></div> */}
+                        <div data-scroll className={styles.nav}>
                             <Link href="/">
                                 <a>Home</a>
                             </Link>
@@ -62,6 +58,7 @@ const Layout = props => {
                         newsRef={props.newsRef}
                         showsRef={props.showsRef}
                         route={props.route}
+                        scroll={scroll}
                     />
                     <main data-scroll-section className={styles.main}>
                         {props.children}

@@ -11,6 +11,9 @@ export default function Text({
     color = "#000000",
     ...props
 }) {
+    const scroll = props.scroll
+    let scrollY = 0
+
     const domEl = props.bodyRef
     const domElRect = domEl.getBoundingClientRect()
 
@@ -58,8 +61,16 @@ export default function Text({
         [children]
     )
 
+    scroll.on("scroll", ({ scroll }) => {
+        scrollY = scroll.y
+    })
+
     useFrame((state, delta) => {
         uniforms.uTime.value += delta
+
+        mesh.current.position.y = -0.5
+        mesh.current.position.y += scrollY / 5
+
         mesh.current.position.y += Math.sin(uniforms.uTime.value / 1.5) / 60
         // mesh.current.rotation.x += Math.sin(uniforms.uTime.value / 2)
         mesh.current.rotation.x = 0.1

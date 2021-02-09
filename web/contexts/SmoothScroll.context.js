@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useRef, useState } from "react"
 import { useRouter } from "next/router"
 import useResizeObserver from "use-resize-observer"
-import { scrollRouteConfigMap } from "./SmoothScroll.utils"
 
 export const SmoothScrollContext = createContext({
     scroll: null,
@@ -30,7 +29,7 @@ export const SmoothScrollProvider = ({ children, containerRef }) => {
                     el:
                         document.querySelector("[data-scroll-container]") ??
                         undefined,
-                    ...scrollRouteConfigMap[route],
+                    smooth: true,
                 })
 
                 setIsReady(true) // Re-render the context
