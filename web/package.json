@@ -13,6 +13,7 @@
     "drei": "^2.2.13",
     "gsap": "^3.6.0",
     "load-bmfont": "^1.4.1",
+    "locomotive-scroll": "^4.0.6",
     "next": "10.0.4",
     "next-images": "^1.6.2",
     "next-transpile-modules": "^6.0.0",
@@ -27,6 +28,7 @@
     "sass": "^1.32.0",
     "three": "^0.124.0",
     "three-bmfont-text": "^3.0.1",
-    "troika-three-text": "^0.37.0"
+    "troika-three-text": "^0.37.0",
+    "use-resize-observer": "^7.0.0"
   }
 }

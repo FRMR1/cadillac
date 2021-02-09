@@ -17,7 +17,7 @@ const Home = props => {
 
     return (
         <>
-            <div className={styles.eldorado}>
+            <div data-scroll className={styles.eldorado}>
                 <div className={styles.text}>
                     <h3>
                         New Album <span className={styles.gold}>El Dorado</span>
@@ -34,7 +34,7 @@ const Home = props => {
             </div>
             <News posts={posts} />
             <Shows shows={shows} />
-            <div className={styles.shop}>
+            <div data-scroll className={styles.shop}>
                 <h3>Give us money.</h3>
                 <Link href="#" target="_blank">
                     <a className={styles.button}>Shop</a>

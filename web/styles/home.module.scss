@@ -40,9 +40,17 @@ $white: #eee;
     }
 }
 
+.eldorado,
+.showsContainer,
+.newsContainer,
+.shop,
+.bioContainer {
+    z-index: 1;
+    position: relative;
+}
+
 .eldorado {
     margin-bottom: 150px;
-    z-index: 1;
     .text {
         margin-right: 50px;
         text-align: center;

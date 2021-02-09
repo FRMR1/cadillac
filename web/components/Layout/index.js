@@ -1,48 +1,23 @@
-import React, { useRef, useEffect } from "react"
+import React, { useRef } from "react"
 import { connect } from "react-redux"
 import Image from "next/image"
 import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import gsap from "gsap"
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import MainCanvas from "../../components/Three/Canvas"
 import client from "../../client"
-import styles from "../../styles/Home.module.scss"
+import styles from "../../styles/home.module.scss"
+import { useContext } from "react"
+import { SmoothScrollContext } from "../../contexts/SmoothScroll.context"
 
 const Layout = props => {
     const bodyRef = useRef()
     const router = useRouter()
 
-    gsap.registerPlugin(ScrollTrigger)
+    const { scroll } = useContext(SmoothScrollContext)
 
     const date = new Date()
     const year = date.getFullYear()
-
-    // useEffect(() => {
-    //     let height
-    //     const element = bodyRef.current
-
-    //     function setHeight() {
-    //         height = element.clientHeight
-    //         document.body.style.height = height + "px"
-    //     }
-
-    //     ScrollTrigger.addEventListener("refreshInit", setHeight)
-    //     router.events.on("routeChangeComplete", setHeight)
-
-    //     gsap.to(element, {
-    //         y: () => -(height - document.documentElement.clientHeight),
-    //         ease: "none",
-    //         scrollTrigger: {
-    //             trigger: document.body,
-    //             invalidateOnRefresh: true,
-    //             start: "top top",
-    //             end: "bottom bottom",
-    //             scrub: 1,
-    //         },
-    //     })
-    // }, [])
 
     return (
         <>
@@ -55,10 +30,18 @@ const Layout = props => {
             <div id="top"></div>
             <div id="bottom"></div>
             <div id="viewport">
-                <div ref={bodyRef} className={styles.container}>
-                    <div className={styles.navContainer}>
+                <div
+                    ref={bodyRef}
+                    data-scroll-container
+                    className={styles.container}
+                >
+                    <div className={styles.navContainer} data-scroll-section>
                         <div className={styles.logo}></div>
-                        <div className={styles.nav}>
+                        <div
+                            data-scroll
+                            // data-scroll-position="top"
+                            className={styles.nav}
+                        >
                             <Link href="/">
                                 <a>Home</a>
                             </Link>
@@ -80,8 +63,10 @@ const Layout = props => {
                         showsRef={props.showsRef}
                         route={props.route}
                     />
-                    <main className={styles.main}>{props.children}</main>
-                    <footer>
+                    <main data-scroll-section className={styles.main}>
+                        {props.children}
+                    </main>
+                    <footer data-scroll-section>
                         <Image src="/svg/logo.svg" width={210} height={43} />
                         <span className={styles.copyright}>
                             ©{year} Cadillac. All Rights Reserved.
