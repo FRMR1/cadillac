@@ -8,6 +8,13 @@ import * as THREE from "three"
 let OBJLoader
 
 const Skull = props => {
+    const domEl = props.bodyRef
+    const domElRect = domEl.getBoundingClientRect()
+
+    const windowWidth = window.innerWidth
+    const pageHeight = domElRect.height
+    const heightToWidthRatio = pageHeight / windowWidth
+
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
     const obj = useLoader(OBJLoader, "/assets/skull.obj")
 
@@ -45,7 +52,11 @@ const Skull = props => {
         })
     }
 
-    obj.scale.set(0.3, 0.3, 0.3)
+    obj.scale.set(
+        0.4 / heightToWidthRatio,
+        0.4 / heightToWidthRatio,
+        0.4 / heightToWidthRatio
+    )
 
     useFrame((state, delta) => {
         uniforms.uTime.value += delta
@@ -61,7 +72,7 @@ const Skull = props => {
 
     return (
         <primitive
-            position={[0, 5, -12]}
+            position={[0, 0.5 * (pageHeight / 200), -15]}
             onPointerOver={() => animateSetting(uniforms.u_setting)}
             object={obj}
         />

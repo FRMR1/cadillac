@@ -13,6 +13,13 @@ export default function Text({
 }) {
     const ref = useRef()
 
+    const domEl = props.bodyRef
+    const domElRect = domEl.getBoundingClientRect()
+
+    const windowWidth = window.innerWidth
+    const pageHeight = domElRect.height
+    const heightToWidthRatio = pageHeight / windowWidth
+
     const font = useLoader(THREE.FontLoader, "/fonts/victorian.json")
 
     const uniforms = useMemo(
@@ -61,7 +68,14 @@ export default function Text({
     })
 
     return (
-        <group {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
+        <group
+            {...props}
+            scale={[
+                size * heightToWidthRatio * 0.1,
+                size * heightToWidthRatio * 0.1,
+                0.1 * heightToWidthRatio * 0.1,
+            ]}
+        >
             <mesh ref={mesh}>
                 <textBufferGeometry args={[children, config]} />
                 <shaderMaterial

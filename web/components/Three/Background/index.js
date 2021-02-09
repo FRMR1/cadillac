@@ -10,11 +10,22 @@ import * as THREE from "three"
 const Background = props => {
     const { gl, camera } = useThree()
     const planeRef = useRef()
+
     const domEl = props.bodyRef
+    const domElRect = domEl.getBoundingClientRect()
 
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
     const aspect = windowWidth / windowHeight
+
+    console.log("aspect", aspect)
+
+    const pageHeight = domElRect.height
+    const heightToWidthRatio = pageHeight / windowWidth
+
+    console.log("pageHeight", pageHeight)
+    console.log("windowWidth", windowWidth)
+    console.log("heightToWidthRatio", heightToWidthRatio)
 
     const [scene, target] = useMemo(() => {
         const scene = new THREE.Scene()
@@ -45,17 +56,20 @@ const Background = props => {
 
     const calculateUnitSize = () => {
         const fov = 75 // default camera value
-        const cameraZ = 95 // default camera value
+        const cameraZ = 25 // default camera value
 
         const vFov = (fov * Math.PI) / 180
 
         const height = 2 * Math.tan(vFov / 2) * cameraZ
-        const width = height * aspect
+        const width = height / heightToWidthRatio
 
         return { width, height }
     }
 
     const camUnit = calculateUnitSize()
+
+    console.log("camUnit", camUnit)
+    console.log("aspect", aspect)
 
     const getRenderSize = el => {
         const {
@@ -73,28 +87,32 @@ const Background = props => {
         return { scaleX, scaleY }
     }
 
-    const updateRenderPosition = (el, scrollY) => {
-        const {
-            left,
-            right,
-            top,
-            bottom,
-            width,
-            height,
-        } = el.getBoundingClientRect()
+    console.log("renderSize", getRenderSize(domEl))
 
-        // Set origin to top left
-        planeRef.current.position.x = -(camUnit.width / 2)
-        planeRef.current.position.y = camUnit.height / 2
+    // Get proper canvas width in ThreeJS units
 
-        // Set position
-        planeRef.current.position.x +=
-            (left / windowWidth) * camUnit.width +
-            (camUnit.width * planeRef.current.scale.x) / 2
-        planeRef.current.position.y -=
-            ((top - scrollY) / windowHeight / 10) * camUnit.height +
-            camUnit.height * planeRef.current.scale.y
-    }
+    // const updateRenderPosition = (el, scrollY) => {
+    //     const {
+    //         left,
+    //         right,
+    //         top,
+    //         bottom,
+    //         width,
+    //         height,
+    //     } = el.getBoundingClientRect()
+
+    //     // Set origin to top left
+    //     planeRef.current.position.x = -(camUnit.width / 2)
+    //     planeRef.current.position.y = camUnit.height / 2
+
+    //     // Set position
+    //     planeRef.current.position.x +=
+    //         (left / windowWidth) * camUnit.width +
+    //         (camUnit.width * planeRef.current.scale.x) / 2
+    //     planeRef.current.position.y -=
+    //         ((top - scrollY) / windowHeight / 10) * camUnit.height +
+    //         camUnit.height * planeRef.current.scale.y
+    // }
 
     useFrame((state, delta) => {
         const { scaleX, scaleY } = getRenderSize(domEl)
@@ -110,9 +128,9 @@ const Background = props => {
 
     return (
         <>
-            <mesh position={[0, 0, -10]} ref={planeRef}>
+            <mesh position={[0, 0, -20]} ref={planeRef}>
                 <planeBufferGeometry
-                    args={[camUnit.width, camUnit.height * 2, 1, 1]}
+                    args={[camUnit.width, camUnit.height, 1, 1]}
                 />
                 <shaderMaterial
                     uniforms={uniforms}

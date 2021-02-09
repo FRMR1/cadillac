@@ -39,6 +39,7 @@ const MainCanvas = props => {
                     position={[0, 4.8, -5]}
                     children={"CADILLAC"}
                     pointer={pointer}
+                    bodyRef={bodyRef}
                 />
                 <Background
                     bodyRef={bodyRef}

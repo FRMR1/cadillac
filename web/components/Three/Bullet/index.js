@@ -39,7 +39,7 @@ const Bullet = props => {
 
     return (
         <>
-            <primitive position={[-1.6, 5.75, -4]} object={obj} />
+            <primitive position={[-1.8, 5.95, -4]} object={obj} />
         </>
     )
 }
