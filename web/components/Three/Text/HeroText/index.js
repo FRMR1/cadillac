@@ -11,8 +11,6 @@ export default function Text({
     color = "#000000",
     ...props
 }) {
-    const ref = useRef()
-
     const domEl = props.bodyRef
     const domElRect = domEl.getBoundingClientRect()
 
@@ -32,8 +30,8 @@ export default function Text({
     const config = useMemo(
         () => ({
             font,
-            size: 10,
-            height: 0.1,
+            size: 20,
+            height: 5,
             curveSegments: 20,
             bevelEnabled: true,
             bevelThickness: 1,
@@ -63,19 +61,12 @@ export default function Text({
     useFrame((state, delta) => {
         uniforms.uTime.value += delta
         mesh.current.position.y += Math.sin(uniforms.uTime.value / 1.5) / 60
-        mesh.current.rotation.x += Math.sin(uniforms.uTime.value / 2)
-        mesh.current.rotation.x = 0.5
+        // mesh.current.rotation.x += Math.sin(uniforms.uTime.value / 2)
+        mesh.current.rotation.x = 0.1
     })
 
     return (
-        <group
-            {...props}
-            scale={[
-                size * heightToWidthRatio * 0.1,
-                size * heightToWidthRatio * 0.1,
-                0.1 * heightToWidthRatio * 0.1,
-            ]}
-        >
+        <group {...props} scale={[0.05, 0.05, 0.05]}>
             <mesh ref={mesh}>
                 <textBufferGeometry args={[children, config]} />
                 <shaderMaterial

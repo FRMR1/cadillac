@@ -36,7 +36,7 @@ const MainCanvas = props => {
                 <Dice pointer={pointer} />
                 <Bullet pointer={pointer} />
                 <HeroText
-                    position={[0, 4.8, -5]}
+                    position={[0, -0.5, -5]}
                     children={"CADILLAC"}
                     pointer={pointer}
                     bodyRef={bodyRef}

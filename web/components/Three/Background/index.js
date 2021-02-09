@@ -61,7 +61,7 @@ const Background = props => {
         const vFov = (fov * Math.PI) / 180
 
         const height = 2 * Math.tan(vFov / 2) * cameraZ
-        const width = height / heightToWidthRatio
+        const width = height / aspect
 
         return { width, height }
     }
@@ -120,6 +120,8 @@ const Background = props => {
         state.camera.position.x = 0
         state.camera.position.z = 5
         state.camera.position.y = 0
+        state.camera.zoom = 4
+        state.camera.updateProjectionMatrix()
 
         uniforms.uTime.value += delta
 

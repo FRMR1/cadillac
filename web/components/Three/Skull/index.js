@@ -52,11 +52,7 @@ const Skull = props => {
         })
     }
 
-    obj.scale.set(
-        0.4 / heightToWidthRatio,
-        0.4 / heightToWidthRatio,
-        0.4 / heightToWidthRatio
-    )
+    obj.scale.set(0.3, 0.3, 0.3)
 
     useFrame((state, delta) => {
         uniforms.uTime.value += delta
@@ -64,7 +60,7 @@ const Skull = props => {
         animateX(uniforms.uMouse.value)
         animateY(uniforms.uMouse.value)
 
-        obj.rotation.x = Math.PI / 0.59
+        obj.rotation.x = Math.PI / 0.63
         obj.rotation.z = uniforms.uMouse.value.x / 10
         obj.rotation.x += uniforms.uMouse.value.y / -10
         obj.position.y += Math.sin(uniforms.uTime.value / 1.75) / 170
@@ -72,7 +68,7 @@ const Skull = props => {
 
     return (
         <primitive
-            position={[0, 0.5 * (pageHeight / 200), -15]}
+            position={[0, -4, -15]}
             onPointerOver={() => animateSetting(uniforms.u_setting)}
             object={obj}
         />

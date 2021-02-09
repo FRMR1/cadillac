@@ -19,30 +19,30 @@ const Layout = props => {
     const date = new Date()
     const year = date.getFullYear()
 
-    useEffect(() => {
-        let height
-        const element = bodyRef.current
+    // useEffect(() => {
+    //     let height
+    //     const element = bodyRef.current
 
-        function setHeight() {
-            height = element.clientHeight
-            document.body.style.height = height + "px"
-        }
+    //     function setHeight() {
+    //         height = element.clientHeight
+    //         document.body.style.height = height + "px"
+    //     }
 
-        ScrollTrigger.addEventListener("refreshInit", setHeight)
-        router.events.on("routeChangeComplete", setHeight)
+    //     ScrollTrigger.addEventListener("refreshInit", setHeight)
+    //     router.events.on("routeChangeComplete", setHeight)
 
-        gsap.to(element, {
-            y: () => -(height - document.documentElement.clientHeight),
-            ease: "none",
-            scrollTrigger: {
-                trigger: document.body,
-                invalidateOnRefresh: true,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1,
-            },
-        })
-    }, [])
+    //     gsap.to(element, {
+    //         y: () => -(height - document.documentElement.clientHeight),
+    //         ease: "none",
+    //         scrollTrigger: {
+    //             trigger: document.body,
+    //             invalidateOnRefresh: true,
+    //             start: "top top",
+    //             end: "bottom bottom",
+    //             scrub: 1,
+    //         },
+    //     })
+    // }, [])
 
     return (
         <>

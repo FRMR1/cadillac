@@ -11,6 +11,8 @@ const Dice = props => {
     const obj = useLoader(OBJLoader, "/assets/dice.obj")
     const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
 
+    let elapsedTime = 0
+
     const uniforms = useMemo(
         () => ({
             uTexture: {
@@ -33,13 +35,15 @@ const Dice = props => {
     obj.scale.set(0.2, 0.2, 0.2)
 
     useFrame((state, delta) => {
+        elapsedTime += delta
+
         obj.rotation.y += 0.03
-        obj.position.y += Math.sin(delta / 2) / 400
+        obj.position.y += Math.sin(elapsedTime / 0.75) / 770
     })
 
     return (
         <>
-            <primitive position={[2.6, 3.75, -4]} object={obj} />
+            <primitive position={[2.6, -1, -4]} object={obj} />
         </>
     )
 }

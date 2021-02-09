@@ -11,6 +11,8 @@ const Bullet = props => {
     const obj = useLoader(OBJLoader, "/assets/bullet.obj")
     const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
 
+    let elapsedTime = 0
+
     const uniforms = useMemo(
         () => ({
             uTexture: {
@@ -33,13 +35,15 @@ const Bullet = props => {
     obj.scale.set(3.3, 3.3, 3.3)
 
     useFrame((state, delta) => {
+        elapsedTime += delta
+
         obj.rotation.y += 0.022
-        obj.position.y += Math.sin(delta / 3) / 300
+        obj.position.y += Math.sin(elapsedTime / 0.55) / 870
     })
 
     return (
         <>
-            <primitive position={[-1.8, 5.95, -4]} object={obj} />
+            <primitive position={[-1.8, 1, -4]} object={obj} />
         </>
     )
 }
