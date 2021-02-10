@@ -1,18 +1,18 @@
 export const vert = `
 precision highp float;
 
-uniform float u_time;
-varying vec2 v_uv;
-varying vec3 v_position;
-varying vec3 v_normal;
+uniform float uTime;
+varying vec2 vUv;
+varying vec3 vPosition;
+varying vec3 vNormal;
 
 void main() {
 
-    v_uv = uv;
-    v_position = position;
-    v_normal = normal;
+    vUv = uv;
+    vPosition = position;
+    vNormal = normal;
 
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(v_position, 1.0);
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(vPosition, 1.0);
 }
 `
 
@@ -21,21 +21,22 @@ export const frag = `
 precision highp float;
 #endif
 
-uniform vec2 u_resolution;
-uniform vec2 u_mouse;
-uniform float u_time;
-uniform sampler2D u_texture;
+uniform float uPercent;
+uniform vec2 uMouse;
+uniform float uTime;
+uniform sampler2D uTexture;
 
-varying vec3 v_position;
-varying vec2 v_uv;
+varying vec3 vPosition;
+varying vec2 vUv;
 
 void main() {
 
-    vec2 uv = v_uv;
+    vec2 uv = vUv;
 
-    vec4 col = texture2D(u_texture, uv);
-    
-    //final color
+    uv.y = 1. - uv.y;
+
+    vec4 col = texture2D(uTexture, uv);
+
     gl_FragColor = col;
 
 }

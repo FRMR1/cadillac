@@ -4,10 +4,10 @@ import { Canvas } from "react-three-fiber"
 import Background from "../Background"
 import Skull from "../Skull"
 import HeroText from "../Text/HeroText"
-// import H1 from "../Text/H1"
+import H1 from "../Text/H1"
 import Dice from "../Dice"
 import Bullet from "../Bullet"
-// import FBO from "../FBO"
+import FBO from "../FBO"
 // import Effects from "../Effects"
 import styles from "../../../styles/Canvas.module.scss"
 
@@ -55,19 +55,20 @@ const MainCanvas = props => {
                     route={props.route}
                     scroll={props.scroll}
                 />
-                {/* {props.route === "/" && (
-                    <FBO
+                {props.route === "/" && (
+                    // <FBO
+                    //     el={props.newsRef}
+                    //     pointer={props.pointer}
+                    //     bodyRef={bodyRef}
+                    // >
+                    <H1
                         el={props.newsRef}
+                        position={[0, 0, 0]}
+                        children={"NEWS"}
                         pointer={props.pointer}
-                        bodyRef={bodyRef}
-                    >
-                        <H1
-                            position={[0, 0, 0]}
-                            children={"NEWS"}
-                            pointer={props.pointer}
-                        />
-                    </FBO>
-                )} */}
+                    />
+                    // </FBO>
+                )}
                 {/* <Effects /> */}
             </Suspense>
         </Canvas>

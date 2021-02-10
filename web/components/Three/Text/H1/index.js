@@ -13,6 +13,7 @@ const H1 = ({
     ...props
 }) => {
     const ref = useRef()
+    const domEl = props.el
 
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
@@ -79,22 +80,83 @@ const H1 = ({
         [children]
     )
 
+    const calculateUnitSize = zDistance => {
+        const fov = 75 // default camera value
+        const cameraZ = 5 // default camera value
+
+        const vFov = (fov * Math.PI) / 180
+
+        const height = 2 * Math.tan(vFov / 2) * cameraZ
+        const width = height * aspect
+
+        return { width, height }
+    }
+
+    const camUnit = calculateUnitSize() // element's z-distance === 0
+
+    const getRenderSize = el => {
+        const {
+            left,
+            right,
+            top,
+            bottom,
+            width,
+            height,
+        } = el.getBoundingClientRect()
+
+        const scaleX = (width / windowWidth) * 2
+        const scaleY = (height / windowHeight) * 14
+
+        return { scaleX, scaleY }
+    }
+
+    const updateRenderPosition = (el, scrollY) => {
+        const {
+            left,
+            right,
+            top,
+            bottom,
+            width,
+            height,
+        } = el.getBoundingClientRect()
+
+        const { scaleX, scaleY } = getRenderSize(domEl)
+
+        // Set origin to top left
+        planeRef.current.position.x = -(camUnit.width / 2) + scaleX / 2
+        planeRef.current.position.y = camUnit.height / 2 - scaleY / 2
+
+        // Set position
+        planeRef.current.position.x += (left / windowWidth) * camUnit.width
+        planeRef.current.position.y -= (top / windowHeight) * camUnit.height
+    }
+
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
 
-        state.gl.setRenderTarget(target)
-        state.gl.render(scene, state.camera)
-        state.gl.setRenderTarget(null)
+        const { scaleX, scaleY } = getRenderSize(domEl)
+
+        // planeRef.current.scale.x = scaleX / 2
+        // planeRef.current.scale.y = scaleY
+        // planeRef.current.position.z = 0
+
+        // updateRenderPosition(domEl, 0)
+
+        // state.gl.setRenderTarget(target)
+        // state.gl.render(scene, state.camera)
+        // state.gl.setRenderTarget(null)
     })
 
     return (
         <group {...props}>
-            <mesh ref={mesh} scale={[1, 1, 1]}>
+            <mesh ref={mesh}>
                 <textBufferGeometry args={[children, config]} />
+                {/* <boxBufferGeometry args={[1, 1, 1]} /> */}
                 <shaderMaterial
                     uniforms={uniforms}
                     vertexShader={vert}
                     fragmentShader={frag}
+                    transparent={true}
                 />
             </mesh>
         </group>

@@ -1,9 +1,9 @@
 import { useMemo, useRef } from "react"
 import { useFrame, useThree } from "react-three-fiber"
 import { frag, vert } from "../Shaders/bg"
-// import FBO from "../FBO"
+import FBO from "../FBO"
+import BioImage from "../BioImage"
 // import H1 from "../Text/H1"
-// import BioImage from "../BioImage"
 
 import * as THREE from "three"
 
@@ -147,11 +147,15 @@ const Background = props => {
                     fragmentShader={frag}
                 />
             </mesh>
-            {/* {props.route === "/bio" && (
-                <FBO el={props.bioRef} pointer={props.pointer}>
+            {props.route === "/bio" && (
+                <FBO
+                    el={props.bioRef}
+                    pointer={props.pointer}
+                    scroll={props.scroll}
+                >
                     <BioImage />
                 </FBO>
-            )} */}
+            )}
             {/* {props.route === "/" && (
                 <>
                     <FBO el={props.newsRef} pointer={props.pointer}>

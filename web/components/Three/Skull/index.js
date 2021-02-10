@@ -9,17 +9,8 @@ import * as THREE from "three"
 let OBJLoader
 
 const Skull = props => {
-    const scroll = props.scroll
     let scrollY = 0
-
-    console.log("skull scroll", props.scroll)
-
-    const domEl = props.bodyRef
-    const domElRect = domEl.getBoundingClientRect()
-
-    const windowWidth = window.innerWidth
-    const pageHeight = domElRect.height
-    const heightToWidthRatio = pageHeight / windowWidth
+    const scroll = props.scroll
 
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
     const obj = useLoader(OBJLoader, "/assets/skull.obj")
