@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { connect } from "react-redux"
 import Image from "next/image"
 import Head from "next/head"
@@ -13,8 +13,13 @@ import { SmoothScrollContext } from "../../contexts/SmoothScroll.context"
 const Layout = props => {
     const bodyRef = useRef()
     const router = useRouter()
+    const [scrollCtx, setScrollCtx] = useState()
 
     const { scroll } = useContext(SmoothScrollContext)
+
+    useEffect(() => {
+        setScrollCtx(scroll)
+    }, [scroll])
 
     const date = new Date()
     const year = date.getFullYear()
@@ -58,7 +63,7 @@ const Layout = props => {
                         newsRef={props.newsRef}
                         showsRef={props.showsRef}
                         route={props.route}
-                        scroll={scroll}
+                        scroll={scrollCtx}
                     />
                     <main data-scroll-section className={styles.main}>
                         {props.children}

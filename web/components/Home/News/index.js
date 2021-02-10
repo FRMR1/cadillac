@@ -16,7 +16,7 @@ const News = props => {
         <div className={styles.newsContainer}>
             <h2 ref={newsRef}>News</h2>
             {posts.map(post => (
-                <>
+                <div className={styles.articleContainer}>
                     <h3 key={post.slug}>{post.title}</h3>
                     <span>{post.publishedAt}</span>
                     <div className={styles.postBody}>
@@ -28,7 +28,7 @@ const News = props => {
                             </p>
                         ))}
                     </div>
-                </>
+                </div>
             ))}
             <div className={styles.buttonContainer}>
                 <Link href="/news">

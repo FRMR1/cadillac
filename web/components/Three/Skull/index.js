@@ -12,6 +12,8 @@ const Skull = props => {
     const scroll = props.scroll
     let scrollY = 0
 
+    console.log("skull scroll", props.scroll)
+
     const domEl = props.bodyRef
     const domElRect = domEl.getBoundingClientRect()
 

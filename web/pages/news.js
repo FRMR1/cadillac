@@ -10,9 +10,9 @@ const News = props => {
     const posts = Object.values(props.posts)
 
     return (
-        <>
+        <div className={styles.newsContainer}>
             {posts.map(post => (
-                <div className={styles.newsContainer}>
+                <div className={styles.articleContainer}>
                     <h3 key={post.slug}>{post.title}</h3>
                     <span>{post.publishedAt}</span>
                     <div className={styles.postBody}>
@@ -22,7 +22,7 @@ const News = props => {
                     </div>
                 </div>
             ))}
-        </>
+        </div>
     )
 }
 

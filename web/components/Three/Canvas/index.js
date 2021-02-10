@@ -53,6 +53,7 @@ const MainCanvas = props => {
                     showsRef={props.showsRef}
                     pointer={pointer}
                     route={props.route}
+                    scroll={props.scroll}
                 />
                 {/* {props.route === "/" && (
                     <FBO
