@@ -13,6 +13,7 @@ precision highp float;
 
 uniform vec2 uResolution;
 uniform float uTime;
+uniform float uScrollPos;
 
 varying vec3 vPosition;
 
@@ -57,6 +58,8 @@ void main() {
     vec2 pos = vPosition.xy / vec2(5.);
     pos.x /= 4.;
     pos.y *= 2.;
+
+    pos.y -= uScrollPos / 500.;
 
     float DF = 0.0;
 

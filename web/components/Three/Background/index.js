@@ -11,6 +11,9 @@ const Background = props => {
     const { gl, camera } = useThree()
     const planeRef = useRef()
 
+    const scroll = props.scroll
+    let scrollY = 0
+
     const domEl = props.bodyRef
     const domElRect = domEl.getBoundingClientRect()
 
@@ -47,8 +50,8 @@ const Background = props => {
         () => ({
             uTime: { value: 0.0 },
             uResolution: { value: { x: windowWidth, y: windowHeight } },
-            uTexture: {
-                value: target.texture,
+            uScrollPos: {
+                value: 0,
             },
         }),
         []
@@ -87,8 +90,6 @@ const Background = props => {
         return { scaleX, scaleY }
     }
 
-    console.log("renderSize", getRenderSize(domEl))
-
     // Get proper canvas width in ThreeJS units
 
     // const updateRenderPosition = (el, scrollY) => {
@@ -114,6 +115,10 @@ const Background = props => {
     //         camUnit.height * planeRef.current.scale.y
     // }
 
+    scroll.on("scroll", ({ scroll }) => {
+        scrollY = scroll.y
+    })
+
     useFrame((state, delta) => {
         const { scaleX, scaleY } = getRenderSize(domEl)
 
@@ -124,6 +129,8 @@ const Background = props => {
         state.camera.updateProjectionMatrix()
 
         uniforms.uTime.value += delta
+
+        uniforms.uScrollPos.value = scrollY
 
         gl.render(scene, camera)
     })
