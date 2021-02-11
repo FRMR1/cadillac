@@ -141,6 +141,9 @@ $white: #eee;
 .newsContainer {
     width: 700px;
     z-index: 1;
+    h2 {
+        border: 1px solid #f00;
+    }
     h2,
     h3,
     p {

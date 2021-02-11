@@ -60,14 +60,17 @@ const MainCanvas = props => {
                     //     el={props.newsRef}
                     //     pointer={props.pointer}
                     //     bodyRef={bodyRef}
+                    //     pointer={pointer}
+                    //     scroll={props.scroll}
                     // >
                     <H1
                         el={props.newsRef}
-                        position={[0, 0, 0]}
+                        position={[0, 0, -5]}
                         children={"NEWS"}
                         pointer={props.pointer}
+                        scroll={props.scroll}
                     />
-                    // </FBO>
+                    //</FBO>
                 )}
                 {/* <Effects /> */}
             </Suspense>

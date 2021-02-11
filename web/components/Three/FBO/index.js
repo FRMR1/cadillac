@@ -5,7 +5,6 @@ import gsap from "gsap"
 import * as THREE from "three"
 
 const FBO = props => {
-    const { camera } = useThree()
     const planeRef = useRef()
 
     const domEl = props.el
