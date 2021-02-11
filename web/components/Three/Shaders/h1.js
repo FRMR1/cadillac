@@ -1,31 +1,38 @@
 export const vert = `
-precision highp float;
-
-varying vec2 v_uv;
-varying vec2 v_n;
-varying vec3 v_position;
+varying vec3 vPosition;
+varying vec3 vNormal;
+varying vec3 vView;
+varying vec2 vN;
 
 void main() {
+    vec4 p = vec4( position, 1. );
 
-    v_position = position;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    vec4 transformed = modelViewMatrix * p;
+    vView = normalize(-transformed.xyz);
+
+    vec3 e = normalize( vec3( transformed ) );
+    vec3 n = normalize( normalMatrix * normal );
+
+    vec3 r = reflect( e, n );
+
+    float m = 2. * sqrt(
+        pow( r.x, 2. ) +
+        pow( r.y, 2. ) +
+        pow( r.z + 1., 2. )
+    );
+
+    vN = r.xy / m + .5;
+
+    gl_Position = projectionMatrix * transformed;
 }
 `
 
 export const frag = `
 precision highp float;
 
-uniform vec2 u_resolution;
-uniform float u_time;
-uniform vec2 u_mouse;
-uniform float u_ratio;
-uniform float u_active;
+uniform float uTime;
 
-varying vec2 v_uv;
-varying vec3 v_position;
-varying vec3 v_view;
-varying vec3 v_normal;
-varying vec2 v_n;
+varying vec2 vN;
 
 float PI = 3.141592653589;
 
@@ -35,7 +42,7 @@ void main() {
     vec3 c = vec3(.5, .5, .5);
     vec3 d = vec3(0., .33, .67);
     
-    vec3 animatedColor = a + b * cos(2. * PI * (c * v_n.y + d + u_time /3.));
+    vec3 animatedColor = a + b * cos(2. * PI * (c * vN.y + d + uTime /3.));
 
     vec4 txt = vec4(animatedColor, 1.);
 

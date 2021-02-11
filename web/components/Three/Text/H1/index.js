@@ -1,14 +1,14 @@
 import * as THREE from "three"
 import React, { useMemo, useRef } from "react"
 import { useLoader, useUpdate, useFrame } from "react-three-fiber"
-import { frag, vert } from "../../Shaders/herotext"
+import { frag, vert } from "../../Shaders/h1"
 import gsap from "gsap"
 
 const H1 = ({
     children,
     vAlign = "center",
     hAlign = "center",
-    size = 1,
+    size = 0.1,
     color = "#000000",
     ...props
 }) => {
@@ -23,14 +23,14 @@ const H1 = ({
     const windowHeight = window.innerHeight
     const aspect = windowWidth / windowHeight
 
-    const font = useLoader(THREE.FontLoader, "/fonts/ciutadella.json")
+    const font = useLoader(THREE.FontLoader, "/fonts/victorian.json")
 
     const uniforms = useMemo(
         () => ({
-            u_time: { value: 0.0 },
-            u_mouse: { value: new THREE.Vector2() },
-            u_resolution: { value: { x: windowWidth, y: windowHeight } },
-            u_ratio: {
+            uTime: { value: 0.0 },
+            uMouse: { value: new THREE.Vector2() },
+            uResolution: { value: { x: windowWidth, y: windowHeight } },
+            uRatio: {
                 value: aspect,
             },
         }),
@@ -40,12 +40,12 @@ const H1 = ({
     const config = useMemo(
         () => ({
             font,
-            size: 0.2,
-            height: 0,
+            size: 0.15,
+            height: 0.1,
             curveSegments: 20,
             bevelEnabled: true,
             bevelThickness: 0,
-            bevelSize: 0.01,
+            bevelSize: 0.001,
             bevelOffset: 0,
             bevelSegments: 2,
         }),
@@ -122,6 +122,23 @@ const H1 = ({
         group.current.position.x += (left / windowWidth) * camUnit.width
     }
 
+    // Mouse animations
+    const animateX = e => {
+        gsap.to(e, {
+            duration: 1,
+            x: props.pointer.x,
+            ease: "inout",
+        })
+    }
+
+    const animateY = e => {
+        gsap.to(e, {
+            duration: 1,
+            y: props.pointer.y,
+            ease: "inout",
+        })
+    }
+
     // Scroll
     scroll.on("scroll", ({ scroll }) => {
         scrollY = scroll.y
@@ -130,13 +147,20 @@ const H1 = ({
     const sizeVec3 = new THREE.Vector3()
 
     useFrame((state, delta) => {
-        uniforms.u_time.value += delta
+        uniforms.uTime.value += delta
 
         // Sync position to dom element + scroll
         updateRenderPosition(domEl, 0)
         const distToTop = scrollY + domEl.getBoundingClientRect().top
         group.current.position.y -= (distToTop / windowHeight) * camUnit.height
         group.current.position.y += scrollY / (windowHeight / camUnit.height)
+
+        // Mouse rotations
+        animateX(uniforms.uMouse.value)
+        animateY(uniforms.uMouse.value)
+
+        group.current.rotation.y = uniforms.uMouse.value.x / 5
+        group.current.rotation.x = uniforms.uMouse.value.y / -5
 
         // Mesh update
         group.current.geometry.computeBoundingBox()
@@ -153,6 +177,7 @@ const H1 = ({
     return (
         <mesh ref={group}>
             <textBufferGeometry args={[children, config]} />
+            {/* <planeBufferGeometry args={[1, 1, 1, 1]} /> */}
             <shaderMaterial
                 uniforms={uniforms}
                 vertexShader={vert}

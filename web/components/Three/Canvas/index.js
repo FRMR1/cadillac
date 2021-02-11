@@ -60,7 +60,7 @@ const MainCanvas = props => {
                             el={props.newsRef}
                             position={[0, 0, 0]}
                             children={"NEWS"}
-                            pointer={props.pointer}
+                            pointer={pointer}
                             scroll={props.scroll}
                         />
                         <H1
@@ -68,7 +68,7 @@ const MainCanvas = props => {
                             position={[0, 0, 0]}
                             children={"UPCOMING SHOWS"}
                             scroll={props.scroll}
-                            pointer={props.pointer}
+                            pointer={pointer}
                         />
                     </>
                 )}

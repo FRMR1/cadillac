@@ -70,6 +70,18 @@ const Layout = props => {
                     </main>
                     <footer data-scroll-section>
                         <Image src="/svg/logo.svg" width={210} height={43} />
+                        <div className={styles.footerSocial}>
+                            <a
+                                href="https://instagram.com/cadillac_ftw"
+                                target="_blank"
+                            >
+                                <Image
+                                    src="/svg/instagram.svg"
+                                    width={30}
+                                    height={30}
+                                />
+                            </a>
+                        </div>
                         <span className={styles.copyright}>
                             ©{year} Cadillac. All Rights Reserved.
                         </span>
