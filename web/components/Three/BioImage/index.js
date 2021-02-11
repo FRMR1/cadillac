@@ -1,13 +1,22 @@
-import { useMemo, useRef, useEffect } from "react"
-import { useFrame, useThree, useLoader } from "react-three-fiber"
+import { useMemo, useRef } from "react"
+import { useFrame, createPortal, useLoader } from "react-three-fiber"
 import { frag, vert } from "../Shaders/bio"
+import gsap from "gsap"
 import * as THREE from "three"
 
-const Scene = props => {
+const BioImage = ({ el, children, pointer, scroll }) => {
+    const mesh = useRef()
+    const domElement = el
+
+    // Loaders
+    const img = useLoader(THREE.TextureLoader, "/jpg/cadillac.jpg")
+    const txt = useLoader(THREE.TextureLoader, "/jpg/texture.jpg")
+
+    console.log("images", img, txt)
+
+    // Render target
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
-
-    const aspect = windowWidth / windowHeight
 
     const [scene, target] = useMemo(() => {
         const scene = new THREE.Scene()
@@ -25,59 +34,129 @@ const Scene = props => {
         return [scene, target]
     }, [])
 
-    const img = useLoader(THREE.TextureLoader, "/jpg/cadillac.jpg")
-    const txt = useLoader(THREE.TextureLoader, "/jpg/texture.jpg")
-
+    // Uniforms
     const uniforms = useMemo(
         () => ({
-            u_time: { value: 0.0 },
-            u_mouse: { value: props.pointer },
-            u_resolution: { value: { x: windowWidth, y: windowHeight } },
-            u_ratio: {
-                value: aspect,
-            },
-            u_image: {
+            uTime: { value: 0.0 },
+            uMouse: { value: new THREE.Vector2() },
+            uImage: {
                 value: img,
             },
-            u_texture: {
+            uTexture: {
                 value: txt,
             },
         }),
         []
     )
 
+    // Viewport in camera units
     const calculateUnitSize = zDistance => {
-        const fov = 75 // default camera value
-        const cameraZ = 65 // default camera value
+        const fov = 75
+        const cameraZ = 5
+        const zoom = 4
+        const aspect = windowWidth / windowHeight
 
         const vFov = (fov * Math.PI) / 180
 
-        const height = 2 * Math.tan(vFov / 2) * (cameraZ - zDistance)
+        const height = (2 * Math.tan(vFov / 2) * cameraZ) / zoom
         const width = height * aspect
 
         return { width, height }
     }
 
-    const camUnit = calculateUnitSize(0) // element's z-index === 0
+    const camUnit = calculateUnitSize()
 
+    // Render size
+    const getRenderSize = el => {
+        const { width, height } = el.getBoundingClientRect()
+
+        const x = width / windowWidth
+        const y = height / windowHeight
+
+        const scaleX = camUnit.width * x
+        const scaleY = camUnit.height * y
+
+        return { scaleX, scaleY }
+    }
+
+    // Render position
+    const updateRenderPosition = el => {
+        const { left } = el.getBoundingClientRect()
+
+        const { scaleX, scaleY } = getRenderSize(domElement)
+
+        // Set origin to top left
+        mesh.current.position.x = -(camUnit.width / 2) + scaleX / 2
+        mesh.current.position.y = camUnit.height / 2 - scaleY / 2
+
+        // Set position
+        const distToTop = scrollY + domElement.getBoundingClientRect().top
+
+        mesh.current.position.x += (left / windowWidth) * camUnit.width
+        mesh.current.position.y -= (distToTop / windowHeight) * camUnit.height
+        mesh.current.position.y += scrollY / (windowHeight / camUnit.height)
+    }
+
+    // Mouse animations
+    const animateX = e => {
+        gsap.to(e, {
+            duration: 1,
+            x: pointer.x,
+            ease: "inout",
+        })
+    }
+
+    const animateY = e => {
+        gsap.to(e, {
+            duration: 1,
+            y: pointer.y,
+            ease: "inout",
+        })
+    }
+
+    // Scroll
+    let scrollY = 0
+
+    scroll.on("scroll", ({ scroll }) => {
+        scrollY = scroll.y
+    })
+
+    // RAF
     useFrame((state, delta) => {
-        uniforms.u_time.value += delta
+        // Render size
+        const { scaleX, scaleY } = getRenderSize(domElement)
+        mesh.current.scale.x = scaleX
+        mesh.current.scale.y = scaleY
 
-        state.gl.setRenderTarget(target)
-        state.gl.render(scene, state.camera)
-        state.gl.setRenderTarget(null)
+        // Render position
+        updateRenderPosition(domElement)
+
+        // Mouse rotations
+        animateX(uniforms.uMouse.value)
+        animateY(uniforms.uMouse.value)
+        mesh.current.rotation.y = uniforms.uMouse.value.x / 5
+        mesh.current.rotation.x = uniforms.uMouse.value.y / -5
+
+        // Render
+        // state.gl.setRenderTarget(target)
+        // state.gl.render(scene, state.camera)
+        // state.gl.setRenderTarget(null)
     })
 
     return (
-        <mesh>
-            <planeBufferGeometry args={[camUnit.width, camUnit.height, 1, 1]} />
-            <shaderMaterial
-                uniforms={uniforms}
-                vertexShader={vert}
-                fragmentShader={frag}
-            />
-        </mesh>
+        <>
+            {createPortal(children, scene)}
+            <mesh ref={mesh}>
+                <planeBufferGeometry args={[1, 1, 1, 1]} />
+                <shaderMaterial
+                    uniforms={uniforms}
+                    vertexShader={vert}
+                    fragmentShader={frag}
+                    // transparent={true}
+                />
+            </mesh>
+        </>
     )
 }
 
-export default Scene
+export default BioImage

@@ -11,7 +11,6 @@ void main() {
 export const frag = `
 precision highp float;
 
-uniform vec2 uResolution;
 uniform float uTime;
 uniform float uScrollPos;
 
@@ -53,8 +52,6 @@ float snoise(vec2 v) {
 }
 
 void main() {
-    vec2 st = gl_FragCoord.xy/uResolution.xy;
-    st.x *= uResolution.x/uResolution.y;
     vec2 pos = vPosition.xy / vec2(5.);
     pos.x /= 4.;
     pos.y *= 2.;

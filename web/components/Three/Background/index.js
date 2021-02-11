@@ -1,7 +1,6 @@
 import { useMemo, useRef } from "react"
 import { useFrame } from "react-three-fiber"
 import { frag, vert } from "../Shaders/bg"
-import FBO from "../FBO"
 import BioImage from "../BioImage"
 
 const Background = props => {
@@ -71,13 +70,11 @@ const Background = props => {
                 />
             </mesh>
             {props.route === "/bio" && (
-                <FBO
+                <BioImage
                     el={props.bioRef}
                     pointer={props.pointer}
                     scroll={props.scroll}
-                >
-                    <BioImage />
-                </FBO>
+                />
             )}
         </>
     )

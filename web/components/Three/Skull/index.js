@@ -4,8 +4,6 @@ import gsap from "gsap"
 import { frag, vert } from "../Shaders/skull"
 import * as THREE from "three"
 
-let OBJLoader
-
 const Skull = props => {
     const uniforms = useMemo(
         () => ({
@@ -17,7 +15,8 @@ const Skull = props => {
 
     // Skull object
     const getObject = () => {
-        OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
+        const OBJLoader = require("three/examples/jsm/loaders/OBJLoader")
+            .OBJLoader
         const obj = useLoader(OBJLoader, "/assets/skull.obj")
         obj.scale.set(0.3, 0.3, 0.3)
 
