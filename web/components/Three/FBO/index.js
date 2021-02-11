@@ -5,15 +5,12 @@ import gsap from "gsap"
 import * as THREE from "three"
 
 const FBO = props => {
-    const planeRef = useRef()
-
+    const mesh = useRef()
     const domEl = props.el
-    const scroll = props.scroll
-    let scrollY = 0
 
+    // Render target
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
-    const aspect = windowWidth / windowHeight
 
     const [scene, target] = useMemo(() => {
         const scene = new THREE.Scene()
@@ -31,13 +28,11 @@ const FBO = props => {
         return [scene, target]
     }, [])
 
+    // Uniforms
     const uniforms = useMemo(
         () => ({
             uTime: { value: 0.0 },
             uMouse: { value: new THREE.Vector2() },
-            uPercent: {
-                value: 1.0,
-            },
             uTexture: {
                 value: target.texture,
             },
@@ -45,10 +40,12 @@ const FBO = props => {
         []
     )
 
+    // Viewport in camera units
     const calculateUnitSize = zDistance => {
-        const fov = 75 // default camera value
-        const cameraZ = 5 // default camera value
+        const fov = 75
+        const cameraZ = 5
         const zoom = 4
+        const aspect = windowWidth / windowHeight
 
         const vFov = (fov * Math.PI) / 180
 
@@ -58,17 +55,11 @@ const FBO = props => {
         return { width, height }
     }
 
-    const camUnit = calculateUnitSize() // element's z-distance === 0
+    const camUnit = calculateUnitSize()
 
+    // Render size
     const getRenderSize = el => {
-        const {
-            left,
-            right,
-            top,
-            bottom,
-            width,
-            height,
-        } = el.getBoundingClientRect()
+        const { width, height } = el.getBoundingClientRect()
 
         const x = width / windowWidth
         const y = height / windowHeight
@@ -79,24 +70,22 @@ const FBO = props => {
         return { scaleX, scaleY }
     }
 
-    const updateRenderPosition = (el, scrollY) => {
-        const {
-            left,
-            right,
-            top,
-            bottom,
-            width,
-            height,
-        } = el.getBoundingClientRect()
+    // Render position
+    const updateRenderPosition = el => {
+        const { left } = el.getBoundingClientRect()
 
         const { scaleX, scaleY } = getRenderSize(domEl)
 
         // Set origin to top left
-        planeRef.current.position.x = -(camUnit.width / 2) + scaleX / 2
-        planeRef.current.position.y = camUnit.height / 2 - scaleY / 2
+        mesh.current.position.x = -(camUnit.width / 2) + scaleX / 2
+        mesh.current.position.y = camUnit.height / 2 - scaleY / 2
 
         // Set position
-        planeRef.current.position.x += (left / windowWidth) * camUnit.width
+        const distToTop = scrollY + domEl.getBoundingClientRect().top
+
+        mesh.current.position.x += (left / windowWidth) * camUnit.width
+        mesh.current.position.y -= (distToTop / windowHeight) * camUnit.height
+        mesh.current.position.y += scrollY / (windowHeight / camUnit.height)
     }
 
     // Mouse animations
@@ -117,29 +106,28 @@ const FBO = props => {
     }
 
     // Scroll
+    const scroll = props.scroll
+    let scrollY = 0
+
     scroll.on("scroll", ({ scroll }) => {
         scrollY = scroll.y
     })
 
+    // RAF
     useFrame((state, delta) => {
-        // Sync size to dom element
+        // Render size
         const { scaleX, scaleY } = getRenderSize(domEl)
-        planeRef.current.scale.x = scaleX
-        planeRef.current.scale.y = scaleY
+        mesh.current.scale.x = scaleX
+        mesh.current.scale.y = scaleY
 
-        // Sync position to dom element + scroll
-        updateRenderPosition(domEl, 0)
-        const distToTop = scrollY + domEl.getBoundingClientRect().top
-        planeRef.current.position.y -=
-            (distToTop / windowHeight) * camUnit.height
-        planeRef.current.position.y += scrollY / (windowHeight / camUnit.height)
+        // Render position
+        updateRenderPosition(domEl)
 
         // Mouse rotations
         animateX(uniforms.uMouse.value)
         animateY(uniforms.uMouse.value)
-
-        planeRef.current.rotation.y = uniforms.uMouse.value.x / 5
-        planeRef.current.rotation.x = uniforms.uMouse.value.y / -5
+        mesh.current.rotation.y = uniforms.uMouse.value.x / 5
+        mesh.current.rotation.x = uniforms.uMouse.value.y / -5
 
         // Render
         state.gl.setRenderTarget(target)
@@ -150,7 +138,7 @@ const FBO = props => {
     return (
         <>
             {createPortal(props.children, scene)}
-            <mesh ref={planeRef}>
+            <mesh ref={mesh}>
                 <planeBufferGeometry args={[1, 1, 1, 1]} />
                 <shaderMaterial
                     uniforms={uniforms}

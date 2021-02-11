@@ -1,20 +1,12 @@
-import React, { useEffect, useContext, useMemo } from "react"
+import React, { useMemo } from "react"
 import { useLoader, useFrame } from "react-three-fiber"
-import { SmoothScrollContext } from "../../../contexts/SmoothScroll.context"
 import gsap from "gsap"
 import { frag, vert } from "../Shaders/skull"
-
 import * as THREE from "three"
 
 let OBJLoader
 
 const Skull = props => {
-    let scrollY = 0
-    const scroll = props.scroll
-
-    OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
-    const obj = useLoader(OBJLoader, "/assets/skull.obj")
-
     const uniforms = useMemo(
         () => ({
             uTime: { value: 0.0 },
@@ -23,16 +15,28 @@ const Skull = props => {
         []
     )
 
-    const material = new THREE.ShaderMaterial({
-        uniforms: uniforms,
-        vertexShader: vert,
-        fragmentShader: frag,
-    })
+    // Skull object
+    const getObject = () => {
+        OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
+        const obj = useLoader(OBJLoader, "/assets/skull.obj")
+        obj.scale.set(0.3, 0.3, 0.3)
 
-    for (let i = 0; i < obj.children.length; i++) {
-        obj.children[i].material = material
+        const material = new THREE.ShaderMaterial({
+            uniforms: uniforms,
+            vertexShader: vert,
+            fragmentShader: frag,
+        })
+
+        for (let i = 0; i < obj.children.length; i++) {
+            obj.children[i].material = material
+        }
+
+        return obj
     }
 
+    const skullObject = getObject()
+
+    // Mouse animations
     const animateX = e => {
         gsap.to(e, {
             duration: 1,
@@ -49,33 +53,32 @@ const Skull = props => {
         })
     }
 
-    obj.scale.set(0.3, 0.3, 0.3)
+    // Scroll
+    let scrollY = 0
+    const scroll = props.scroll
 
     scroll.on("scroll", ({ scroll }) => {
         scrollY = scroll.y
     })
 
+    // RAF
     useFrame((state, delta) => {
         uniforms.uTime.value += delta
 
+        // Position/rotation
+        skullObject.position.y = -4
+        skullObject.position.y += scrollY / 80
+        skullObject.position.y += Math.sin(uniforms.uTime.value / 1.75) / 170
+        skullObject.rotation.x = Math.PI / 0.63
+        skullObject.rotation.z = uniforms.uMouse.value.x / 10
+        skullObject.rotation.x += uniforms.uMouse.value.y / -10
+
+        // Mouse animations
         animateX(uniforms.uMouse.value)
         animateY(uniforms.uMouse.value)
-
-        obj.position.y = -4
-        obj.position.y += scrollY / 80
-        obj.rotation.x = Math.PI / 0.63
-        obj.rotation.z = uniforms.uMouse.value.x / 10
-        obj.rotation.x += uniforms.uMouse.value.y / -10
-        obj.position.y += Math.sin(uniforms.uTime.value / 1.75) / 170
     })
 
-    return (
-        <primitive
-            position={[0, -4, -15]}
-            onPointerOver={() => animateSetting(uniforms.u_setting)}
-            object={obj}
-        />
-    )
+    return <primitive position={[0, -4, -15]} object={skullObject} />
 }
 
 export default Skull

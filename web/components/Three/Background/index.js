@@ -5,16 +5,9 @@ import FBO from "../FBO"
 import BioImage from "../BioImage"
 
 const Background = props => {
-    const planeRef = useRef()
-    const windowWidth = window.innerWidth
-    const windowHeight = window.innerHeight
-    const aspect = windowWidth / windowHeight
-
-    // Uniforms
     const uniforms = useMemo(
         () => ({
             uTime: { value: 0.0 },
-            uResolution: { value: { x: windowWidth, y: windowHeight } },
             uScrollPos: {
                 value: 0,
             },
@@ -26,10 +19,15 @@ const Background = props => {
     const calculateUnitSize = () => {
         const fov = 75 // default camera value
         const cameraZ = 25
+        const zoom = 4
+
+        const windowWidth = window.innerWidth
+        const windowHeight = window.innerHeight
+        const aspect = windowWidth / windowHeight
 
         const vFov = (fov * Math.PI) / 180
 
-        const height = 2 * Math.tan(vFov / 2) * cameraZ
+        const height = (2 * Math.tan(vFov / 2) * cameraZ) / zoom
         const width = height * aspect
 
         return { width, height }
@@ -62,9 +60,9 @@ const Background = props => {
 
     return (
         <>
-            <mesh position={[0, 0, -20]} ref={planeRef}>
+            <mesh position={[0, 0, -20]}>
                 <planeBufferGeometry
-                    args={[camUnit.width - 0.1, camUnit.height - 0.1, 1, 1]}
+                    args={[camUnit.width, camUnit.height, 1, 1]}
                 />
                 <shaderMaterial
                     uniforms={uniforms}
