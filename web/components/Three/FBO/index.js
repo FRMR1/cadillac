@@ -74,7 +74,7 @@ const FBO = props => {
         const y = height / windowHeight
 
         const scaleX = camUnit.width * x
-        const scaleY = camUnit.height * x
+        const scaleY = camUnit.height * y
 
         return { scaleX, scaleY }
     }
