@@ -13,7 +13,7 @@ const Shows = props => {
 
     return (
         <div className={styles.showsContainer}>
-            <h2 ref={showsRef}>Upcoming Shows</h2>
+            <h2 ref={showsRef}></h2>
             <table>
                 <tHead>
                     <tr>

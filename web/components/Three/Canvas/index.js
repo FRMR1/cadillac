@@ -31,7 +31,6 @@ const MainCanvas = props => {
     return (
         <Canvas onPointerMove={pointerMove} className={styles.canvas}>
             <Suspense fallback={null}>
-                {/* <OrbitControls /> */}
                 <Skull
                     bodyRef={bodyRef}
                     pointer={pointer}
@@ -56,21 +55,22 @@ const MainCanvas = props => {
                     scroll={props.scroll}
                 />
                 {props.route === "/" && (
-                    // <FBO
-                    //     el={props.newsRef}
-                    //     pointer={props.pointer}
-                    //     bodyRef={bodyRef}
-                    //     pointer={pointer}
-                    //     scroll={props.scroll}
-                    // >
-                    <H1
-                        el={props.newsRef}
-                        position={[0, 0, -5]}
-                        children={"NEWS"}
-                        pointer={props.pointer}
-                        scroll={props.scroll}
-                    />
-                    //</FBO>
+                    <>
+                        <H1
+                            el={props.newsRef}
+                            position={[0, 0, 0]}
+                            children={"NEWS"}
+                            pointer={props.pointer}
+                            scroll={props.scroll}
+                        />
+                        <H1
+                            el={props.showsRef}
+                            position={[0, 0, 0]}
+                            children={"UPCOMING SHOWS"}
+                            scroll={props.scroll}
+                            pointer={props.pointer}
+                        />
+                    </>
                 )}
                 {/* <Effects /> */}
             </Suspense>

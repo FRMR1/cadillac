@@ -88,7 +88,7 @@ $white: #eee;
     h2 {
         text-transform: uppercase;
         font-size: 60px;
-        margin-bottom: 30px;
+        margin-bottom: 80px;
         color: $white;
         font-family: "GoldenTrail";
     }
@@ -141,9 +141,6 @@ $white: #eee;
 .newsContainer {
     width: 700px;
     z-index: 1;
-    h2 {
-        border: 1px solid #f00;
-    }
     h2,
     h3,
     p {
@@ -156,7 +153,7 @@ $white: #eee;
     h2 {
         text-transform: uppercase;
         font-size: 60px;
-        margin-bottom: 30px;
+        margin-bottom: 50px;
         font-family: "GoldenTrail";
     }
     h3 {

@@ -1,7 +1,7 @@
 import * as THREE from "three"
 import React, { useMemo, useRef } from "react"
 import { useLoader, useUpdate, useFrame } from "react-three-fiber"
-import { frag, vert } from "../../Shaders/h1"
+import { frag, vert } from "../../Shaders/herotext"
 import gsap from "gsap"
 
 const H1 = ({
@@ -25,22 +25,6 @@ const H1 = ({
 
     const font = useLoader(THREE.FontLoader, "/fonts/ciutadella.json")
 
-    const [scene, target] = useMemo(() => {
-        const scene = new THREE.Scene()
-        const target = new THREE.WebGLMultisampleRenderTarget(
-            windowWidth,
-            windowHeight,
-            {
-                format: THREE.RGBFormat,
-                stencilBuffer: false,
-                depthBuffer: true,
-                depthWrite: true,
-                depthTest: true,
-            }
-        )
-        return [scene, target]
-    }, [])
-
     const uniforms = useMemo(
         () => ({
             u_time: { value: 0.0 },
@@ -56,12 +40,12 @@ const H1 = ({
     const config = useMemo(
         () => ({
             font,
-            size: 1,
+            size: 0.2,
             height: 0,
             curveSegments: 20,
             bevelEnabled: true,
             bevelThickness: 0,
-            bevelSize: 0,
+            bevelSize: 0.01,
             bevelOffset: 0,
             bevelSegments: 2,
         }),
@@ -70,16 +54,16 @@ const H1 = ({
 
     const mesh = useUpdate(
         self => {
-            // const size = new THREE.Vector3()
-            // self.geometry.computeBoundingBox()
-            // self.geometry.boundingBox.getSize(size)
-            // self.rotation.x = 1
-            // self.position.x =
-            //     hAlign === "center"
-            //         ? -size.x / 2
-            //         : hAlign === "right"
-            //         ? 0
-            //         : -size.x
+            const size = new THREE.Vector3()
+            self.geometry.computeBoundingBox()
+            self.geometry.boundingBox.getSize(size)
+            self.rotation.x = 1
+            self.position.x =
+                hAlign === "center"
+                    ? -size.x / 2
+                    : hAlign === "right"
+                    ? 0
+                    : -size.x
         },
         [children]
     )
@@ -143,13 +127,10 @@ const H1 = ({
         scrollY = scroll.y
     })
 
+    const sizeVec3 = new THREE.Vector3()
+
     useFrame((state, delta) => {
         uniforms.u_time.value += delta
-
-        // Sync size to dom element
-        const { scaleX, scaleY } = getRenderSize(domEl)
-        group.current.scale.x = scaleX
-        group.current.scale.y = scaleY
 
         // Sync position to dom element + scroll
         updateRenderPosition(domEl, 0)
@@ -157,25 +138,27 @@ const H1 = ({
         group.current.position.y -= (distToTop / windowHeight) * camUnit.height
         group.current.position.y += scrollY / (windowHeight / camUnit.height)
 
-        // Render
-        state.gl.setRenderTarget(target)
-        state.gl.render(scene, state.camera)
-        state.gl.setRenderTarget(null)
+        // Mesh update
+        group.current.geometry.computeBoundingBox()
+        group.current.geometry.boundingBox.getSize(sizeVec3)
+        // group.current.rotation.x = 1
+        group.current.position.x =
+            hAlign === "center"
+                ? -sizeVec3.x / 2
+                : hAlign === "right"
+                ? 0
+                : -sizeVec3.x
     })
 
     return (
-        // <group ref={group} {...props}>
         <mesh ref={group}>
-            {/* <textBufferGeometry args={[children, config]} /> */}
-            <planeBufferGeometry args={[1, 1, 1, 1]} />
+            <textBufferGeometry args={[children, config]} />
             <shaderMaterial
                 uniforms={uniforms}
                 vertexShader={vert}
                 fragmentShader={frag}
-                transparent={true}
             />
         </mesh>
-        // </group>
     )
 }
 
