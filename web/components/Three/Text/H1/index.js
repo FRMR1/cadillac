@@ -1,7 +1,7 @@
 import * as THREE from "three"
 import React, { useMemo, useRef } from "react"
 import { useLoader, useUpdate, useFrame } from "react-three-fiber"
-import { frag, vert } from "../../Shaders/h1"
+import { frag, vert } from "../../Shaders/gold"
 import gsap from "gsap"
 
 const H1 = ({
@@ -23,7 +23,9 @@ const H1 = ({
     const windowHeight = window.innerHeight
     const aspect = windowWidth / windowHeight
 
+    // Loaders
     const font = useLoader(THREE.FontLoader, "/fonts/victorian.json")
+    const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
 
     const uniforms = useMemo(
         () => ({
@@ -32,6 +34,9 @@ const H1 = ({
             uResolution: { value: { x: windowWidth, y: windowHeight } },
             uRatio: {
                 value: aspect,
+            },
+            uTexture: {
+                value: txt,
             },
         }),
         []
@@ -119,7 +124,11 @@ const H1 = ({
         group.current.position.y = camUnit.height / 2 - scaleY / 2
 
         // Set position
+        const distToTop = scrollY + domEl.getBoundingClientRect().top
+
         group.current.position.x += (left / windowWidth) * camUnit.width
+        group.current.position.y -= (distToTop / windowHeight) * camUnit.height
+        group.current.position.y += scrollY / (windowHeight / camUnit.height)
     }
 
     // Mouse animations
@@ -142,7 +151,10 @@ const H1 = ({
     // Scroll
     scroll.on("scroll", ({ scroll }) => {
         scrollY = scroll.y
+        console.log(windowHeight, scrollY, camUnit.height)
     })
+
+    const distToTop = scrollY + domEl.getBoundingClientRect().top
 
     const sizeVec3 = new THREE.Vector3()
 
@@ -151,13 +163,13 @@ const H1 = ({
 
         // Sync position to dom element + scroll
         updateRenderPosition(domEl, 0)
-        const distToTop = scrollY + domEl.getBoundingClientRect().top
-        group.current.position.y -= (distToTop / windowHeight) * camUnit.height
-        group.current.position.y += scrollY / (windowHeight / camUnit.height)
 
         // Mouse rotations
         animateX(uniforms.uMouse.value)
         animateY(uniforms.uMouse.value)
+
+        // scrollY = scroll.y
+        // group.current.position.y += scrollY / (distToTop / camUnit.height)
 
         group.current.rotation.y = uniforms.uMouse.value.x / 5
         group.current.rotation.x = uniforms.uMouse.value.y / -5
@@ -177,7 +189,6 @@ const H1 = ({
     return (
         <mesh ref={group}>
             <textBufferGeometry args={[children, config]} />
-            {/* <planeBufferGeometry args={[1, 1, 1, 1]} /> */}
             <shaderMaterial
                 uniforms={uniforms}
                 vertexShader={vert}

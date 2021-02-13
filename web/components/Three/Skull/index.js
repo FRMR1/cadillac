@@ -5,10 +5,14 @@ import { frag, vert } from "../Shaders/skull"
 import * as THREE from "three"
 
 const Skull = props => {
+    // const txt = useLoader(THREE.TextureLoader, "/assets/texture2.png")
     const uniforms = useMemo(
         () => ({
             uTime: { value: 0.0 },
             uMouse: { value: new THREE.Vector2() },
+            // uTexture: {
+            //     value: txt,
+            // },
         }),
         []
     )

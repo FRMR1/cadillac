@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { useFrame, createPortal, useLoader } from "react-three-fiber"
 import { frag, vert } from "../Shaders/bio"
 import gsap from "gsap"
@@ -6,33 +6,17 @@ import * as THREE from "three"
 
 const BioImage = ({ el, children, pointer, scroll }) => {
     const mesh = useRef()
+    const geometry = useRef()
     const domElement = el
+
+    // Window size
+    const windowWidth = window.innerWidth
+    const windowHeight = window.innerHeight
+    const aspect = windowWidth / windowHeight
 
     // Loaders
     const img = useLoader(THREE.TextureLoader, "/jpg/cadillac.jpg")
     const txt = useLoader(THREE.TextureLoader, "/jpg/texture.jpg")
-
-    console.log("images", img, txt)
-
-    // Render target
-    const windowWidth = window.innerWidth
-    const windowHeight = window.innerHeight
-
-    const [scene, target] = useMemo(() => {
-        const scene = new THREE.Scene()
-        const target = new THREE.WebGLMultisampleRenderTarget(
-            windowWidth,
-            windowHeight,
-            {
-                format: THREE.RGBFormat,
-                stencilBuffer: false,
-                depthBuffer: true,
-                depthWrite: true,
-                depthTest: true,
-            }
-        )
-        return [scene, target]
-    }, [])
 
     // Uniforms
     const uniforms = useMemo(
@@ -49,12 +33,35 @@ const BioImage = ({ el, children, pointer, scroll }) => {
         []
     )
 
+    // Vertex position animation
+    const updateVerticePositions = () => {
+        const verticeWidth = 30
+        const verticeHeight = 15
+        const verticeCount = 496
+
+        const randomArr = new Float32Array(verticeCount)
+
+        for (let i = 0; i < verticeCount; i++) {
+            randomArr[i] = Math.random()
+        }
+
+        return { verticeWidth, verticeHeight, verticeCount, randomArr }
+    }
+
+    const {
+        verticeWidth,
+        verticeHeight,
+        verticeCount,
+        randomArr,
+    } = updateVerticePositions()
+
+    console.log(randomArr)
+
     // Viewport in camera units
     const calculateUnitSize = zDistance => {
         const fov = 75
         const cameraZ = 5
         const zoom = 4
-        const aspect = windowWidth / windowHeight
 
         const vFov = (fov * Math.PI) / 180
 
@@ -123,6 +130,8 @@ const BioImage = ({ el, children, pointer, scroll }) => {
 
     // RAF
     useFrame((state, delta) => {
+        uniforms.uTime.value += delta
+
         // Render size
         const { scaleX, scaleY } = getRenderSize(domElement)
         mesh.current.scale.x = scaleX
@@ -136,23 +145,30 @@ const BioImage = ({ el, children, pointer, scroll }) => {
         animateY(uniforms.uMouse.value)
         mesh.current.rotation.y = uniforms.uMouse.value.x / 5
         mesh.current.rotation.x = uniforms.uMouse.value.y / -5
-
-        // Render
-        // state.gl.setRenderTarget(target)
-        // state.gl.render(scene, state.camera)
-        // state.gl.setRenderTarget(null)
     })
+
+    console.log("mesh", mesh)
 
     return (
         <>
-            {createPortal(children, scene)}
             <mesh ref={mesh}>
-                <planeBufferGeometry args={[1, 1, 1, 1]} />
+                <planeBufferGeometry
+                    attach="geometry"
+                    ref={geometry}
+                    args={[1, 1, verticeWidth, verticeHeight]}
+                >
+                    <bufferAttribute
+                        attachObject={["attributes", "aRandom"]}
+                        count={verticeCount}
+                        array={randomArr}
+                        itemSize={1}
+                    />
+                </planeBufferGeometry>
                 <shaderMaterial
                     uniforms={uniforms}
                     vertexShader={vert}
                     fragmentShader={frag}
-                    // transparent={true}
+                    // wireframe={true}
                 />
             </mesh>
         </>

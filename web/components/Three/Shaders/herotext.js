@@ -53,6 +53,12 @@ void main() {
     vec3 b = vec3(.15, 0., .34);
     vec3 c = vec3(1., 1., 1.);
     vec3 d = vec3(0., 0.333, 0.);
+
+    // black, gold
+    // vec3 a = vec3(.44, 0.36, .12);
+    // vec3 b = vec3(.28, 0.2, -0.04);
+    // vec3 c = vec3(1., 1., 1.);
+    // vec3 d = vec3(0., 0., 0.);
     
     vec3 animatedColor = a + b * sin(2. * PI * (c * vN.y + d + uTime / 10.));
 

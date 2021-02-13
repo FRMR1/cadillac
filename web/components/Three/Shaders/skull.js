@@ -1,4 +1,5 @@
 export const vert = `
+varying vec2 vUv;
 varying vec3 vPosition;
 varying vec2 vN;
 
@@ -27,8 +28,10 @@ void main() {
 
 export const frag = `
 uniform float uTime;
+uniform sampler2D uTexture;
 
 varying vec3 vPosition;
+varying vec2 vUv;
 varying vec2 vN;
 
 #define F4 0.309016994374947451
@@ -216,6 +219,8 @@ void main() {
 
     vec4 txt = vec4(animatedColor, 1.);
     vec4 txt2 = vec4(animatedColor2, 1.);
+
+    // vec4 txt2 = texture2D(uTexture, vN);
     
     vec4 color = mix(txt, txt2, step);
 

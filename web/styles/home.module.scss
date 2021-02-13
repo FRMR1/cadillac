@@ -120,7 +120,7 @@ $white: #eee;
     max-width: 700px;
     h2 {
         font-family: "GoldenTrail";
-        font-size: 45px;
+        font-size: 85px;
         color: $gold;
         margin-bottom: 60px;
     }
@@ -132,8 +132,9 @@ $white: #eee;
 
 .bioImage {
     width: 700px;
-    height: 400px;
-    margin: 0 auto;
+    height: 450px;
+    margin-top: 100px;
+    margin-bottom: -100px;
     position: relative;
     // border: 1px solid #f00;
 }

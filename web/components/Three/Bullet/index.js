@@ -35,7 +35,7 @@ const Bullet = props => {
         obj.children[i].material = material
     }
 
-    obj.scale.set(3.3, 3.3, 3.3)
+    obj.scale.set(5, 5, 5)
 
     scroll.on("scroll", ({ scroll }) => {
         scrollY = scroll.y
@@ -44,16 +44,16 @@ const Bullet = props => {
     useFrame((state, delta) => {
         elapsedTime += delta
 
-        obj.position.y = 1
+        obj.position.y = 0.5
         obj.position.y += scrollY / 250
 
         obj.rotation.y += 0.022
-        obj.position.y += Math.sin(elapsedTime / 0.55) / 870
+        obj.position.y += Math.sin(elapsedTime / 0.55) / 570
     })
 
     return (
         <>
-            <primitive position={[-1.8, 1, -4]} object={obj} />
+            <primitive position={[-3, 0.5, -8]} object={obj} />
         </>
     )
 }

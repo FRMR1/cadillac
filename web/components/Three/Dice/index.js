@@ -1,16 +1,13 @@
 import React, { useMemo } from "react"
 import { useLoader, useFrame } from "react-three-fiber"
 import { frag, vert } from "../Shaders/gold"
-
 import * as THREE from "three"
-
-let OBJLoader
 
 const Dice = props => {
     const scroll = props.scroll
     let scrollY = 0
 
-    OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
+    const OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
     const obj = useLoader(OBJLoader, "/assets/dice.obj")
     const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
 

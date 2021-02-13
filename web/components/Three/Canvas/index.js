@@ -7,7 +7,6 @@ import HeroText from "../Text/HeroText"
 import H1 from "../Text/H1"
 import Dice from "../Dice"
 import Bullet from "../Bullet"
-import FBO from "../FBO"
 // import Effects from "../Effects"
 import styles from "../../../styles/Canvas.module.scss"
 
