@@ -185,8 +185,8 @@ void main() {
     // vec3 d = vec3(0., 0.333, 0.);
 
     // red, orange, yellow
-    // vec3 a = vec3(0.75, 0.5, .5);
-    // vec3 b = vec3(0., 0.25, 0.0);
+    // vec3 a = vec3(0.9, 0.5, .2);
+    // vec3 b = vec3(0., 0.3, 0.0);
     // vec3 c = vec3(1., 1., 1.);
     // vec3 d = vec3(0.698, 0.333, 0.667);
 

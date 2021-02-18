@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useMemo, useRef } from "react"
 import { useLoader, useFrame } from "react-three-fiber"
 import { frag, vert } from "../Shaders/gold"
 
@@ -7,14 +7,15 @@ import * as THREE from "three"
 let OBJLoader
 
 const Bullet = props => {
-    const scroll = props.scroll
-    let scrollY = 0
+    const ref1 = useRef()
+    const ref2 = useRef()
 
+    // Bullet object
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
     const obj = useLoader(OBJLoader, "/assets/bullet.obj")
     const txt = useLoader(THREE.TextureLoader, "/assets/texture.jpg")
 
-    let elapsedTime = 0
+    const geometry = obj.children[0].geometry
 
     const uniforms = useMemo(
         () => ({
@@ -31,29 +32,45 @@ const Bullet = props => {
         fragmentShader: frag,
     })
 
-    for (let i = 0; i < obj.children.length; i++) {
-        obj.children[i].material = material
-    }
-
-    obj.scale.set(5, 5, 5)
+    // Scroll
+    const scroll = props.scroll
+    let scrollY = 0
 
     scroll.on("scroll", ({ scroll }) => {
         scrollY = scroll.y
     })
 
+    // RAF
+    let elapsedTime = 0
+
     useFrame((state, delta) => {
         elapsedTime += delta
 
-        obj.position.y = 0.5
-        obj.position.y += scrollY / 250
+        ref1.current.position.y = 0.5
+        ref1.current.position.y += scrollY / 240
+        ref1.current.rotation.y += 0.022
+        ref1.current.position.y += Math.sin(elapsedTime / 2.5) / 5
+        ref1.current.scale.set(3, 3, 3)
 
-        obj.rotation.y += 0.022
-        obj.position.y += Math.sin(elapsedTime / 0.55) / 570
+        ref2.current.position.y = -6.5
+        ref2.current.position.y += scrollY / 240
+        ref2.current.rotation.y -= 0.022
+        ref2.current.position.y += Math.sin(elapsedTime / 2.5) / 5
+        ref2.current.scale.set(3, 3, 3)
     })
 
     return (
         <>
-            <primitive position={[-3, 0.5, -8]} object={obj} />
+            <mesh
+                ref={ref1}
+                args={[geometry, material]}
+                position={[-2, 0.5, -3]}
+            ></mesh>
+            <mesh
+                ref={ref2}
+                args={[geometry, material]}
+                position={[1.5, -6, -3]}
+            ></mesh>
         </>
     )
 }

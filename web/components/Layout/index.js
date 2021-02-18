@@ -69,7 +69,6 @@ const Layout = props => {
                         {props.children}
                     </main>
                     <footer data-scroll-section>
-                        <Image src="/svg/logo.svg" width={210} height={43} />
                         <div className={styles.footerSocial}>
                             <a
                                 href="https://instagram.com/cadillac_ftw"
@@ -82,6 +81,7 @@ const Layout = props => {
                                 />
                             </a>
                         </div>
+                        <Image src="/svg/logo.svg" width={210} height={43} />
                         <span className={styles.copyright}>
                             ©{year} Cadillac. All Rights Reserved.
                         </span>

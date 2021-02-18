@@ -69,10 +69,10 @@ export default function Text({
         uniforms.uTime.value += delta
 
         mesh.current.position.y = -0.5
-        mesh.current.position.y += scrollY / 5
+        mesh.current.position.y += scrollY / 11
 
-        mesh.current.position.y += Math.sin(uniforms.uTime.value / 1.5) / 60
-        // mesh.current.rotation.x += Math.sin(uniforms.uTime.value / 2)
+        mesh.current.position.y += Math.sin(uniforms.uTime.value / 1.5)
+
         mesh.current.rotation.x = 0.1
     })
 

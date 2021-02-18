@@ -55,12 +55,10 @@ const BioImage = ({ el, children, pointer, scroll }) => {
         randomArr,
     } = updateVerticePositions()
 
-    console.log(randomArr)
-
     // Viewport in camera units
     const calculateUnitSize = zDistance => {
         const fov = 75
-        const cameraZ = 5
+        const cameraZ = 10
         const zoom = 4
 
         const vFov = (fov * Math.PI) / 180
@@ -102,6 +100,7 @@ const BioImage = ({ el, children, pointer, scroll }) => {
         mesh.current.position.x += (left / windowWidth) * camUnit.width
         mesh.current.position.y -= (distToTop / windowHeight) * camUnit.height
         mesh.current.position.y += scrollY / (windowHeight / camUnit.height)
+        mesh.current.position.z = -5
     }
 
     // Mouse animations

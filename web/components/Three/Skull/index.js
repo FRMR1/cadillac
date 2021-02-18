@@ -69,19 +69,21 @@ const Skull = props => {
         uniforms.uTime.value += delta
 
         // Position/rotation
-        skullObject.position.y = -4
-        skullObject.position.y += scrollY / 80
-        skullObject.position.y += Math.sin(uniforms.uTime.value / 1.75) / 170
+        skullObject.position.y = -3.5
+        skullObject.position.y += scrollY / 150
+        skullObject.position.y += Math.sin(uniforms.uTime.value / 1.75) / 2
         skullObject.rotation.x = Math.PI / 0.63
         skullObject.rotation.z = uniforms.uMouse.value.x / 10
         skullObject.rotation.x += uniforms.uMouse.value.y / -10
+
+        console.log(uniforms.uTime.value, skullObject.position.y)
 
         // Mouse animations
         animateX(uniforms.uMouse.value)
         animateY(uniforms.uMouse.value)
     })
 
-    return <primitive position={[0, -4, -15]} object={skullObject} />
+    return <primitive position={[0, -3.5, -15]} object={skullObject} />
 }
 
 export default Skull

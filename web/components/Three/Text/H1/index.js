@@ -1,14 +1,14 @@
 import * as THREE from "three"
 import React, { useMemo, useRef } from "react"
 import { useLoader, useUpdate, useFrame } from "react-three-fiber"
-import { frag, vert } from "../../Shaders/gold"
+import { frag, vert } from "../../Shaders/h1"
 import gsap from "gsap"
 
 const H1 = ({
     children,
     vAlign = "center",
     hAlign = "center",
-    size = 0.1,
+    size = 0.2,
     color = "#000000",
     ...props
 }) => {
@@ -46,10 +46,10 @@ const H1 = ({
         () => ({
             font,
             size: 0.15,
-            height: 0.1,
+            height: 0.05,
             curveSegments: 20,
             bevelEnabled: true,
-            bevelThickness: 0,
+            bevelThickness: 0.01,
             bevelSize: 0.001,
             bevelOffset: 0,
             bevelSegments: 2,

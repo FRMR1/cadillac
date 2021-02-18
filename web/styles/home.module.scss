@@ -95,6 +95,7 @@ $white: #eee;
     table {
         width: 700px;
         border-collapse: collapse;
+        background-color: rgba(32, 32, 32, 0.6);
     }
     table,
     td,
@@ -214,7 +215,7 @@ $white: #eee;
 }
 
 .footerSocial {
-    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .footer a {
