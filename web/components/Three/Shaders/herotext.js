@@ -37,10 +37,10 @@ float PI = 3.141592653589;
 void main() {
 
     // red, orange, yellow
-    // vec3 a = vec3(1., 0.5, .3);
-    // vec3 b = vec3(0., 0.35, 0.0);
-    // vec3 c = vec3(1.5, 1.5, 1.5);
-    // vec3 d = vec3(0.698, 0.333, 0.667);
+    vec3 a = vec3(1., 0.5, .3);
+    vec3 b = vec3(0., 0.35, 0.0);
+    vec3 c = vec3(3.5, 3.5, 3.5);
+    vec3 d = vec3(0.698, 0.333, 0.667);
 
     // pink, aqua blue
     // vec3 a = vec3(0.4, 0.4, 1.);
@@ -49,10 +49,10 @@ void main() {
     // vec3 d = vec3(0.698, 0.145, 0.667);
 
     // black, purple
-    vec3 a = vec3(.306, 0.156, .496);
-    vec3 b = vec3(.15, 0., .34);
-    vec3 c = vec3(1., 1., 1.);
-    vec3 d = vec3(0., 0.333, 0.);
+    // vec3 a = vec3(.306, 0.156, .496);
+    // vec3 b = vec3(.15, 0., .34);
+    // vec3 c = vec3(1., 1., 1.);
+    // vec3 d = vec3(0., 0.333, 0.);
 
     // black, gold
     // vec3 a = vec3(.44, 0.36, .12);
@@ -60,7 +60,7 @@ void main() {
     // vec3 c = vec3(1., 1., 1.);
     // vec3 d = vec3(0., 0., 0.);
     
-    vec3 animatedColor = a + b * sin(2. * PI * (c * vN.y + d + uTime / 10.));
+    vec3 animatedColor = a + b * sin(2. * PI * (c * vN.y + d + uTime / 5.));
 
     vec4 color = vec4(animatedColor, 1.);
 

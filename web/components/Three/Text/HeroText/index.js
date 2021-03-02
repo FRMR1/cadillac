@@ -9,26 +9,12 @@ export default function Text({
     hAlign = "center",
     size = 1,
     color = "#000000",
+    isTablet,
+    isMobile,
     ...props
 }) {
-    const scroll = props.scroll
-    let scrollY = 0
-
-    const domEl = props.bodyRef
-    const domElRect = domEl.getBoundingClientRect()
-
-    const windowWidth = window.innerWidth
-    const pageHeight = domElRect.height
-    const heightToWidthRatio = pageHeight / windowWidth
-
+    // Font config
     const font = useLoader(THREE.FontLoader, "/fonts/victorian.json")
-
-    const uniforms = useMemo(
-        () => ({
-            uTime: { value: 0.0 },
-        }),
-        []
-    )
 
     const config = useMemo(
         () => ({
@@ -45,34 +31,57 @@ export default function Text({
         [font]
     )
 
+    // Mesh
+    const uniforms = useMemo(
+        () => ({
+            uTime: { value: 0.0 },
+        }),
+        []
+    )
+
     const mesh = useUpdate(
         self => {
             const size = new THREE.Vector3()
             self.geometry.computeBoundingBox()
             self.geometry.boundingBox.getSize(size)
             self.rotation.x = 1
-            self.position.x =
-                hAlign === "center"
-                    ? -size.x / 2
-                    : hAlign === "right"
-                    ? 0
-                    : -size.x
+
+            if (isMobile) {
+                self.position.x = (-size.x * 0.3) / 2
+            } else if (isTablet) {
+                self.position.x = (-size.x * 0.7) / 2
+            } else {
+                self.position.x = -size.x / 2
+            }
         },
-        [children]
+        [children, isTablet, isMobile]
     )
+
+    // Scroll
+    let scrollY = 0
+    const scroll = props.scroll
 
     scroll.on("scroll", ({ scroll }) => {
         scrollY = scroll.y
     })
 
+    // RAF
     useFrame((state, delta) => {
         uniforms.uTime.value += delta
 
+        // Responsive
+        if (isMobile) {
+            mesh.current.scale.set(0.3, 0.3, 0.3)
+        } else if (isTablet) {
+            mesh.current.scale.set(0.7, 0.7, 0.7)
+        } else {
+            mesh.current.scale.set(1, 1, 1)
+        }
+
+        // Animation
         mesh.current.position.y = -0.5
         mesh.current.position.y += scrollY / 11
-
         mesh.current.position.y += Math.sin(uniforms.uTime.value / 1.5)
-
         mesh.current.rotation.x = 0.1
     })
 

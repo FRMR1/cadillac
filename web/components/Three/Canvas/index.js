@@ -7,11 +7,14 @@ import HeroText from "../Text/HeroText"
 import H1 from "../Text/H1"
 import Dice from "../Dice"
 import Bullet from "../Bullet"
+import { useMediaQuery } from "react-responsive"
 // import Effects from "../Effects"
 import styles from "../../../styles/Canvas.module.scss"
 
 const MainCanvas = props => {
     const [bodyRef, setBodyRef] = useState()
+    const isTablet = useMediaQuery({ query: "(max-width: 1224px)" })
+    const isMobile = useMediaQuery({ query: "(max-width: 600px)" })
 
     const pointer = useMemo(() => {
         return new THREE.Vector2()
@@ -34,15 +37,29 @@ const MainCanvas = props => {
                     bodyRef={bodyRef}
                     pointer={pointer}
                     scroll={props.scroll}
+                    isTablet={isTablet}
+                    isMobile={isMobile}
                 />
-                <Dice scroll={props.scroll} pointer={pointer} />
-                <Bullet scroll={props.scroll} pointer={pointer} />
+                <Dice
+                    scroll={props.scroll}
+                    pointer={pointer}
+                    isTablet={isTablet}
+                    isMobile={isMobile}
+                />
+                <Bullet
+                    scroll={props.scroll}
+                    pointer={pointer}
+                    isTablet={isTablet}
+                    isMobile={isMobile}
+                />
                 <HeroText
                     position={[0, -0.5, -5]}
                     children={"CADILLAC"}
                     pointer={pointer}
                     bodyRef={bodyRef}
                     scroll={props.scroll}
+                    isTablet={isTablet}
+                    isMobile={isMobile}
                 />
                 <Background
                     bodyRef={bodyRef}

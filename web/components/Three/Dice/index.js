@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useRef } from "react"
+import React, { useUpdate, useMemo, useRef } from "react"
 import { useLoader, useFrame } from "react-three-fiber"
 import { frag, vert } from "../Shaders/gold"
 import * as THREE from "three"
 
-const Dice = props => {
-    const ref = useRef()
-    const ref2 = useRef()
+const Dice = ({ isTablet, isMobile, ...props }) => {
+    const mesh = useRef()
+    const mesh2 = useRef()
 
     // Dice instances
     const OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
@@ -43,33 +43,44 @@ const Dice = props => {
     useFrame((state, delta) => {
         elapsedTime += delta
 
-        ref.current.scale.set(0.2, 0.2, 0.2)
-        ref.current.position.y = -1
-        ref.current.position.y += scrollY / 240
-        ref.current.rotation.y += 0.03
-        ref.current.position.y += Math.sin(elapsedTime / 5) / 5
+        mesh.current.scale.set(0.2, 0.2, 0.2)
+        mesh.current.position.y = -1
+        mesh.current.position.y += scrollY / 240
+        mesh.current.rotation.y += 0.03
+        mesh.current.position.y += Math.sin(elapsedTime / 5) / 5
 
-        ref2.current.scale.set(0.2, 0.2, 0.2)
-        ref2.current.position.y = -4
-        ref2.current.position.y += scrollY / 240
-        ref2.current.rotation.y -= 0.03
-        ref2.current.position.y += Math.sin(elapsedTime / 4.5) / 5
+        mesh2.current.scale.set(0.2, 0.2, 0.2)
+        mesh2.current.position.y = -4
+        mesh2.current.position.y += scrollY / 240
+        mesh2.current.rotation.y -= 0.03
+        mesh2.current.position.y += Math.sin(elapsedTime / 4.5) / 5
+
+        // Responsive
+        if (isMobile) {
+            mesh.current.scale.set(0.11, 0.11, 0.11)
+            mesh2.current.scale.set(0.11, 0.11, 0.11)
+            mesh.current.position.x = 0.5
+            mesh2.current.position.x = -0.1
+        } else if (isTablet) {
+            mesh.current.scale.set(0.15, 0.15, 0.15)
+            mesh2.current.scale.set(0.15, 0.15, 0.15)
+            mesh.current.position.x = 1.5
+            mesh2.current.position.x = -1.4
+        }
     })
-
-    console.log(ref)
 
     return (
         <>
             <mesh
-                ref={ref}
+                ref={mesh}
                 args={[geometry, material]}
                 position={[2.6, -1, -4]}
-            ></mesh>
+            />
             <mesh
-                ref={ref2}
+                ref={mesh2}
                 args={[geometry, material]}
                 position={[-2, -4, -3]}
-            ></mesh>
+            />
         </>
     )
 }

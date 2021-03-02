@@ -4,15 +4,11 @@ import gsap from "gsap"
 import { frag, vert } from "../Shaders/skull"
 import * as THREE from "three"
 
-const Skull = props => {
-    // const txt = useLoader(THREE.TextureLoader, "/assets/texture2.png")
+const Skull = ({ isTablet, isMobile, pointer, scroll }) => {
     const uniforms = useMemo(
         () => ({
             uTime: { value: 0.0 },
             uMouse: { value: new THREE.Vector2() },
-            // uTexture: {
-            //     value: txt,
-            // },
         }),
         []
     )
@@ -43,7 +39,7 @@ const Skull = props => {
     const animateX = e => {
         gsap.to(e, {
             duration: 1,
-            x: props.pointer.x,
+            x: pointer.x,
             ease: "inout",
         })
     }
@@ -51,14 +47,13 @@ const Skull = props => {
     const animateY = e => {
         gsap.to(e, {
             duration: 1,
-            y: props.pointer.y,
+            y: pointer.y,
             ease: "inout",
         })
     }
 
     // Scroll
     let scrollY = 0
-    const scroll = props.scroll
 
     scroll.on("scroll", ({ scroll }) => {
         scrollY = scroll.y
@@ -68,15 +63,25 @@ const Skull = props => {
     useFrame((state, delta) => {
         uniforms.uTime.value += delta
 
+        // Responsive
+
+        if (isMobile) {
+            skullObject.scale.set(0.15, 0.15, 0.15)
+            skullObject.position.y = -1.8
+        } else if (isTablet) {
+            skullObject.scale.set(0.2, 0.2, 0.2)
+            skullObject.position.y = -2.2
+        } else {
+            skullObject.scale.set(0.3, 0.3, 0.3)
+            skullObject.position.y = -3.5
+        }
+
         // Position/rotation
-        skullObject.position.y = -3.5
         skullObject.position.y += scrollY / 150
         skullObject.position.y += Math.sin(uniforms.uTime.value / 1.75) / 2
         skullObject.rotation.x = Math.PI / 0.63
         skullObject.rotation.z = uniforms.uMouse.value.x / 10
         skullObject.rotation.x += uniforms.uMouse.value.y / -10
-
-        console.log(uniforms.uTime.value, skullObject.position.y)
 
         // Mouse animations
         animateX(uniforms.uMouse.value)

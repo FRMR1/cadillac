@@ -6,9 +6,9 @@ import * as THREE from "three"
 
 let OBJLoader
 
-const Bullet = props => {
-    const ref1 = useRef()
-    const ref2 = useRef()
+const Bullet = ({ isTablet, isMobile, ...props }) => {
+    const mesh = useRef()
+    const mesh2 = useRef()
 
     // Bullet object
     OBJLoader = require("three/examples/jsm/loaders/OBJLoader").OBJLoader
@@ -46,31 +46,44 @@ const Bullet = props => {
     useFrame((state, delta) => {
         elapsedTime += delta
 
-        ref1.current.position.y = 0.5
-        ref1.current.position.y += scrollY / 240
-        ref1.current.rotation.y += 0.022
-        ref1.current.position.y += Math.sin(elapsedTime / 2.5) / 5
-        ref1.current.scale.set(3, 3, 3)
+        mesh.current.position.y = 0.5
+        mesh.current.position.y += scrollY / 240
+        mesh.current.rotation.y += 0.022
+        mesh.current.position.y += Math.sin(elapsedTime / 2.5) / 5
+        mesh.current.scale.set(3, 3, 3)
 
-        ref2.current.position.y = -6.5
-        ref2.current.position.y += scrollY / 240
-        ref2.current.rotation.y -= 0.022
-        ref2.current.position.y += Math.sin(elapsedTime / 2.5) / 5
-        ref2.current.scale.set(3, 3, 3)
+        mesh2.current.position.y = -6.5
+        mesh2.current.position.y += scrollY / 240
+        mesh2.current.rotation.y -= 0.022
+        mesh2.current.position.y += Math.sin(elapsedTime / 2.5) / 5
+        mesh2.current.scale.set(3, 3, 3)
+
+        // Responsive
+        if (isMobile) {
+            mesh.current.scale.set(1.5, 1.5, 1.5)
+            mesh2.current.scale.set(1.5, 1.5, 1.5)
+            mesh.current.position.x = -0.5
+            mesh2.current.position.x = 0.3
+        } else if (isTablet) {
+            mesh.current.scale.set(2.3, 2.3, 2.3)
+            mesh2.current.scale.set(2.3, 2.3, 2.3)
+            mesh.current.position.x = -1.5
+            mesh2.current.position.x = 1
+        }
     })
 
     return (
         <>
             <mesh
-                ref={ref1}
+                ref={mesh}
                 args={[geometry, material]}
                 position={[-2, 0.5, -3]}
-            ></mesh>
+            />
             <mesh
-                ref={ref2}
+                ref={mesh2}
                 args={[geometry, material]}
-                position={[1.5, -6, -3]}
-            ></mesh>
+                position={[1.5, -8, -3]}
+            />
         </>
     )
 }
