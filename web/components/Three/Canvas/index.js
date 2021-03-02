@@ -13,8 +13,8 @@ import styles from "../../../styles/Canvas.module.scss"
 
 const MainCanvas = props => {
     const [bodyRef, setBodyRef] = useState()
-    const isTablet = useMediaQuery({ query: "(max-width: 1224px)" })
-    const isMobile = useMediaQuery({ query: "(max-width: 600px)" })
+    const isTablet = useMediaQuery({ query: "(max-width: 1200px)" })
+    const isMobile = useMediaQuery({ query: "(max-width: 700px)" })
 
     const pointer = useMemo(() => {
         return new THREE.Vector2()
@@ -70,24 +70,6 @@ const MainCanvas = props => {
                     route={props.route}
                     scroll={props.scroll}
                 />
-                {props.route === "/" && (
-                    <>
-                        <H1
-                            el={props.newsRef}
-                            position={[0, 0, 0]}
-                            children={"NEWS"}
-                            pointer={pointer}
-                            scroll={props.scroll}
-                        />
-                        <H1
-                            el={props.showsRef}
-                            position={[0, 0, 0]}
-                            children={"UPCOMING SHOWS"}
-                            scroll={props.scroll}
-                            pointer={pointer}
-                        />
-                    </>
-                )}
                 {/* <Effects /> */}
             </Suspense>
         </Canvas>

@@ -2,9 +2,8 @@ $gold: #b58f18;
 $white: #eee;
 
 .container {
-    // min-height: 100vh;
+    overflow: hidden;
     position: absolute;
-    // overflow: hidden;
     width: 100%;
     padding: 0 0.5rem;
     display: flex;
@@ -14,12 +13,7 @@ $white: #eee;
 }
 
 .main {
-    padding: 5rem 0;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: 5rem;
 }
 
 .navContainer {
@@ -47,21 +41,35 @@ $white: #eee;
 .bioContainer {
     z-index: 1;
     position: relative;
+    max-width: 800px;
 }
 
 .eldorado {
     margin-bottom: 150px;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
     .text {
-        margin-right: 50px;
+        // margin-right: 50px;
         text-align: center;
         h3 {
-            font-family: "GoldenTrail";
-            font-size: 55px;
-            margin-bottom: 15px;
+            font-family: "Winsor";
+            font-size: 25px;
+            margin: 0;
+            margin-top: -10px;
             color: $white;
+            @media (max-width: 600px) {
+                font-size: 20px;
+            }
             span {
-                font-size: 55px;
+                font-family: "GoldenTrail";
+                font-size: 85px;
                 color: $gold;
+                margin-bottom: 15px;
+                @media (max-width: 600px) {
+                    font-size: 70px;
+                }
             }
         }
         p {
@@ -72,28 +80,34 @@ $white: #eee;
     }
     .text,
     .image {
+        text-align: center;
         display: inline-block;
     }
     .buy {
         position: relative;
         display: inline;
-        top: -150px !important;
+        top: -170px !important;
         left: -50px;
     }
 }
 
 .showsContainer {
     z-index: 1;
-    margin-top: 120px;
+    max-width: 800px;
+    margin-top: 150px;
     h2 {
         text-transform: uppercase;
         font-size: 60px;
-        margin-bottom: 80px;
-        color: $white;
+        margin-bottom: 30px;
+        color: $gold;
         font-family: "GoldenTrail";
+        @media (max-width: 600px) {
+            font-size: 40px;
+        }
     }
     table {
-        width: 700px;
+        width: 100%;
+        margin: 0 auto;
         border-collapse: collapse;
         background-color: rgba(32, 32, 32, 0.6);
     }
@@ -118,30 +132,37 @@ $white: #eee;
 .bioContainer {
     z-index: 1;
     text-align: center;
-    max-width: 700px;
+    max-width: 800px;
+    // padding: 0 5rem;
+    width: 100%;
     h2 {
         font-family: "GoldenTrail";
         font-size: 85px;
         color: $gold;
         margin-bottom: 60px;
+        @media (max-width: 600px) {
+            font-size: 45px;
+        }
     }
     p {
         color: $white;
-        margin-bottom: 40px;
+        margin-bottom: 13px;
     }
 }
 
 .bioImage {
     width: 700px;
     height: 450px;
-    margin-top: 100px;
-    margin-bottom: -100px;
+    margin: 100px auto -100px;
     position: relative;
-    // border: 1px solid #f00;
+    @media (max-width: 600px) {
+        width: 300px;
+        height: 200px;
+    }
 }
 
 .newsContainer {
-    width: 700px;
+    // width: 700px;
     z-index: 1;
     h2,
     h3,
@@ -155,7 +176,8 @@ $white: #eee;
     h2 {
         text-transform: uppercase;
         font-size: 60px;
-        margin-bottom: 50px;
+        color: $gold;
+        margin-bottom: 30px;
         font-family: "GoldenTrail";
     }
     h3 {
@@ -174,13 +196,16 @@ $white: #eee;
 
 .shop {
     z-index: 1;
-    margin-top: 120px;
+    margin-top: 180px;
     text-align: center;
     h3 {
         font-size: 70px;
         font-family: "GoldenTrail";
         margin-bottom: 40px;
-        color: $gold;
+        color: $white;
+        @media (max-width: 600px) {
+            font-size: 35px;
+        }
     }
 }
 
@@ -195,6 +220,10 @@ $white: #eee;
     transition: background-color 0.3s ease-in-out;
     cursor: pointer;
     padding: 15px 40px;
+    @media (max-width: 600px) {
+        font-size: 13px;
+        padding: 10px 30px;
+    }
     &:hover {
         background-color: rgba(32, 32, 32, 1);
         transition: background-color 0.3s ease-in-out;

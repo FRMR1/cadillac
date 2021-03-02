@@ -19,14 +19,15 @@ const Home = props => {
         <>
             <div data-scroll className={styles.eldorado}>
                 <div className={styles.text}>
+                    <h3>New Album</h3>
                     <h3>
-                        New Album <span className={styles.gold}>El Dorado</span>
+                        <span>El Dorado</span>
                     </h3>
                     <p>Listen Now On</p>
                     <Image src="/svg/spotify.svg" width={180} height={50} />
                 </div>
                 <div className={styles.image}>
-                    <Image src="/png/eldorado.png" width={200} height={200} />
+                    <Image src="/png/eldorado.png" width={230} height={230} />
                     <div className={styles.buy}>
                         <Image src="/svg/shithot.svg" width={80} height={80} />
                     </div>
