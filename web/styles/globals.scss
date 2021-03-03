@@ -24,6 +24,13 @@
     font-display: swap;
 }
 
+@media (max-width: 600px) {
+    html,
+    body {
+        font-size: 0.8rem;
+    }
+}
+
 html,
 body {
     padding: 0;

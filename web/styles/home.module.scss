@@ -13,7 +13,9 @@ $white: #eee;
 }
 
 .main {
-    padding: 5rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 800px;
 }
 
 .navContainer {
@@ -46,10 +48,16 @@ $white: #eee;
 
 .eldorado {
     margin-bottom: 150px;
-    display: grid;
+    margin-top: 150px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
     align-items: center;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
+    gap: 30px;
+    @media (max-width: 600px) {
+        display: flex;
+        flex-direction: column;
+    }
     .text {
         // margin-right: 50px;
         text-align: center;
@@ -64,7 +72,7 @@ $white: #eee;
             }
             span {
                 font-family: "GoldenTrail";
-                font-size: 85px;
+                font-size: 80px;
                 color: $gold;
                 margin-bottom: 15px;
                 @media (max-width: 600px) {
@@ -81,13 +89,22 @@ $white: #eee;
     .text,
     .image {
         text-align: center;
-        display: inline-block;
+        // margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    .text {
+        order: 3;
+    }
+    .image {
+        order: 2;
     }
     .buy {
         position: relative;
         display: inline;
-        top: -170px !important;
-        left: -50px;
+        top: -260px !important;
+        left: 100px !important;
     }
 }
 
@@ -107,6 +124,7 @@ $white: #eee;
     }
     table {
         width: 100%;
+        overflow-x: auto;
         margin: 0 auto;
         border-collapse: collapse;
         background-color: rgba(32, 32, 32, 0.6);
