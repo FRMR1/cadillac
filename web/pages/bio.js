@@ -19,19 +19,16 @@ const Bio = props => {
         <div className={styles.bioContainer}>
             <h2>We are Cadillac.</h2>
             <p>
-                Twenty-first century rock n roll you could fall in love, or have
-                your heart broken to. Either way, a stiff drink and some natural
-                mind medication is strongly encouraged. With one boot well
-                placed in the traditions of yesteryear, and the other kicking
-                down the door of the dystopian future we have yet to face,
-                Cadillac is the best band you have yet to hear in this bizarre
-                timeline we’ve all been chosen to exist in. Blazing dual
-                guitars, thundering bass, intricate percussion and lyrics that
-                would make Charlemagne second guess himself. With a dynamite
-                rhythm section comprised of Wade Hunter on drums, and Chad
-                Krause on bass, they are the key components that keep the engine
-                running. In the passenger seat is Nick Gauvin, whose twangy
-                telecaster licks and sweet Vocal harmonies are the seasoning
+                With one boot well placed in the traditions of yesteryear, and
+                the other kicking down the door of the dystopian future we have
+                yet to face, Cadillac is the best band you have yet to hear in
+                this bizarre timeline we’ve all been chosen to exist in. Blazing
+                dual guitars, thundering bass, intricate percussion and lyrics
+                that would make Charlemagne second guess himself. With a
+                dynamite rhythm section comprised of Farmer on drums, and Puff
+                Chaddy on bass, they are the key components that keep the engine
+                running. In the passenger seat is Reese Richards, whose twangy
+                telecaster licks and sweet vocal harmonies are the seasoning
                 that leave you wanting more. Last but not least, the one at the
                 helm, on lead vocals and guitar is Reverend Kitchener Langfield
                 III. In 2019 he left the bustling metropolis of Vancouver for

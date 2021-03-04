@@ -81,7 +81,7 @@ $white: #eee;
             }
         }
         p {
-            font-size: 17px;
+            font-size: 14px;
             text-transform: uppercase;
             color: $white;
         }
@@ -114,12 +114,12 @@ $white: #eee;
     margin-top: 150px;
     h2 {
         text-transform: uppercase;
-        font-size: 60px;
+        font-size: 50px;
         margin-bottom: 30px;
         color: $gold;
-        font-family: "GoldenTrail";
+        font-family: "Winsor";
         @media (max-width: 600px) {
-            font-size: 40px;
+            font-size: 30px;
         }
     }
     table {
@@ -159,8 +159,8 @@ $white: #eee;
     // padding: 0 5rem;
     width: 100%;
     h2 {
-        font-family: "GoldenTrail";
-        font-size: 85px;
+        font-family: "Winsor";
+        font-size: 65px;
         color: $gold;
         margin-bottom: 60px;
         @media (max-width: 600px) {
@@ -170,6 +170,14 @@ $white: #eee;
     p {
         color: $white;
         margin-bottom: 13px;
+    }
+    @media (max-width: 600px) {
+        p {
+            font-size: 11px;
+        }
+        h2 {
+            font-size: 45px;
+        }
     }
 }
 
@@ -198,10 +206,10 @@ $white: #eee;
     }
     h2 {
         text-transform: uppercase;
-        font-size: 60px;
+        font-size: 50px;
         color: $gold;
         margin-bottom: 30px;
-        font-family: "GoldenTrail";
+        font-family: "Winsor";
     }
     h3 {
         text-transform: uppercase;
@@ -214,6 +222,17 @@ $white: #eee;
     }
     .articleContainer {
         margin-bottom: 40px;
+    }
+    @media (max-width: 600px) {
+        h2 {
+            font-size: 30px;
+        }
+        h3 {
+            font-size: 20px;
+        }
+        p {
+            font-size: 11px;
+        }
     }
 }
 
