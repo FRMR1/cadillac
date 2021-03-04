@@ -23,13 +23,21 @@ const Shows = props => {
                     </tr>
                 </tHead>
                 <tBody>
-                    {shows.map(show => (
-                        <tr key={show.date}>
-                            <td>{show.date}</td>
-                            <td>{show.city}</td>
-                            <td>{show.venue}</td>
+                    {shows &&
+                        shows.map(show => (
+                            <tr key={show.date}>
+                                <td>{show.date}</td>
+                                <td>{show.city}</td>
+                                <td>{show.venue}</td>
+                            </tr>
+                        ))}
+                    {!shows.length && (
+                        <tr className={styles.noShows}>
+                            <td colspan="3">
+                                There are currently no shows scheduled.
+                            </td>
                         </tr>
-                    ))}
+                    )}
                 </tBody>
             </table>
         </div>

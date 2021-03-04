@@ -27,6 +27,7 @@
     "react-three-fiber": "^5.3.10",
     "redux": "^4.0.5",
     "sass": "^1.32.0",
+    "styled-components": "^5.2.1",
     "three": "^0.124.0",
     "three-bmfont-text": "^3.0.1",
     "troika-three-text": "^0.37.0",

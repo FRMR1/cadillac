@@ -1,19 +1,25 @@
 import React, { useEffect, useRef, useState } from "react"
 import { connect } from "react-redux"
 import Image from "next/image"
-import Head from "next/head"
 import Link from "next/link"
+import Head from "next/head"
 import { useRouter } from "next/router"
+import MediaQuery from "react-responsive"
+import Nav from "../Layout/Nav"
 import MainCanvas from "../../components/Three/Canvas"
+import Burger from "./Nav/Burger"
+import MobileMenu from "./Nav/MobileMenu"
 import client from "../../client"
-import styles from "../../styles/home.module.scss"
+import styles from "../../styles/Home.module.scss"
 import { useContext } from "react"
 import { SmoothScrollContext } from "../../contexts/SmoothScroll.context"
 
 const Layout = props => {
     const bodyRef = useRef()
     const router = useRouter()
+
     const [scrollCtx, setScrollCtx] = useState()
+    const [menuOpen, setMenuOpen] = useState()
 
     const { scroll } = useContext(SmoothScrollContext)
 
@@ -40,23 +46,34 @@ const Layout = props => {
                     data-scroll-container
                     className={styles.container}
                 >
-                    <div className={styles.navContainer} data-scroll-section>
-                        {/* <div className={styles.logo}></div> */}
-                        <div data-scroll className={styles.nav}>
-                            <Link href="/">
-                                <a>Home</a>
-                            </Link>
-                            <Link href="/news">
-                                <a>News</a>
-                            </Link>
-                            <Link href="/bio">
-                                <a>Bio</a>
-                            </Link>
-                            <Link href="#">
-                                <a>Shop</a>
-                            </Link>
+                    <MediaQuery maxWidth={700}>
+                        <Burger menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+                        <MobileMenu
+                            menuOpen={menuOpen}
+                            setMenuOpen={setMenuOpen}
+                        />
+                    </MediaQuery>
+                    <MediaQuery minWidth={701}>
+                        <div
+                            className={styles.navContainer}
+                            data-scroll-section
+                        >
+                            <div data-scroll className={styles.nav}>
+                                <Link href="/">
+                                    <a>Home</a>
+                                </Link>
+                                <Link href="/news">
+                                    <a>News</a>
+                                </Link>
+                                <Link href="/bio">
+                                    <a>Bio</a>
+                                </Link>
+                                <Link href="#">
+                                    <a>Shop</a>
+                                </Link>
+                            </div>
                         </div>
-                    </div>
+                    </MediaQuery>
                     <MainCanvas
                         bodyRef={bodyRef}
                         bioRef={props.bioRef}
