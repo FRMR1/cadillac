@@ -1,7 +1,6 @@
-import Link from "next/link"
 import styled from "styled-components"
 
-const StyledMenu = styled.nav`
+export const MenuStyles = styled.nav`
     display: flex;
     z-index: 5;
     flex-direction: column;
@@ -41,23 +40,3 @@ const StyledMenu = styled.nav`
         }
     }
 `
-
-const MobileMenu = ({ menuOpen, setMenuOpen }) => {
-    return (
-        <StyledMenu menuOpen={menuOpen}>
-            <Link href="/">
-                <a onClick={() => setMenuOpen(!menuOpen)}>Home</a>
-            </Link>
-            <Link href="/news">
-                <a onClick={() => setMenuOpen(!menuOpen)}>News</a>
-            </Link>
-            <Link href="/bio">
-                <a onClick={() => setMenuOpen(!menuOpen)}>Bio</a>
-            </Link>
-            <Link href="#">
-                <a onClick={() => setMenuOpen(!menuOpen)}>Shop</a>
-            </Link>
-        </StyledMenu>
-    )
-}
-export default MobileMenu

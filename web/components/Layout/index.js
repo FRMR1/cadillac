@@ -4,11 +4,10 @@ import Image from "next/image"
 import Link from "next/link"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import MediaQuery from "react-responsive"
-import Nav from "../Layout/Nav"
+import { useMediaQuery } from "react-responsive"
 import MainCanvas from "../../components/Three/Canvas"
-import Burger from "./Nav/Burger"
-import MobileMenu from "./Nav/MobileMenu"
+import { MenuStyles } from "../../styles/MenuStyles"
+import { BurgerStyles } from "../../styles/BurgerStyles"
 import client from "../../client"
 import styles from "../../styles/Home.module.scss"
 import { useContext } from "react"
@@ -16,17 +15,23 @@ import { SmoothScrollContext } from "../../contexts/SmoothScroll.context"
 
 const Layout = props => {
     const bodyRef = useRef()
-    const router = useRouter()
-
-    const [scrollCtx, setScrollCtx] = useState()
     const [menuOpen, setMenuOpen] = useState()
 
+    // Responsive
+    const isTabletPlus = useMediaQuery({ query: "(min-width: 701px)" })
+    const isMobile = useMediaQuery({ query: "(max-width: 700px)" })
+
+    console.log(isTabletPlus)
+
+    // Scroll
+    const [scrollCtx, setScrollCtx] = useState()
     const { scroll } = useContext(SmoothScrollContext)
 
     useEffect(() => {
         setScrollCtx(scroll)
     }, [scroll])
 
+    // Copyright date
     const date = new Date()
     const year = date.getFullYear()
 
@@ -46,19 +51,46 @@ const Layout = props => {
                     data-scroll-container
                     className={styles.container}
                 >
-                    <MediaQuery maxWidth={700}>
-                        <Burger menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-                        <MobileMenu
-                            menuOpen={menuOpen}
-                            setMenuOpen={setMenuOpen}
-                        />
-                    </MediaQuery>
-                    <MediaQuery minWidth={701}>
+                    {isMobile && (
+                        <>
+                            <BurgerStyles
+                                open={menuOpen}
+                                onClick={() => setMenuOpen(!menuOpen)}
+                            >
+                                <div />
+                                <div />
+                                <div />
+                            </BurgerStyles>
+                            <MenuStyles menuOpen={menuOpen}>
+                                <Link href="/">
+                                    <a onClick={() => setMenuOpen(!menuOpen)}>
+                                        Home
+                                    </a>
+                                </Link>
+                                <Link href="/news">
+                                    <a onClick={() => setMenuOpen(!menuOpen)}>
+                                        News
+                                    </a>
+                                </Link>
+                                <Link href="/bio">
+                                    <a onClick={() => setMenuOpen(!menuOpen)}>
+                                        Bio
+                                    </a>
+                                </Link>
+                                <Link href="#">
+                                    <a onClick={() => setMenuOpen(!menuOpen)}>
+                                        Shop
+                                    </a>
+                                </Link>
+                            </MenuStyles>
+                        </>
+                    )}
+                    {!isMobile && (
                         <div
                             className={styles.navContainer}
                             data-scroll-section
                         >
-                            <div data-scroll className={styles.nav}>
+                            <div className={styles.nav}>
                                 <Link href="/">
                                     <a>Home</a>
                                 </Link>
@@ -73,7 +105,8 @@ const Layout = props => {
                                 </Link>
                             </div>
                         </div>
-                    </MediaQuery>
+                    )}
+
                     <MainCanvas
                         bodyRef={bodyRef}
                         bioRef={props.bioRef}

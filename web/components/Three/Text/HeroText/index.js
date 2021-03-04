@@ -46,6 +46,7 @@ export default function Text({
             self.geometry.boundingBox.getSize(size)
             self.rotation.x = 1
 
+            // Center the text after responsive rescaling
             if (isMobile) {
                 self.position.x = (-size.x * 0.3) / 2
             } else if (isTablet) {

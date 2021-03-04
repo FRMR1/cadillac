@@ -6,6 +6,7 @@ import Layout from "../components/Layout"
 import { BioContext } from "../pages/bio"
 import styles from "../styles/home.module.scss"
 import { SmoothScrollProvider } from "../contexts/SmoothScroll.context"
+import { LocomotiveScrollProvider } from "react-locomotive-scroll"
 import "../styles/globals.scss"
 
 const store = createStore(reducer)
