@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useState, useMemo } from "react"
 import * as THREE from "three"
 import { Canvas } from "react-three-fiber"
+import dynamic from "next/dynamic"
 import Background from "../Background"
 import Skull from "../Skull"
 import HeroText from "../Text/HeroText"
@@ -8,8 +9,9 @@ import H1 from "../Text/H1"
 import Dice from "../Dice"
 import Bullet from "../Bullet"
 import { useMediaQuery } from "react-responsive"
-// import Effects from "../Effects"
 import styles from "../../../styles/Canvas.module.scss"
+
+const Background = dynamic(() => import("../Background"), { ssr: false })
 
 const MainCanvas = props => {
     const [bodyRef, setBodyRef] = useState()
@@ -33,7 +35,7 @@ const MainCanvas = props => {
     return (
         <Canvas onPointerMove={pointerMove} className={styles.canvas}>
             <Suspense fallback={null}>
-                <Skull
+                {/* <Skull
                     bodyRef={bodyRef}
                     pointer={pointer}
                     scroll={props.scroll}
@@ -60,7 +62,7 @@ const MainCanvas = props => {
                     scroll={props.scroll}
                     isTablet={isTablet}
                     isMobile={isMobile}
-                />
+                /> */}
                 <Background
                     bodyRef={bodyRef}
                     bioRef={props.bioRef}

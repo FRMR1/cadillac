@@ -69,13 +69,13 @@ const Background = props => {
                     fragmentShader={frag}
                 />
             </mesh>
-            {props.route === "/bio" && (
+            {/* {props.route === "/bio" && (
                 <BioImage
                     el={props.bioRef}
                     pointer={props.pointer}
                     scroll={props.scroll}
                 />
-            )}
+            )} */}
         </>
     )
 }
