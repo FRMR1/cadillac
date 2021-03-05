@@ -6,7 +6,7 @@ export default {
         {
             name: "date",
             title: "Date",
-            type: "string",
+            type: "datetime",
         },
         {
             name: "venue",
