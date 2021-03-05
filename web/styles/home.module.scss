@@ -151,7 +151,7 @@ $white: #eee;
     .noShows td {
         // display: block;
         text-align: center;
-        padding: 40px;
+        padding: 40px 10px;
     }
 }
 
@@ -244,9 +244,10 @@ $white: #eee;
     margin-top: 180px;
     text-align: center;
     h3 {
-        font-size: 70px;
-        font-family: "GoldenTrail";
+        font-size: 80px;
+        font-family: "Carosello";
         margin-bottom: 40px;
+        transform: skew(0turn, -6deg);
         color: $white;
         @media (max-width: 600px) {
             font-size: 35px;

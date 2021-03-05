@@ -54,8 +54,10 @@ const MobileMenu = ({ menuOpen, setMenuOpen }) => {
             <Link href="/bio">
                 <a onClick={() => setMenuOpen(!menuOpen)}>Bio</a>
             </Link>
-            <Link href="#">
-                <a onClick={() => setMenuOpen(!menuOpen)}>Shop</a>
+            <Link href="https://cadillac.bigcartel.com/">
+                <a onClick={() => setMenuOpen(!menuOpen)} target="_blank">
+                    Shop
+                </a>
             </Link>
         </StyledMenu>
     )

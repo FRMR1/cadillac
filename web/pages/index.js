@@ -36,9 +36,11 @@ const Home = props => {
             <News posts={posts} />
             <Shows shows={shows} />
             <div data-scroll className={styles.shop}>
-                <h3>Give us your money.</h3>
-                <Link href="#" target="_blank">
-                    <a className={styles.button}>Shop</a>
+                <h3>Give us your money!</h3>
+                <Link href="https://cadillac.bigcartel.com/">
+                    <a className={styles.button} target="_blank">
+                        Shop
+                    </a>
                 </Link>
             </div>
         </>

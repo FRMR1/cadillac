@@ -21,8 +21,6 @@ const Layout = props => {
     const isTabletPlus = useMediaQuery({ query: "(min-width: 701px)" })
     const isMobile = useMediaQuery({ query: "(max-width: 700px)" })
 
-    console.log(isTabletPlus)
-
     // Scroll
     const [scrollCtx, setScrollCtx] = useState()
     const { scroll } = useContext(SmoothScrollContext)
@@ -77,8 +75,11 @@ const Layout = props => {
                                         Bio
                                     </a>
                                 </Link>
-                                <Link href="#">
-                                    <a onClick={() => setMenuOpen(!menuOpen)}>
+                                <Link href="https://cadillac.bigcartel.com/">
+                                    <a
+                                        onClick={() => setMenuOpen(!menuOpen)}
+                                        target="_blank"
+                                    >
                                         Shop
                                     </a>
                                 </Link>
@@ -100,8 +101,8 @@ const Layout = props => {
                                 <Link href="/bio">
                                     <a>Bio</a>
                                 </Link>
-                                <Link href="#">
-                                    <a>Shop</a>
+                                <Link href="https://cadillac.bigcartel.com/">
+                                    <a target="_blank">Shop</a>
                                 </Link>
                             </div>
                         </div>

@@ -1,5 +1,6 @@
 import { connect } from "react-redux"
 import { useRouter } from "next/router"
+import { formatDate } from "../utils/formatDate"
 import client from "../client"
 import styles from "../styles/Home.module.scss"
 
@@ -14,7 +15,7 @@ const News = props => {
             {posts.map(post => (
                 <div className={styles.articleContainer}>
                     <h3 key={post.slug}>{post.title}</h3>
-                    <span>{post.publishedAt}</span>
+                    <span>{formatDate(post.publishedAt)}</span>
                     <div className={styles.postBody}>
                         {post.body.map(p => (
                             <p>{p.children[0].text}</p>
