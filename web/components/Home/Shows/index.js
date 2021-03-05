@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react"
 import { connect } from "react-redux"
 import { formatDate } from "../../../utils/formatDate"
-import styles from "../../../styles/Home.module.scss"
+import styles from "../../../styles/home.module.scss"
 
 const Shows = props => {
     const showsRef = useRef()
