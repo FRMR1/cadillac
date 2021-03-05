@@ -41,7 +41,7 @@ const MainCanvas = props => {
                     isTablet={isTablet}
                     isMobile={isMobile}
                 />
-                <Dice
+                {/* <Dice
                     scroll={props.scroll}
                     pointer={pointer}
                     isTablet={isTablet}
@@ -70,7 +70,7 @@ const MainCanvas = props => {
                     pointer={pointer}
                     route={props.route}
                     scroll={props.scroll}
-                />
+                /> */}
                 {/* <Effects /> */}
             </Suspense>
         </Canvas>
