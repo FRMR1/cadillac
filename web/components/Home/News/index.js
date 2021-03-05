@@ -15,12 +15,12 @@ const News = ({ posts, ...props }) => {
         <div className={styles.newsContainer}>
             <h2 ref={newsRef}>News</h2>
             {posts.map(post => (
-                <div className={styles.articleContainer}>
+                <div key={post.publishedAt} className={styles.articleContainer}>
                     <h3 key={post.slug}>{post.title}</h3>
                     <span>{formatDate(post.publishedAt)}</span>
                     <div className={styles.postBody}>
                         {post.body.map(p => (
-                            <p>
+                            <p key={p._key}>
                                 {p.children[0].text
                                     .substring(0, 200)
                                     .concat("...")}

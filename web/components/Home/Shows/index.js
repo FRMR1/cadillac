@@ -34,7 +34,7 @@ const Shows = props => {
                         ))}
                     {!shows.length && (
                         <tr className={styles.noShows}>
-                            <td colspan="3">
+                            <td colSpan="3">
                                 There are currently no shows scheduled.
                             </td>
                         </tr>
