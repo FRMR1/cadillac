@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react"
 import { connect } from "react-redux"
 import Link from "next/link"
-import styles from "../../../styles/home.module.scss"
+import styles from "../../../styles/Home.module.scss"
 import { formatDate } from "../../../utils/formatDate"
 
 const News = ({ posts, ...props }) => {
