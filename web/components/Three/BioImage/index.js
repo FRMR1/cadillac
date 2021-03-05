@@ -16,7 +16,6 @@ const BioImage = ({ el, pointer, scroll }) => {
 
     // Loaders
     const img = useLoader(THREE.TextureLoader, "/jpg/cadillac.jpg")
-    const txt = useLoader(THREE.TextureLoader, "/jpg/texture.jpg")
 
     // Uniforms
     const uniforms = useMemo(
@@ -25,9 +24,6 @@ const BioImage = ({ el, pointer, scroll }) => {
             uMouse: { value: new THREE.Vector2() },
             uImage: {
                 value: img,
-            },
-            uTexture: {
-                value: txt,
             },
         }),
         []

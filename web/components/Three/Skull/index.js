@@ -88,7 +88,13 @@ const Skull = ({ isTablet, isMobile, pointer, scroll }) => {
         animateY(uniforms.uMouse.value)
     })
 
-    return <primitive position={[0, -3.5, -15]} object={skullObject} />
+    // return <primitive position={[0, -3.5, -15]} object={skullObject} />
+    return (
+        <mesh>
+            <boxBufferGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial color="orange" />
+        </mesh>
+    )
 }
 
 export default Skull

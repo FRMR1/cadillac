@@ -34,14 +34,14 @@ const MainCanvas = props => {
     return (
         <Canvas onPointerMove={pointerMove} className={styles.canvas}>
             <Suspense fallback={null}>
-                {/* <Skull
+                <Skull
                     bodyRef={bodyRef}
                     pointer={pointer}
                     scroll={props.scroll}
                     isTablet={isTablet}
                     isMobile={isMobile}
                 />
-                <Dice
+                {/* <Dice
                     scroll={props.scroll}
                     pointer={pointer}
                     isTablet={isTablet}
