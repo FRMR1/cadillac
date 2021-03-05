@@ -1,8 +1,6 @@
-import React, { useRef, useState, useEffect } from "react"
+import React, { useRef, useEffect } from "react"
 import { connect } from "react-redux"
 import { useRouter } from "next/router"
-import Link from "next/link"
-import Image from "next/image"
 import styles from "../styles/Home.module.scss"
 
 const Bio = props => {

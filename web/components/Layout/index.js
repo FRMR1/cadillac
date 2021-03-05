@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from "react"
 import { connect } from "react-redux"
-import Image from "next/image"
+import ImageComponent from "../ImageComponent"
 import Link from "next/link"
 import Head from "next/head"
-import { useRouter } from "next/router"
 import { useMediaQuery } from "react-responsive"
 import MainCanvas from "../../components/Three/Canvas"
 import { MenuStyles } from "../../styles/MenuStyles"
@@ -18,7 +17,6 @@ const Layout = props => {
     const [menuOpen, setMenuOpen] = useState()
 
     // Responsive
-    const isTabletPlus = useMediaQuery({ query: "(min-width: 701px)" })
     const isMobile = useMediaQuery({ query: "(max-width: 700px)" })
 
     // Scroll
@@ -125,14 +123,18 @@ const Layout = props => {
                                 href="https://instagram.com/cadillac_ftw"
                                 target="_blank"
                             >
-                                <Image
-                                    src="/svg/instagram.svg"
+                                <ImageComponent
+                                    src="instagram_aogt64.svg"
                                     width={30}
                                     height={30}
                                 />
                             </a>
                         </div>
-                        <Image src="/svg/logo.svg" width={210} height={43} />
+                        <ImageComponent
+                            src="logo_r0urvg.svg"
+                            width={210}
+                            height={43}
+                        />
                         <span className={styles.copyright}>
                             ©{year} Cadillac. All Rights Reserved.
                         </span>

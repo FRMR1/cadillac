@@ -1,8 +1,7 @@
 import { useMemo, useRef } from "react"
 import { useFrame } from "react-three-fiber"
 import { frag, vert } from "../Shaders/bg"
-
-const BioImage = dynamic(() => import("../BioImage"), { ssr: false })
+import BioImage from "../BioImage"
 
 const Background = props => {
     const uniforms = useMemo(

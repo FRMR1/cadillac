@@ -24,7 +24,6 @@ export const SmoothScrollProvider = ({ children, containerRef }) => {
                 const LocomotiveScroll = (await import("locomotive-scroll"))
                     .default
 
-                console.log()
                 LocomotiveScrollRef.current = new LocomotiveScroll({
                     el:
                         document.querySelector("[data-scroll-container]") ??

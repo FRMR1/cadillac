@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useRef } from "react"
-import { useFrame, createPortal, useLoader } from "react-three-fiber"
+import { useMemo, useRef } from "react"
+import { useFrame, useLoader } from "react-three-fiber"
 import { frag, vert } from "../Shaders/bio"
 import gsap from "gsap"
 import * as THREE from "three"
 
-const BioImage = ({ el, children, pointer, scroll }) => {
+const BioImage = ({ el, pointer, scroll }) => {
     const mesh = useRef()
     const geometry = useRef()
     const domElement = el
@@ -145,8 +145,6 @@ const BioImage = ({ el, children, pointer, scroll }) => {
         mesh.current.rotation.y = uniforms.uMouse.value.x / 5
         mesh.current.rotation.x = uniforms.uMouse.value.y / -5
     })
-
-    console.log("mesh", mesh)
 
     return (
         <>
