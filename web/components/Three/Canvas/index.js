@@ -6,10 +6,10 @@ import { useMediaQuery } from "react-responsive"
 import styles from "../../../styles/Canvas.module.scss"
 
 const Background = dynamic(() => import("../Background"), { ssr: false })
-const Skull = dynamic(() => import("../Skull"), { ssr: false })
-const HeroText = dynamic(() => import("../Text/HeroText"), { ssr: false })
-const Dice = dynamic(() => import("../Dice"), { ssr: false })
-const Bullet = dynamic(() => import("../Bullet"), { ssr: false })
+// const Skull = dynamic(() => import("../Skull"), { ssr: false })
+// const HeroText = dynamic(() => import("../Text/HeroText"), { ssr: false })
+// const Dice = dynamic(() => import("../Dice"), { ssr: false })
+// const Bullet = dynamic(() => import("../Bullet"), { ssr: false })
 
 const MainCanvas = props => {
     const [bodyRef, setBodyRef] = useState()
@@ -34,14 +34,14 @@ const MainCanvas = props => {
     return (
         <Canvas onPointerMove={pointerMove} className={styles.canvas}>
             <Suspense fallback={null}>
-                <Skull
+                {/* <Skull
                     bodyRef={bodyRef}
                     pointer={pointer}
                     scroll={props.scroll}
                     isTablet={isTablet}
                     isMobile={isMobile}
                 />
-                {/* <Dice
+                <Dice
                     scroll={props.scroll}
                     pointer={pointer}
                     isTablet={isTablet}
