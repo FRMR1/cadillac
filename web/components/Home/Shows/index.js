@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react"
 import { connect } from "react-redux"
+import { formatDate } from "../../../utils/formatDate"
 import styles from "../../../styles/Home.module.scss"
 
 const Shows = props => {
@@ -26,7 +27,7 @@ const Shows = props => {
                     {shows &&
                         shows.map(show => (
                             <tr key={show.date}>
-                                <td>{show.date}</td>
+                                <td>{formatDate(show.date)}</td>
                                 <td>{show.city}</td>
                                 <td>{show.venue}</td>
                             </tr>

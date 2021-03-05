@@ -2,11 +2,10 @@ import { useRef, useEffect } from "react"
 import { connect } from "react-redux"
 import Link from "next/link"
 import styles from "../../../styles/Home.module.scss"
+import { formatDate } from "../../../utils/formatDate"
 
-const News = props => {
+const News = ({ posts, ...props }) => {
     const newsRef = useRef()
-
-    const posts = props.posts
 
     useEffect(() => {
         props.setNewsRef(newsRef.current)
@@ -18,7 +17,7 @@ const News = props => {
             {posts.map(post => (
                 <div className={styles.articleContainer}>
                     <h3 key={post.slug}>{post.title}</h3>
-                    <span>{post.publishedAt}</span>
+                    <span>{formatDate(post.publishedAt)}</span>
                     <div className={styles.postBody}>
                         {post.body.map(p => (
                             <p>
