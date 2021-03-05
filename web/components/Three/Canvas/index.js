@@ -34,14 +34,14 @@ const MainCanvas = props => {
     return (
         <Canvas onPointerMove={pointerMove} className={styles.canvas}>
             <Suspense fallback={null}>
-                <Skull
+                {/* <Skull
                     bodyRef={bodyRef}
                     pointer={pointer}
                     scroll={props.scroll}
                     isTablet={isTablet}
                     isMobile={isMobile}
                 />
-                {/* <Dice
+                <Dice
                     scroll={props.scroll}
                     pointer={pointer}
                     isTablet={isTablet}
@@ -61,7 +61,7 @@ const MainCanvas = props => {
                     scroll={props.scroll}
                     isTablet={isTablet}
                     isMobile={isMobile}
-                />
+                /> */}
                 <Background
                     bodyRef={bodyRef}
                     bioRef={props.bioRef}
@@ -70,7 +70,7 @@ const MainCanvas = props => {
                     pointer={pointer}
                     route={props.route}
                     scroll={props.scroll}
-                /> */}
+                />
                 {/* <Effects /> */}
             </Suspense>
         </Canvas>
