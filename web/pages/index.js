@@ -5,6 +5,7 @@ import Link from "next/link"
 import Shows from "../components/Home/Shows"
 import News from "../components/Home/News"
 import Image from "next/image"
+import ImageComponent from "../components/ImageComponent"
 import styles from "../styles/Home.module.scss"
 import { useRouter } from "next/router"
 
@@ -24,12 +25,24 @@ const Home = props => {
                         <span>El Dorado</span>
                     </h3>
                     <p>Listen Now On</p>
-                    <Image src="/svg/spotify.svg" width={180} height={50} />
+                    <ImageComponent
+                        src="spotify_iccow0.svg"
+                        width={180}
+                        height={50}
+                    />
                 </div>
                 <div className={styles.image}>
-                    <Image src="/png/eldorado.png" width={230} height={230} />
+                    <ImageComponent
+                        src="eldorado_rqdi4o.png"
+                        width={230}
+                        height={230}
+                    />
                     <div className={styles.buy}>
-                        <Image src="/svg/shithot.svg" width={80} height={80} />
+                        <ImageComponent
+                            src="shithot_tc9bx7.svg"
+                            width={80}
+                            height={80}
+                        />
                     </div>
                 </div>
             </div>

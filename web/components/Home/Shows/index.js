@@ -5,7 +5,6 @@ import styles from "../../../styles/Home.module.scss"
 
 const Shows = props => {
     const showsRef = useRef()
-
     const shows = props.shows
 
     useEffect(() => {
