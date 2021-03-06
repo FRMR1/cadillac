@@ -77,13 +77,13 @@ const Background = props => {
                 isTablet={props.isTablet}
                 isMobile={props.isMobile}
             />
-            {/* {props.route === "/bio" && (
+            {props.route === "/bio" && (
                 <BioImage
                     el={props.bioRef}
                     pointer={props.pointer}
                     scroll={props.scroll}
                 />
-            )} */}
+            )}
         </>
     )
 }
