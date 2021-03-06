@@ -1,7 +1,7 @@
 import { useMemo, useRef } from "react"
 import { useFrame } from "react-three-fiber"
 import { frag, vert } from "../Shaders/bg"
-// import BioImage from "../BioImage"
+import BioImage from "../BioImage"
 import Skull from "../Skull"
 
 const Background = props => {
