@@ -22,8 +22,6 @@ const Skull = ({ isTablet, isMobile, pointer, scroll }) => {
     useEffect(() => {
         const loader = new OBJLoader()
         loader.load("/assets/skull.obj", async obj => {
-            console.log(obj)
-
             obj.scale.set(0.3, 0.3, 0.3)
 
             const material = new THREE.ShaderMaterial({
