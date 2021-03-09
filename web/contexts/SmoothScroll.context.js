@@ -29,6 +29,12 @@ export const SmoothScrollProvider = ({ children, containerRef }) => {
                         document.querySelector("[data-scroll-container]") ??
                         undefined,
                     smooth: true,
+                    smartphone: {
+                        smooth: true,
+                    },
+                    tablet: {
+                        smooth: true,
+                    },
                 })
 
                 setIsReady(true) // Re-render the context

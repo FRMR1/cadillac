@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const BurgerStyles = styled.button`
-    position: absolute;
+    position: fixed;
     top: 40px;
     right: 40px;
     display: flex;

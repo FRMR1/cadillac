@@ -29,6 +29,9 @@ const Layout = props => {
 
     useEffect(() => {
         setScrollCtx(scroll)
+
+        // Update height after page load
+        if (scroll) scroll.update()
     }, [scroll])
 
     // Copyright date
