@@ -1,23 +1,27 @@
-import React, { useEffect, useRef, useState } from "react"
-import { connect } from "react-redux"
-import ImageComponent from "../ImageComponent"
+import React, { useEffect, useState, useContext } from "react"
 import Link from "next/link"
 import Head from "next/head"
-import { useMediaQuery } from "react-responsive"
+import { connect } from "react-redux"
+import { SmoothScrollContext } from "../../contexts/SmoothScroll.context"
+import ImageComponent from "../ImageComponent"
 import MainCanvas from "../../components/Three/Canvas"
+import { useMediaQuery } from "react-responsive"
 import { MenuStyles } from "../../styles/MenuStyles"
 import { BurgerStyles } from "../../styles/BurgerStyles"
 import client from "../../client"
 import styles from "../../styles/Home.module.scss"
-import { useContext } from "react"
-import { SmoothScrollContext } from "../../contexts/SmoothScroll.context"
 
 const Layout = props => {
-    const bodyRef = useRef()
+    // State
     const [menuOpen, setMenuOpen] = useState()
+    const [isMobile, setIsMobile] = useState()
 
     // Responsive
-    const isMobile = useMediaQuery({ query: "(max-width: 700px)" })
+    const mobile = useMediaQuery({ query: "(max-width: 700px)" })
+
+    useEffect(() => {
+        setIsMobile(mobile)
+    }, [mobile])
 
     // Scroll
     const [scrollCtx, setScrollCtx] = useState()
@@ -42,12 +46,8 @@ const Layout = props => {
             <div id="top"></div>
             <div id="bottom"></div>
             <div id="viewport">
-                <div
-                    ref={bodyRef}
-                    data-scroll-container
-                    className={styles.container}
-                >
-                    {isMobile && (
+                <div data-scroll-container className={styles.container}>
+                    {isMobile ? (
                         <>
                             <BurgerStyles
                                 open={menuOpen}
@@ -83,8 +83,7 @@ const Layout = props => {
                                 </Link>
                             </MenuStyles>
                         </>
-                    )}
-                    {!isMobile && (
+                    ) : (
                         <div
                             className={styles.navContainer}
                             data-scroll-section
@@ -105,12 +104,8 @@ const Layout = props => {
                             </div>
                         </div>
                     )}
-
                     <MainCanvas
-                        bodyRef={bodyRef}
                         bioRef={props.bioRef}
-                        newsRef={props.newsRef}
-                        showsRef={props.showsRef}
                         route={props.route}
                         scroll={scrollCtx}
                     />
@@ -159,8 +154,6 @@ const mapStateToProps = state => {
     return {
         bioRef: state.bioRef,
         route: state.route,
-        newsRef: state.newsRef,
-        showsRef: state.showsRef,
     }
 }
 

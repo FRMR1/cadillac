@@ -1,8 +1,7 @@
-import { useMemo, useRef } from "react"
+import { useMemo } from "react"
 import { useFrame } from "react-three-fiber"
 import { frag, vert } from "../Shaders/bg"
 import BioImage from "../BioImage"
-import Skull from "../Skull"
 
 const Background = props => {
     const uniforms = useMemo(
@@ -70,20 +69,13 @@ const Background = props => {
                     fragmentShader={frag}
                 />
             </mesh>
-            <Skull
-                bodyRef={props.bodyRef}
-                pointer={props.pointer}
-                scroll={props.scroll}
-                isTablet={props.isTablet}
-                isMobile={props.isMobile}
-            />
-            {/* {props.route === "/bio" && (
+            {props.route === "/bio" && (
                 <BioImage
                     el={props.bioRef}
                     pointer={props.pointer}
                     scroll={props.scroll}
                 />
-            )} */}
+            )}
         </>
     )
 }
