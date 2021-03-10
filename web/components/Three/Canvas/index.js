@@ -13,8 +13,8 @@ const Bullet = dynamic(() => import("../Bullet"), { ssr: false })
 
 const MainCanvas = props => {
     // Responsive
-    const isTablet = useMediaQuery({ query: "(max-width: 1200px)" })
-    const isMobile = useMediaQuery({ query: "(max-width: 700px)" })
+    const isTablet = useMediaQuery({ query: "(max-width: 1279px)" })
+    const isMobile = useMediaQuery({ query: "(max-width: 600px)" })
     const isLandscape = useMediaQuery({ query: "(orientation: landscape)" })
 
     // Pointer data

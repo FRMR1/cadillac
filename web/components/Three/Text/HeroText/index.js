@@ -50,15 +50,17 @@ export default function Text({
             // Center the text after responsive rescaling
             if (isMobile && isLandscape) {
                 self.position.x = (-size.x * 0.8) / 2
-            } else if (isMobile) {
+            } else if (isMobile && !isLandscape) {
                 self.position.x = (-size.x * 0.3) / 2
-            } else if (isTablet) {
+            } else if (isTablet && !isLandscape) {
+                self.position.x = (-size.x * 0.4) / 2
+            } else if (isTablet && isLandscape) {
                 self.position.x = (-size.x * 0.7) / 2
             } else {
                 self.position.x = -size.x / 2
             }
         },
-        [children, isTablet, isMobile]
+        [children, isTablet, isMobile, isLandscape]
     )
 
     // Scroll
@@ -77,7 +79,10 @@ export default function Text({
         } else if (isMobile) {
             mesh.current.scale.set(0.3, 0.3, 0.3)
             return
-        } else if (isTablet) {
+        } else if (isTablet && !isLandscape) {
+            mesh.current.scale.set(0.4, 0.4, 0.4)
+            return
+        } else if (isTablet && isLandscape) {
             mesh.current.scale.set(0.7, 0.7, 0.7)
             return
         } else {
@@ -86,12 +91,15 @@ export default function Text({
         }
     }
 
+    console.log("IS TABLET: ", isTablet)
+
     // RAF
     useFrame((state, delta) => {
         uniforms.uTime.value += delta
-
         // Animation
-        mesh.current.position.y = -0.5
+        isTablet && !isLandscape
+            ? (mesh.current.position.y = 5)
+            : (mesh.current.position.y = -0.5)
         mesh.current.position.y += scrollY / 11
         mesh.current.position.y += Math.sin(uniforms.uTime.value / 1.5)
         mesh.current.rotation.x = 0.1

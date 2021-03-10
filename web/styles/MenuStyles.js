@@ -29,10 +29,10 @@ export const MenuStyles = styled.nav`
         text-decoration: none;
         transition: color 0.3s linear;
         font-family: "Winsor";
-
-        @media (max-width: 700px) {
-            font-size: 1.5rem;
-            text-align: center;
+        text-align: center;
+        @media (orientation: landscape) {
+            font-size: 2.2rem !important;
+            padding: 1.2rem;
         }
 
         &:hover {

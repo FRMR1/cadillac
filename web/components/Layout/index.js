@@ -17,7 +17,7 @@ const Layout = props => {
     const [isMobile, setIsMobile] = useState()
 
     // Responsive
-    const mobile = useMediaQuery({ query: "(max-width: 700px)" })
+    const mobile = useMediaQuery({ query: "(max-width: 600px)" })
 
     useEffect(() => {
         setIsMobile(mobile)
