@@ -11,6 +11,7 @@ export default function Text({
     color = "#000000",
     isTablet,
     isMobile,
+    isLandscape,
     ...props
 }) {
     // Font config
@@ -47,7 +48,9 @@ export default function Text({
             self.rotation.x = 1
 
             // Center the text after responsive rescaling
-            if (isMobile) {
+            if (isMobile && isLandscape) {
+                self.position.x = (-size.x * 0.8) / 2
+            } else if (isMobile) {
                 self.position.x = (-size.x * 0.3) / 2
             } else if (isTablet) {
                 self.position.x = (-size.x * 0.7) / 2
@@ -66,24 +69,35 @@ export default function Text({
         scrollY = scroll.y
     })
 
+    // Set responsive scale
+    const setScale = () => {
+        if (isMobile && isLandscape) {
+            mesh.current.scale.set(0.8, 0.8, 0.8)
+            return
+        } else if (isMobile) {
+            mesh.current.scale.set(0.3, 0.3, 0.3)
+            return
+        } else if (isTablet) {
+            mesh.current.scale.set(0.7, 0.7, 0.7)
+            return
+        } else {
+            mesh.current.scale.set(1, 1, 1)
+            return
+        }
+    }
+
     // RAF
     useFrame((state, delta) => {
         uniforms.uTime.value += delta
-
-        // Responsive
-        if (isMobile) {
-            mesh.current.scale.set(0.3, 0.3, 0.3)
-        } else if (isTablet) {
-            mesh.current.scale.set(0.7, 0.7, 0.7)
-        } else {
-            mesh.current.scale.set(1, 1, 1)
-        }
 
         // Animation
         mesh.current.position.y = -0.5
         mesh.current.position.y += scrollY / 11
         mesh.current.position.y += Math.sin(uniforms.uTime.value / 1.5)
         mesh.current.rotation.x = 0.1
+
+        // Scale
+        setScale()
     })
 
     return (

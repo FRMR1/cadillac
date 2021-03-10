@@ -203,6 +203,9 @@ $white: #eee;
     p {
         color: $white;
         margin-top: 15px;
+        @media (max-width: 600px) {
+            font-size: 11px;
+        }
     }
     .postBody {
         margin-top: 15px;
@@ -225,17 +228,6 @@ $white: #eee;
     }
     .articleContainer {
         margin-bottom: 40px;
-    }
-    @media (max-width: 600px) {
-        h2 {
-            font-size: 30px;
-        }
-        h3 {
-            font-size: 20px;
-        }
-        p {
-            font-size: 11px;
-        }
     }
 }
 

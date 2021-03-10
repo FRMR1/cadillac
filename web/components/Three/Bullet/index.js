@@ -6,7 +6,7 @@ import * as THREE from "three"
 
 let OBJLoader
 
-const Bullet = ({ isTablet, isMobile, ...props }) => {
+const Bullet = ({ isTablet, isMobile, isLandscape, ...props }) => {
     const mesh = useRef()
     const mesh2 = useRef()
 
@@ -40,36 +40,52 @@ const Bullet = ({ isTablet, isMobile, ...props }) => {
         scrollY = scroll.y
     })
 
+    // Set responsive scale
+    const setScale = () => {
+        if (isMobile && isLandscape) {
+            mesh.current.scale.set(2.3, 2.3, 2.3)
+            mesh2.current.scale.set(2.3, 2.3, 2.3)
+            mesh.current.position.x = -1.7
+            mesh2.current.position.x = 1.6
+            return
+        } else if (isMobile) {
+            mesh.current.scale.set(1.5, 1.5, 1.5)
+            mesh2.current.scale.set(1.5, 1.5, 1.5)
+            mesh.current.position.x = -0.5
+            mesh2.current.position.x = 0.3
+            return
+        } else if (isTablet) {
+            mesh.current.scale.set(2.3, 2.3, 2.3)
+            mesh2.current.scale.set(2.3, 2.3, 2.3)
+            mesh.current.position.x = -1.5
+            mesh2.current.position.x = 1
+            return
+        } else {
+            mesh2.current.scale.set(3, 3, 3)
+            mesh.current.scale.set(3, 3, 3)
+            return
+        }
+    }
+
     // RAF
     let elapsedTime = 0
 
     useFrame((state, delta) => {
         elapsedTime += delta
 
+        // Position/rotation
         mesh.current.position.y = 0.5
         mesh.current.position.y += scrollY / 240
         mesh.current.rotation.y += 0.022
         mesh.current.position.y += Math.sin(elapsedTime / 2.5) / 5
-        mesh.current.scale.set(3, 3, 3)
 
         mesh2.current.position.y = -6.5
         mesh2.current.position.y += scrollY / 240
         mesh2.current.rotation.y -= 0.022
         mesh2.current.position.y += Math.sin(elapsedTime / 2.5) / 5
-        mesh2.current.scale.set(3, 3, 3)
 
-        // Responsive
-        if (isMobile) {
-            mesh.current.scale.set(1.5, 1.5, 1.5)
-            mesh2.current.scale.set(1.5, 1.5, 1.5)
-            mesh.current.position.x = -0.5
-            mesh2.current.position.x = 0.3
-        } else if (isTablet) {
-            mesh.current.scale.set(2.3, 2.3, 2.3)
-            mesh2.current.scale.set(2.3, 2.3, 2.3)
-            mesh.current.position.x = -1.5
-            mesh2.current.position.x = 1
-        }
+        // Set scale
+        setScale()
     })
 
     return (

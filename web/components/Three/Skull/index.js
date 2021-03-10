@@ -5,7 +5,7 @@ import gsap from "gsap"
 import { frag, vert } from "../Shaders/skull"
 import * as THREE from "three"
 
-const Skull = ({ isTablet, isMobile, pointer, scroll }) => {
+const Skull = ({ isTablet, isMobile, isLandscape, pointer, scroll }) => {
     // State
     const [skullObject, setSkullObject] = useState()
 
@@ -62,24 +62,36 @@ const Skull = ({ isTablet, isMobile, pointer, scroll }) => {
         scrollY = scroll.y
     })
 
+    // Set responsive scale
+    const setScale = () => {
+        if (isMobile && isLandscape) {
+            skullObject.scale.set(0.22, 0.22, 0.22)
+            skullObject.position.y = -2
+            return
+        } else if (isMobile) {
+            skullObject.scale.set(0.15, 0.15, 0.15)
+            skullObject.position.y = -1.8
+            return
+        } else if (isTablet) {
+            skullObject.scale.set(0.2, 0.2, 0.2)
+            skullObject.position.y = -2.2
+            return
+        } else {
+            skullObject.scale.set(0.3, 0.3, 0.3)
+            skullObject.position.y = -3.5
+            return
+        }
+    }
+
     // RAF
     useFrame((state, delta) => {
         uniforms.uTime.value += delta
 
-        if (skullObject) {
-            // Responsive
-            if (isMobile) {
-                skullObject.scale.set(0.15, 0.15, 0.15)
-                skullObject.position.y = -1.8
-            } else if (isTablet) {
-                skullObject.scale.set(0.2, 0.2, 0.2)
-                skullObject.position.y = -2.2
-            } else {
-                skullObject.scale.set(0.3, 0.3, 0.3)
-                skullObject.position.y = -3.5
-            }
+        // Set scale
+        skullObject && setScale()
 
-            // Position/rotation
+        // Position/rotation
+        if (skullObject) {
             skullObject.position.y += scrollY / 150
             skullObject.position.y += Math.sin(uniforms.uTime.value / 1.75) / 2
             skullObject.rotation.x = Math.PI / 0.63

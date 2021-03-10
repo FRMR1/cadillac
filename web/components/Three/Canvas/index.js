@@ -15,6 +15,7 @@ const MainCanvas = props => {
     // Responsive
     const isTablet = useMediaQuery({ query: "(max-width: 1200px)" })
     const isMobile = useMediaQuery({ query: "(max-width: 700px)" })
+    const isLandscape = useMediaQuery({ query: "(orientation: landscape)" })
 
     // Pointer data
     const pointer = useMemo(() => {
@@ -35,18 +36,21 @@ const MainCanvas = props => {
                     scroll={props.scroll}
                     isTablet={isTablet}
                     isMobile={isMobile}
+                    isLandscape={isLandscape}
                 />
                 <Dice
                     scroll={props.scroll}
                     pointer={pointer}
                     isTablet={isTablet}
                     isMobile={isMobile}
+                    isLandscape={isLandscape}
                 />
                 <Bullet
                     scroll={props.scroll}
                     pointer={pointer}
                     isTablet={isTablet}
                     isMobile={isMobile}
+                    isLandscape={isLandscape}
                 />
                 <HeroText
                     position={[0, -0.5, -5]}
@@ -55,6 +59,7 @@ const MainCanvas = props => {
                     scroll={props.scroll}
                     isTablet={isTablet}
                     isMobile={isMobile}
+                    isLandscape={isLandscape}
                 />
                 <Background
                     bioRef={props.bioRef}
