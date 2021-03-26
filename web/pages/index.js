@@ -23,11 +23,17 @@ const Home = props => {
                         <span>El Dorado</span>
                     </h3>
                     <p>Listen Now On</p>
-                    <ImageComponent
-                        src="spotify_iccow0.svg"
-                        width={180}
-                        height={50}
-                    />
+                    <a
+                        href="https://open.spotify.com/album/7CWOL9I84czWmMSUaPIGZt?si=7eTevxqMT7eKmtuyOExLqQ"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <ImageComponent
+                            src="spotify_iccow0.svg"
+                            width={180}
+                            height={50}
+                        />
+                    </a>
                 </div>
                 <div className={styles.image}>
                     <ImageComponent
